@@ -43,7 +43,7 @@ class Navigation
 		geo_features = topojson.feature(map, map.objects.europe).features
 		# get stories
 		@stories = {}
-		results = results.slice(1) # remove the map
+		results  = results.slice(1) # remove the map
 		for _, i in Array(results.length/2) # read the array 2 by 2 (infos and data)
 			infos     = results[i + i][ 0]
 			data      = results[i + i + 1]
@@ -116,10 +116,20 @@ class Banner
 	constructor: (navigation) ->
 		@navigation = navigation
 		@uis =
-			title : $("> .title", ".banner")
+			title       : $("> .title", ".banner")
+			description : $("> .description", ".banner")
 
-	setTitle: (title) =>
-		@uis.title.html(title)
+		#bind events
+		$(document).on("storySelected", @onStorySelected)
+
+	update: (title, description) =>
+		@uis.title      .html(title)
+		@uis.description.html(description)
+
+	onStorySelected: (e, story_key) =>
+		title       = @navigation.stories[story_key].infos['Title']
+		description = @navigation.stories[story_key].infos['Introduction']
+		@update(title, description)
 
 # -----------------------------------------------------------------------------
 #
