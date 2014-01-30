@@ -1,4 +1,4 @@
-# Makefile -- nhost-10years
+# Makefile -- nost-10years
 
 WEBAPP     = $(wildcard webapp.py)
 
@@ -6,7 +6,7 @@ run:
 	. `pwd`/.env ; python $(WEBAPP)
 
 install:
-	virtualenv venv --no-site-packages --distribute --prompt=nhost-10years
+	virtualenv venv --no-site-packages --distribute --prompt=nost-10years
 	. `pwd`/.env ; pip install -r requirements.txt
 
 freeze:

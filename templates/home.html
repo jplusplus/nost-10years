@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			{% include "partials/panel.html" %}
+		</div>
+		<div class="col-md-8">
+			{% include "partials/map.html" %}
+			{% include "partials/banner.html" %}
+		</div>
+	</div>
+</div>
 {% endblock %}

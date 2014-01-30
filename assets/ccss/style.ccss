@@ -1,0 +1,47 @@
+// Styles with CleverCSS
+
+MAP_COLOR        = #FFD784
+MAP_STROKE       = $MAP_COLOR.darken(50%)
+MAP_STROKE_WIDTH = .3px
+
+//--------------------------------------------
+// PANEL
+.stories:
+	border-right: 2px solid #F7A600
+	.story:
+		padding-bottom: 5px
+		&:hover:
+			background-color : $MAP_COLOR
+			cursor           : pointer
+			> .title:
+				background-color: #313131.darken(50%)
+			> .description:
+				padding-left: 10px
+		> .title:
+			padding-left     : 20px
+			background-color : #313131
+			color            : white
+		> .description:
+			transition-property: padding-left
+			transition-duration: .25s
+
+//--------------------------------------------
+// BANNER
+.banner:
+	position         : absolute
+	top              : 30px
+	background-color : white
+	padding          : 20px
+	box-shadow       : 2px 2px 10px $MAP_COLOR.darken(40%)
+	> .title:
+		font-size: 1.5em
+
+//--------------------------------------------
+// MAP
+.map:
+	.all-path:
+		fill        : $MAP_COLOR
+		stroke      : $MAP_STROKE
+		stroke-width: $MAP_STROKE_WIDTH
+
+// EOF
