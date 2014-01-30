@@ -16,6 +16,7 @@ js_all:
     - "../assets/js/raf.js"
     - "../assets/js/topojson.js"
     - "../assets/js/bootstrap.min.js"
+    - "../assets/js/chroma.js"
     - contents:
       - "../assets/coffee/map.coffee"
       filters: coffeescript

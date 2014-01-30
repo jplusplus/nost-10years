@@ -1,4 +1,4 @@
-// Styles with CleverCSS
+// Style your life with CleverCSS
 
 MAP_COLOR        = #FFD784
 MAP_STROKE       = $MAP_COLOR.darken(50%)
@@ -6,6 +6,7 @@ MAP_STROKE_WIDTH = .3px
 
 .template:
 	display:none
+
 //--------------------------------------------
 // PANEL
 .row:
@@ -39,7 +40,8 @@ MAP_STROKE_WIDTH = .3px
 	position         : absolute
 	max-width        : 500px
 	top              : 30px
-	background-color : white
+	background-color : "rgba(0, 0, 0, 0.7)"
+	color: white
 	padding          : 20px
 	box-shadow       : 2px 2px 10px $MAP_COLOR.darken(40%)
 	> .title:
@@ -48,6 +50,7 @@ MAP_STROKE_WIDTH = .3px
 //--------------------------------------------
 // MAP
 .map:
+	margin-top: 100px
 	.all-path:
 		fill        : $MAP_COLOR
 		stroke      : $MAP_STROKE

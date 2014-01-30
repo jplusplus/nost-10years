@@ -10,10 +10,19 @@
 # Last mod : 30-Jan-2014
 # -----------------------------------------------------------------------------
 
+# STORIES = [
+# 	"project-1"
+# 	"project-2" :
+# 		center : [10, 58]
+# 		zoom   : 500
+# ]
+
 STORIES = [
 	"project-1"
 	"project-2"
 ]
+# console.log STORIES
+# getStory = (id) =>
 
 # -----------------------------------------------------------------------------
 #
@@ -40,7 +49,7 @@ class Navigation
 	loadedDataCallback: (error, results) =>
 		# get map data
 		map          = results[0]
-		geo_features = topojson.feature(map, map.objects.europe).features
+		geo_features = topojson.feature(map, map.objects.continent_Europe_subunits).features
 		# get stories
 		@stories = {}
 		results  = results.slice(1) # remove the map
@@ -143,7 +152,7 @@ class Map
 		svg_height                 : 500
 		svg_width                  : 600
 		initial_zoom               : 400
-		initial_center             : [30, 55]
+		initial_center             : [10, 58]
 
 	constructor: (navigation, map, stories) ->
 		@navigation = navigation
@@ -173,6 +182,32 @@ class Map
 			.attr("class", "all-path")
 
 		@drawEuropeMap()
+
+		#bind events
+		$(document).on("storySelected", @onStorySelected)
+
+	onStorySelected: (e, story_key) =>
+		@story = @stories[story_key]
+		symbol = @story.infos["Symbol map (Yes or No). If No, it's a Choropleth maps"] == "Yes"
+		if symbol
+			@drawSymbolMap()
+		else
+			@drawChoroplethMap()
+
+	drawChoroplethMap: (serie="2003") =>
+		countries = {}
+		for line in @story.data
+			countries[line['Country ISO Code']] = parseFloat(line[serie]) or undefined
+		values = _.values(countries).filter((d) -> d?)
+		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
+		scale  = chroma.scale(['white', 'red']).domain(domain)
+		d3.selectAll('path')
+			.attr('fill', 'white')
+			.transition()
+			.duration(2000)
+			.attr 'fill', (d) ->
+				value = countries[d.properties.adm0_a3]
+				if value? then scale(countries[d.properties.adm0_a3]) else undefined
 
 	drawEuropeMap: =>
 		# Create every countries
