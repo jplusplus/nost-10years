@@ -4,10 +4,16 @@ MAP_COLOR        = #FFD784
 MAP_STROKE       = $MAP_COLOR.darken(50%)
 MAP_STROKE_WIDTH = .3px
 
+.template:
+	display:none
 //--------------------------------------------
 // PANEL
+.row:
+	overflow: hidden
 .stories:
-	border-right: 2px solid #F7A600
+	border-right  : 2px solid #F7A600
+	margin-bottom : -99999px
+	padding-bottom: 99999px
 	.story:
 		padding-bottom: 5px
 		&:hover:
@@ -17,6 +23,8 @@ MAP_STROKE_WIDTH = .3px
 				background-color: #313131.darken(50%)
 			> .description:
 				padding-left: 10px
+		&.active:
+			background-color : $MAP_COLOR
 		> .title:
 			padding-left     : 20px
 			background-color : #313131
