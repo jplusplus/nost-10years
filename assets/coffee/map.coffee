@@ -10,19 +10,12 @@
 # Last mod : 30-Jan-2014
 # -----------------------------------------------------------------------------
 
-# STORIES = [
-# 	"project-1"
-# 	"project-2" :
-# 		center : [10, 58]
-# 		zoom   : 500
-# ]
-
-STORIES = [
+STORIES = {
 	"project-1"
-	"project-2"
-]
-# console.log STORIES
-# getStory = (id) =>
+	"project-2" :
+		center : [20, 45]
+		zoom   : 700
+}
 
 # -----------------------------------------------------------------------------
 #
@@ -41,7 +34,7 @@ class Navigation
 	start: =>
 		q = queue()
 		q.defer(d3.json, "static/europe.topo.json")
-		for story in STORIES
+		for story of STORIES
 			q.defer(d3.dsv(";", "text/plain"),  "static/data/#{story}-infos.csv")
 			q.defer(d3.dsv(";", "text/plain"),  "static/data/#{story}-data.csv")
 		q.awaitAll(@loadedDataCallback)
@@ -53,14 +46,14 @@ class Navigation
 		# get stories
 		@stories = {}
 		results  = results.slice(1) # remove the map
-		for _, i in Array(results.length/2) # read the array 2 by 2 (infos and data)
+		for o, i in Array(results.length/2) # read the array 2 by 2 (infos and data)
 			infos     = results[i + i][ 0]
 			data      = results[i + i + 1]
-			story_id  = STORIES[i]
+			story_id  = _.keys(STORIES)[i]
+
 			@stories[story_id] =
 				infos : infos
 				data  : data
-
 		# instanciate widgets
 		@map    = new Map(this  , geo_features, @stories)
 		@panel  = new Panel(this, @stories)
@@ -172,17 +165,11 @@ class Map
 			.translate([CONFIG.svg_width/2, CONFIG.svg_height/2])
 
 		# Create the path
-		@path = d3.geo.path()
-			.projection(@projection)
-
+		@path  = d3.geo.path().projection(@projection)
 		@group = @svg.append("g")
-
 		# Create the group of path and add graticule
-		@groupPaths = @group.append("g")
-			.attr("class", "all-path")
-
+		@groupPaths = @group.append("g").attr("class", "all-path")
 		@drawEuropeMap()
-
 		#bind events
 		$(document).on("storySelected", @onStorySelected)
 
@@ -192,22 +179,46 @@ class Map
 		if symbol
 			@drawSymbolMap()
 		else
-			@drawChoroplethMap()
+			@drawChoroplethMap("2003", STORIES[story_key].center, STORIES[story_key].zoom)
 
-	drawChoroplethMap: (serie="2003") =>
+	drawChoroplethMap: (serie="2003", center, zoom) =>
+		zoom   = zoom or CONFIG.initial_zoom
+		center = center or CONFIG.initial_center
+		@animationRequest = requestAnimationFrame @zoom(zoom, center)
+
 		countries = {}
 		for line in @story.data
-			countries[line['Country ISO Code']] = parseFloat(line[serie]) or undefined
+			if line['Country ISO Code']? and line['Country ISO Code'] != ""
+				countries[line['Country ISO Code']] = parseFloat(line[serie]) or undefined
 		values = _.values(countries).filter((d) -> d?)
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
 		scale  = chroma.scale(['white', 'red']).domain(domain)
-		d3.selectAll('path')
+
+		@groupPaths.selectAll('path')
 			.attr('fill', 'white')
 			.transition()
 			.duration(2000)
 			.attr 'fill', (d) ->
 				value = countries[d.properties.adm0_a3]
 				if value? then scale(countries[d.properties.adm0_a3]) else undefined
+			# .attr("d", @path)
+		
+	zoom: (_scale, _center) =>
+		return (timestamp) =>
+			if not @start?
+				@start = timestamp
+			progress = timestamp - @start
+			scale = @projection.scale()
+			scale += (_scale - scale) * progress/1000
+			center = @projection.center()
+			center[0] += (_center[0] - center[0]) * progress/1000
+			center[1] += (_center[1] - center[1]) * progress/1000
+			@projection
+				.scale(scale)
+				.center(center)
+			@groupPaths.selectAll('path').attr("d", @path)
+			if progress < 1000
+				requestAnimationFrame @zoom(_scale, _center)
 
 	drawEuropeMap: =>
 		# Create every countries
