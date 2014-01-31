@@ -13,10 +13,10 @@
 STORIES = {
 	"project-1"
 	"project-2" :
-		center : [20, 45]
-		zoom   : 700
+		center : [-200,-250]
+		zoom   : 2
 }
-
+# 2)translate(-200,-250)
 # -----------------------------------------------------------------------------
 #
 #    NAVIGATION
@@ -182,10 +182,8 @@ class Map
 			@drawChoroplethMap("2003", STORIES[story_key].center, STORIES[story_key].zoom)
 
 	drawChoroplethMap: (serie="2003", center, zoom) =>
-		zoom   = zoom or CONFIG.initial_zoom
-		center = center or CONFIG.initial_center
-		@animationRequest = requestAnimationFrame @zoom(zoom, center)
-
+		zoom      = zoom or 1
+		center    = center or [0,0]
 		countries = {}
 		for line in @story.data
 			if line['Country ISO Code']? and line['Country ISO Code'] != ""
@@ -195,30 +193,32 @@ class Map
 		scale  = chroma.scale(['white', 'red']).domain(domain)
 
 		@groupPaths.selectAll('path')
-			.attr('fill', 'white')
 			.transition()
 			.duration(2000)
-			.attr 'fill', (d) ->
+			# scale(2)translate(-200,-250)
+			.attr("transform", "scale(#{zoom})translate(#{center[0]},#{center[1]})")
+			.attr('fill', 'white')
+			.attr 'fill', (d) -> # color countries using the color scale
 				value = countries[d.properties.adm0_a3]
 				if value? then scale(countries[d.properties.adm0_a3]) else undefined
-			# .attr("d", @path)
 		
-	zoom: (_scale, _center) =>
-		return (timestamp) =>
-			if not @start?
-				@start = timestamp
-			progress = timestamp - @start
-			scale = @projection.scale()
-			scale += (_scale - scale) * progress/1000
-			center = @projection.center()
-			center[0] += (_center[0] - center[0]) * progress/1000
-			center[1] += (_center[1] - center[1]) * progress/1000
-			@projection
-				.scale(scale)
-				.center(center)
-			@groupPaths.selectAll('path').attr("d", @path)
-			if progress < 1000
-				requestAnimationFrame @zoom(_scale, _center)
+	# zoom: (_scale, _center) =>
+	# 	return (timestamp) =>
+	# 		if not @start?
+	# 			@start = timestamp
+	# 		progress = timestamp - @start
+	# 		scale = @projection.scale()
+	# 		scale += (2 - scale) * progress/1000
+	# 		center = @projection.center()
+	# 		center[0] += (_center[0] - center[0]) * progress/1000
+	# 		center[1] += (_center[1] - center[1]) * progress/1000
+	# 		@groupPaths.attr("transform", "scale("+scale+")")
+	# 		# @projection
+	# 		# 	.scale(scale)
+	# 		# 	.center(center)
+	# 		# @groupPaths.selectAll('path').attr("d", @path)
+	# 		if progress < 1000
+	# 			requestAnimationFrame @zoom(_scale, _center)
 
 	drawEuropeMap: =>
 		# Create every countries

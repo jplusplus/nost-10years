@@ -12,7 +12,6 @@ MAP_STROKE_WIDTH = .3px
 .row:
 	overflow: hidden
 .stories:
-	border-right   : 2px solid #F7A600
 	margin-bottom  : -99999px
 	padding-bottom : 99999px
 	.story:
@@ -40,6 +39,7 @@ MAP_STROKE_WIDTH = .3px
 	position         : absolute
 	max-width        : 500px
 	top              : 30px
+	left             : 30px 
 	background-color : "rgba(0, 0, 0, 0.7)"
 	color: white
 	padding          : 20px
@@ -50,10 +50,15 @@ MAP_STROKE_WIDTH = .3px
 //--------------------------------------------
 // MAP
 .map:
-	margin-top: 20px
+	margin-left:0
+	box-shadow:-6px -20px 9px -4px #f7a600
 	.all-path:
 		fill        : $MAP_COLOR
 		stroke      : $MAP_STROKE
 		stroke-width: $MAP_STROKE_WIDTH
+		path:hover:
+			transition-duration: .25s
+			transition-property: fill
+			fill: $MAP_COLOR.darken(80%)
 
 // EOF
