@@ -51,7 +51,7 @@ MAP_STROKE_WIDTH = .3px
 // MAP
 .map:
 	margin-left:0
-	box-shadow:-6px -20px 9px -4px #f7a600
+	box-shadow:-6px -20px 9px -4px #C4C3C3
 	.all-path:
 		fill        : $MAP_COLOR
 		stroke      : $MAP_STROKE

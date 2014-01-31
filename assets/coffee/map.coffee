@@ -182,8 +182,6 @@ class Map
 			@drawChoroplethMap("2003", STORIES[story_key].center, STORIES[story_key].zoom)
 
 	drawChoroplethMap: (serie="2003", center, zoom) =>
-		zoom      = zoom or 1
-		center    = center or [0,0]
 		countries = {}
 		for line in @story.data
 			if line['Country ISO Code']? and line['Country ISO Code'] != ""
@@ -191,16 +189,22 @@ class Map
 		values = _.values(countries).filter((d) -> d?)
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
 		scale  = chroma.scale(['white', 'red']).domain(domain)
-
+		# tooltip 
+		@groupPaths.each (d) ->
+			$(this).qtip
+				content: "pouet"
+				style  : 'qtip-dark'
+		# zoom + move animation
+		zoom      = zoom or 1
+		center    = center or [0,0]
 		@groupPaths.selectAll('path')
-			.transition()
-			.duration(2000)
-			# scale(2)translate(-200,-250)
-			.attr("transform", "scale(#{zoom})translate(#{center[0]},#{center[1]})")
 			.attr('fill', 'white')
-			.attr 'fill', (d) -> # color countries using the color scale
-				value = countries[d.properties.adm0_a3]
-				if value? then scale(countries[d.properties.adm0_a3]) else undefined
+			.transition()
+				.duration(2000)
+				.attr("transform", "scale(#{zoom})translate(#{center[0]},#{center[1]})")
+				.attr 'fill', (d) -> # color countries using the color scale
+					value = countries[d.properties.adm0_a3]
+					if value? then scale(countries[d.properties.adm0_a3]) else undefined
 		
 	# zoom: (_scale, _center) =>
 	# 	return (timestamp) =>
