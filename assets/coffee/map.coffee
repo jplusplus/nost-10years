@@ -190,10 +190,20 @@ class Map
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
 		scale  = chroma.scale(['white', 'red']).domain(domain)
 		# tooltip 
-		# @groupPaths.each (d) ->
-		# 	$(this).qtip
-		# 		content: "pouet"
-		# 		style  : 'qtip-dark'
+		@groupPaths.selectAll('path').each (d) ->
+			value = countries[d.properties.iso_a3] or ""
+			country_name = d.properties.admin
+			$(this).qtip
+				content: "#{country_name}<br/><strong>#{value}</strong>"
+				style  : 
+					theme: 'qtip-dark'
+					tip:
+						corner: false
+				position:
+					target: 'mouse'
+					adjust:
+						x: 10
+						y: -20
 		# zoom + move animation
 		zoom      = zoom or 1
 		center    = center or [0,0]
