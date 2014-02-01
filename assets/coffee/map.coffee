@@ -42,7 +42,7 @@ class Navigation
 	loadedDataCallback: (error, results) =>
 		# get map data
 		map          = results[0]
-		geo_features = topojson.feature(map, map.objects.continent_Europe_subunits).features
+		geo_features = topojson.feature(map, map.objects.admin0).features
 		# get stories
 		@stories = {}
 		results  = results.slice(1) # remove the map
@@ -190,10 +190,10 @@ class Map
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
 		scale  = chroma.scale(['white', 'red']).domain(domain)
 		# tooltip 
-		@groupPaths.each (d) ->
-			$(this).qtip
-				content: "pouet"
-				style  : 'qtip-dark'
+		# @groupPaths.each (d) ->
+		# 	$(this).qtip
+		# 		content: "pouet"
+		# 		style  : 'qtip-dark'
 		# zoom + move animation
 		zoom      = zoom or 1
 		center    = center or [0,0]
@@ -203,9 +203,9 @@ class Map
 				.duration(2000)
 				.attr("transform", "scale(#{zoom})translate(#{center[0]},#{center[1]})")
 				.attr 'fill', (d) -> # color countries using the color scale
-					value = countries[d.properties.adm0_a3]
-					if value? then scale(countries[d.properties.adm0_a3]) else undefined
-		
+					value = countries[d.properties.iso_a3]
+					if value? then scale(countries[d.properties.iso_a3]) else undefined
+
 	# zoom: (_scale, _center) =>
 	# 	return (timestamp) =>
 	# 		if not @start?
