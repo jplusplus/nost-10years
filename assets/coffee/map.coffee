@@ -117,12 +117,20 @@ class Banner
 
 	constructor: (navigation) ->
 		@navigation = navigation
+		hidden      = false
+		@ui         = $(".banner")
 		@uis =
-			title       : $("> .title", ".banner")
-			description : $("> .description", ".banner")
+			title       : $("> .title"      , @ui)
+			description : $("> .description", @ui)
+			increase    : $("> .increase"   , @ui)
+			reduce      : $("> .reduce"     , @ui)
 
 		#bind events
 		$(document).on("storySelected", @onStorySelected)
+		@ui        .on("click", => if @hidden then @show() else @hide())
+
+		# init hide/show button
+		if @hidden then @hide() else @show()
 
 	update: (title, description) =>
 		@uis.title      .html(title)
@@ -132,6 +140,19 @@ class Banner
 		title       = @navigation.stories[story_key].infos['Title']
 		description = @navigation.stories[story_key].infos['Introduction']
 		@update(title, description)
+		@show()
+
+	hide: =>
+		@hidden = true
+		@ui.addClass("reduced")
+		@uis.reduce.addClass("hidden")
+		@uis.increase.removeClass("hidden")
+
+	show: =>
+		@hidden = false
+		@ui.removeClass("reduced")
+		@uis.increase.addClass("hidden")
+		@uis.reduce.removeClass("hidden")
 
 # -----------------------------------------------------------------------------
 #
