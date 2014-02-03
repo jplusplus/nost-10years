@@ -167,14 +167,15 @@ class Map
 		initial_center : [10, 53]
 
 	constructor: (navigation, map, stories) ->
-		@navigation = navigation
-		@map        = map
-		@stories    = stories
+		@story_selected = undefined
+		@navigation     = navigation
+		@map            = map
+		@stories        = stories
 
 		@relayout()
 
 		#bind events
-		$(document).on("storySelected", @onStorySelected)
+		$(document).on("storySelected", (e, story_key) => @drawMap(story_key))
 		$(window).resize(@relayout)
 
 	relayout: =>
@@ -199,18 +200,22 @@ class Map
 		# Create the group of path and add graticule
 		@groupPaths = @group.append("g").attr("class", "all-path")
 		@drawEuropeMap()
+		# draw the map if a story is selected
+		@drawMap(@story_selected) if @story_selected?
 
-	onStorySelected: (e, story_key) =>
-		@story = @stories[story_key]
-		symbol = @story.infos["Symbol map (Yes or No). If No, it's a Choropleth maps"] == "Yes"
+	drawMap: (story_key) =>
+		console.log "coucou", story_key
+		@story_selected = story_key
+		story  = @stories[@story_selected]
+		symbol = story.infos["Symbol map (Yes or No). If No, it's a Choropleth maps"] == "Yes"
 		if symbol
 			@drawSymbolMap()
 		else
-			@drawChoroplethMap("2003", STORIES[story_key].center, STORIES[story_key].zoom)
+			@drawChoroplethMap("2003", STORIES[@story_selected].center, STORIES[@story_selected].zoom)
 
 	drawChoroplethMap: (serie="2003", center, zoom) =>
 		countries = {}
-		for line in @story.data
+		for line in @stories[@story_selected].data
 			if line['Country ISO Code']? and line['Country ISO Code'] != ""
 				# cast
 				line[serie] = parseFloat(line[serie]) or undefined
