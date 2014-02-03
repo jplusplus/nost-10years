@@ -88,9 +88,8 @@ body:
 		fill        : $MAP_COLOR
 		stroke      : $MAP_STROKE
 		stroke-width: $MAP_STROKE_WIDTH
-		path:hover:
-			transition-duration: .25s
-			transition-property: fill
-			fill               : $MAP_COLOR.darken(80%)
+		// path:hover:
+		// 	transition-duration: .25s
+		// 	transition-property: fill
 
 // EOF

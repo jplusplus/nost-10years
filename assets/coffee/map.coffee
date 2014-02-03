@@ -251,6 +251,8 @@ class Map
 					if country?
 						value = countries[d.properties.iso_a3][serie]
 						if value? then scale(value) else undefined
+					else
+						"#E5E5E5"
 
 	# zoom: (_scale, _center) =>
 	# 	return (timestamp) =>
