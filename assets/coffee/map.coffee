@@ -15,6 +15,7 @@ STORIES = {
 	"project-2" :
 		center : [-300,-240]
 		zoom   : 2
+	"project-3"
 }
 
 # -----------------------------------------------------------------------------
@@ -204,7 +205,6 @@ class Map
 		@drawMap(@story_selected) if @story_selected?
 
 	drawMap: (story_key) =>
-		console.log "coucou", story_key
 		@story_selected = story_key
 		story  = @stories[@story_selected]
 		symbol = story.infos["Symbol map (Yes or No). If No, it's a Choropleth maps"] == "Yes"
@@ -222,7 +222,7 @@ class Map
 				countries[line['Country ISO Code']] = line
 		values = _.values(countries).map((d)->d[serie]).filter((d) -> d?)
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
-		scale  = chroma.scale(['white', 'red']).domain(domain)
+		scale  = chroma.scale("YlOrRd").domain(domain, 5)
 		# tooltip 
 		@groupPaths.selectAll('path').each (d) ->
 			data  = countries[d.properties.iso_a3]
@@ -257,7 +257,7 @@ class Map
 						value = countries[d.properties.iso_a3][serie]
 						if value? then scale(value) else undefined
 					else
-						"#DADADA"
+						"white"
 
 	drawEuropeMap: =>
 		# Create every countries

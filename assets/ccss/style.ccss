@@ -1,8 +1,9 @@
 // Style your life with CleverCSS
 
-MAP_COLOR        = #FFD784
+MAP_COLOR        = #D6D6D6
 MAP_STROKE       = $MAP_COLOR.darken(50%)
 MAP_STROKE_WIDTH = .3px
+PANEL_STORY_COLOR = #FFD784
 
 .template:
 	display:none
@@ -30,7 +31,7 @@ body:
 		margin-bottom : 10px
 		box-shadow: 3px 0px 6px black
 		&:hover:
-			background-color : $MAP_COLOR
+			background-color : $PANEL_STORY_COLOR
 			cursor           : pointer
 			> .title:
 				background-color: #313131.darken(50%)
@@ -38,10 +39,10 @@ body:
 				padding-left: 10px
 				margin-right: -10px
 		&.active:
-			background-color : $MAP_COLOR
+			background-color : $PANEL_STORY_COLOR
 			.title:
 				font-weight: bold
-				color: $MAP_COLOR
+				color: $PANEL_STORY_COLOR
 		> .title:
 			background-color : #313131
 			color            : white
