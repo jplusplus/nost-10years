@@ -67,8 +67,6 @@ body:
 	transition-duration : .25s
 	transition-property : all
 	&:hover, &.reduced:
-		background-color : "rgba(255, 255, 255, 0.4)"
-		color            : black
 		cursor           : pointer
 	&.reduced:
 		transform : "rotate(-90deg)"
