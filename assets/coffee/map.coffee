@@ -257,7 +257,7 @@ class Map
 						value = countries[d.properties.iso_a3][serie]
 						if value? then scale(value) else undefined
 					else
-						"#E5E5E5"
+						"#DADADA"
 
 	drawEuropeMap: =>
 		# Create every countries
