@@ -254,24 +254,6 @@ class Map
 					else
 						"#E5E5E5"
 
-	# zoom: (_scale, _center) =>
-	# 	return (timestamp) =>
-	# 		if not @start?
-	# 			@start = timestamp
-	# 		progress = timestamp - @start
-	# 		scale = @projection.scale()
-	# 		scale += (2 - scale) * progress/1000
-	# 		center = @projection.center()
-	# 		center[0] += (_center[0] - center[0]) * progress/1000
-	# 		center[1] += (_center[1] - center[1]) * progress/1000
-	# 		@groupPaths.attr("transform", "scale("+scale+")")
-	# 		# @projection
-	# 		# 	.scale(scale)
-	# 		# 	.center(center)
-	# 		# @groupPaths.selectAll('path').attr("d", @path)
-	# 		if progress < 1000
-	# 			requestAnimationFrame @zoom(_scale, _center)
-
 	drawEuropeMap: =>
 		# Create every countries
 		@groupPaths.selectAll("path")
