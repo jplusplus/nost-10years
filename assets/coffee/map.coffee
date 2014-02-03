@@ -225,7 +225,7 @@ class Map
 			if data?
 				value = data[serie] or ""
 			country_name = if data? then data["Country name"] else ""
-			append       = if data? then data["Append Sign (€,%, Mio, etc)"] else ""
+			append       = if data? then data["Append Sign (€,%, Mio, etc)"] or "" else ""
 			if country_name
 				$(this).qtip
 					content: "#{country_name}<br/><strong>#{value} #{append}</strong>"
