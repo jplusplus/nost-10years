@@ -24,7 +24,6 @@ body:
 	margin-bottom  : -99999px
 	padding-bottom : 99999px
 	.story:
-		white-space:nowrap
 		overflow: hidden
 		padding-bottom: 5px
 		&:hover:
@@ -36,6 +35,8 @@ body:
 				padding-left: 10px
 		&.active:
 			background-color : $MAP_COLOR
+			.title:
+				color: $MAP_COLOR
 		> .title:
 			padding-left     : 20px
 			background-color : #313131
