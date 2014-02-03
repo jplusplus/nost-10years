@@ -33,16 +33,18 @@ body:
 				background-color: #313131.darken(50%)
 			> .description:
 				padding-left: 10px
+				margin-right: -10px
 		&.active:
 			background-color : $MAP_COLOR
 			.title:
+				font-weight: bold
 				color: $MAP_COLOR
 		> .title:
 			padding-left     : 20px
 			background-color : #313131
 			color            : white
 		> .description:
-			transition-property: padding-left
+			transition-property: all
 			transition-duration: .25s
 
 //--------------------------------------------
@@ -58,18 +60,24 @@ body:
 	box-shadow          : 2px 2px 10px rgb(46, 45, 45)
 	transition-duration : .50s
 	transition-property : all
+	&:hover, &.reduced:
+		color: #3D3D3D
+		background-color : "rgba(0, 0, 0, 0.2)"
+	&:hover:
+		> .reduce, > .increase:
+			color: white
 	&.reduced:
 		transform : "rotate(-90deg)"
 		top       : -250px
 		left      : -150px
-		background-color: "rgba(0, 0, 0, 0.4)"
 	> .title:
 		font-size: 1.5em
 	> .reduce, .increase:
-		position   : absolute
-		margin: 5px
+		position : absolute
+		margin   : 5px
 		&:hover:
 			cursor: pointer
+			color : #FFD784
 	> .reduce:
 		right: 0
 	> .increase:
@@ -79,7 +87,7 @@ body:
 // MAP
 .map:
 	margin-left:0
-	box-shadow :-6px -20px 9px -4px #C4C3C3
+	box-shadow :-6px -20px 9px -4px #6B6262
 	.all-path:
 		fill        : $MAP_COLOR
 		stroke      : $MAP_STROKE
