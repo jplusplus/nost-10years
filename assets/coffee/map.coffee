@@ -13,10 +13,10 @@
 STORIES = {
 	"project-1"
 	"project-2" :
-		center : [-200,-250]
+		center : [-300,-240]
 		zoom   : 2
 }
-# 2)translate(-200,-250)
+
 # -----------------------------------------------------------------------------
 #
 #    NAVIGATION
@@ -142,27 +142,35 @@ class Map
 
 	# Define default config
 	CONFIG =
-		svg_height                 : 500
-		svg_width                  : 600
-		initial_zoom               : 400
-		initial_center             : [10, 58]
+		initial_zoom   : 500
+		initial_center : [10, 53]
 
 	constructor: (navigation, map, stories) ->
 		@navigation = navigation
 		@map        = map
 		@stories    = stories
 
+		@relayout()
+
+		#bind events
+		$(document).on("storySelected", @onStorySelected)
+		$(window).resize(@relayout)
+
+	relayout: =>
 		# Create svg tag
+		@width  = $(window).width() - $(".map").offset().left
+		@height = $(window).height()
+		d3.select(".map svg").remove()
 		@svg = d3.select(".map")
 			.insert("svg" , ":first-child")
-			.attr("width" , CONFIG.svg_width)
-			.attr("height", CONFIG.svg_height)
+			.attr("width" , @width)
+			.attr("height",@height)
 
 		# Create projection
 		@projection = d3.geo.mercator()
 			.center(CONFIG.initial_center)
 			.scale(CONFIG.initial_zoom)
-			.translate([CONFIG.svg_width/2, CONFIG.svg_height/2])
+			.translate([@width/2, @height/2])
 
 		# Create the path
 		@path  = d3.geo.path().projection(@projection)
@@ -170,8 +178,6 @@ class Map
 		# Create the group of path and add graticule
 		@groupPaths = @group.append("g").attr("class", "all-path")
 		@drawEuropeMap()
-		#bind events
-		$(document).on("storySelected", @onStorySelected)
 
 	onStorySelected: (e, story_key) =>
 		@story = @stories[story_key]

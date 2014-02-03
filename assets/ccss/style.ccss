@@ -7,6 +7,16 @@ MAP_STROKE_WIDTH = .3px
 .template:
 	display:none
 
+body:
+  overflow: hidden
+
+.container-full:
+  margin: 0 auto
+  width : 100%
+
+.row:
+	margin-right: 0
+	margin-left: 0
 //--------------------------------------------
 // PANEL
 .row:
