@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 27-Jan-2014
-# Last mod : 30-Jan-2014
+# Last mod : 03-Feb-2014
 # -----------------------------------------------------------------------------
 
 STORIES = {
@@ -185,25 +185,32 @@ class Map
 		countries = {}
 		for line in @story.data
 			if line['Country ISO Code']? and line['Country ISO Code'] != ""
-				countries[line['Country ISO Code']] = parseFloat(line[serie]) or undefined
-		values = _.values(countries).filter((d) -> d?)
+				# cast
+				line[serie] = parseFloat(line[serie]) or undefined
+				countries[line['Country ISO Code']] = line
+		values = _.values(countries).map((d)->d[serie]).filter((d) -> d?)
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
 		scale  = chroma.scale(['white', 'red']).domain(domain)
 		# tooltip 
 		@groupPaths.selectAll('path').each (d) ->
-			value = countries[d.properties.iso_a3] or ""
-			country_name = d.properties.admin
-			$(this).qtip
-				content: "#{country_name}<br/><strong>#{value}</strong>"
-				style  : 
-					theme: 'qtip-dark'
-					tip:
-						corner: false
-				position:
-					target: 'mouse'
-					adjust:
-						x: 10
-						y: -20
+			data  = countries[d.properties.iso_a3]
+			value = ""
+			if data?
+				value = data[serie] or ""
+			country_name = if data? then data["Country name"] else ""
+			append       = if data? then data["Append Sign (�,%, Mio, etc)"] else ""
+			if country_name
+				$(this).qtip
+					content: "#{country_name}<br/><strong>#{value} #{append}</strong>"
+					style:
+						theme: 'qtip-dark'
+						tip:
+							corner: false
+					position:
+						target: 'mouse'
+						adjust:
+							x: 10
+							y: -20
 		# zoom + move animation
 		zoom      = zoom or 1
 		center    = center or [0,0]
@@ -213,8 +220,10 @@ class Map
 				.duration(2000)
 				.attr("transform", "scale(#{zoom})translate(#{center[0]},#{center[1]})")
 				.attr 'fill', (d) -> # color countries using the color scale
-					value = countries[d.properties.iso_a3]
-					if value? then scale(countries[d.properties.iso_a3]) else undefined
+					country = countries[d.properties.iso_a3]
+					if country?
+						value = countries[d.properties.iso_a3][serie]
+						if value? then scale(value) else undefined
 
 	# zoom: (_scale, _center) =>
 	# 	return (timestamp) =>
