@@ -35,8 +35,8 @@ class Navigation
 		q = queue()
 		q.defer(d3.json, "static/europe.topo.json")
 		for story of STORIES
-			q.defer(d3.dsv(";", "text/plain"),  "static/data/#{story}-infos.csv")
-			q.defer(d3.dsv(";", "text/plain"),  "static/data/#{story}-data.csv")
+			q.defer(d3.csv,  "static/data/#{story}-infos.csv")
+			q.defer(d3.csv,  "static/data/#{story}-data.csv")
 		q.awaitAll(@loadedDataCallback)
 
 	loadedDataCallback: (error, results) =>
@@ -154,8 +154,8 @@ class Map
 
 		# Create svg tag
 		@svg = d3.select(".map")
-			.insert("svg", ":first-child")
-			.attr("width", CONFIG.svg_width)
+			.insert("svg" , ":first-child")
+			.attr("width" , CONFIG.svg_width)
 			.attr("height", CONFIG.svg_height)
 
 		# Create projection
@@ -198,7 +198,7 @@ class Map
 			if data?
 				value = data[serie] or ""
 			country_name = if data? then data["Country name"] else ""
-			append       = if data? then data["Append Sign (�,%, Mio, etc)"] else ""
+			append       = if data? then data["Append Sign (€,%, Mio, etc)"] else ""
 			if country_name
 				$(this).qtip
 					content: "#{country_name}<br/><strong>#{value} #{append}</strong>"
@@ -211,7 +211,7 @@ class Map
 						adjust:
 							x: 10
 							y: -20
-		# zoom + move animation
+		# zoom + move + color animation
 		zoom      = zoom or 1
 		center    = center or [0,0]
 		@groupPaths.selectAll('path')
