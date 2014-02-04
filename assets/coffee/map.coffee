@@ -51,7 +51,6 @@ class Navigation
 			infos     = results[i + i][ 0]
 			data      = results[i + i + 1]
 			story_id  = _.keys(STORIES)[i]
-
 			@stories[story_id] =
 				infos : infos
 				data  : data
@@ -173,10 +172,14 @@ class Map
 		@map            = map
 		@stories        = stories
 
+		@uis =
+			switch_button : $(".switch", ".map")
+
 		@relayout()
 
 		#bind events
-		$(document).on("storySelected", (e, story_key) => @drawMap(story_key))
+		$(document).on("storySelected", @onStorySelected)
+		@uis.switch_button.find("input.switch-input").on("change", @onSwitchButtonChange)
 		$(window).resize(@relayout)
 
 	relayout: =>
@@ -204,31 +207,50 @@ class Map
 		# draw the map if a story is selected
 		@drawMap(@story_selected) if @story_selected?
 
-	drawMap: (story_key) =>
+	onStorySelected : (e, story_key) =>
 		@story_selected = story_key
+		@drawMap(story_key)
+		console.log @stories[@story_selected]
+		infos = @stories[@story_selected].infos
+		if infos.Serie1? and infos.Serie2?
+			@uis.switch_button.find("label[for=serie1]").text(infos.Serie1)
+			@uis.switch_button.find("label[for=serie2]").text(infos.Serie2)
+			@uis.switch_button.find("label[for=serie2]").text(infos.Serie2)
+			@uis.switch_button.find("input.switch-input:checked").prop("checked", false)
+			@uis.switch_button.find("input.switch-input:first").prop("checked", true)
+			@uis.switch_button.removeClass("hidden")
+		else
+			@uis.switch_button.addClass("hidden")
+
+	onSwitchButtonChange: (e) =>
+		value = @uis.switch_button.find("input.switch-input:checked").val()
+		serie  = parseInt(value.replace("serie", ""))
+		@drawChoroplethMap(serie)
+
+	drawMap: (story_key) =>
 		story  = @stories[@story_selected]
 		symbol = story.infos["Symbol map (Yes or No). If No, it's a Choropleth maps"] == "Yes"
 		if symbol
 			@drawSymbolMap()
 		else
-			@drawChoroplethMap("2003", STORIES[@story_selected].center, STORIES[@story_selected].zoom)
+			@drawChoroplethMap(1)
 
-	drawChoroplethMap: (serie="2003", center, zoom) =>
+	drawChoroplethMap: (serie=1) =>
 		countries = {}
 		for line in @stories[@story_selected].data
 			if line['Country ISO Code']? and line['Country ISO Code'] != ""
 				# cast
-				line[serie] = parseFloat(line[serie]) or undefined
+				line["value"] = parseFloat(line["serie#{serie}"]) or undefined
 				countries[line['Country ISO Code']] = line
-		values = _.values(countries).map((d)->d[serie]).filter((d) -> d?)
+		values = _.values(countries).map((d)->d["value"]).filter((d) -> d?)
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
 		scale  = chroma.scale("YlOrRd").domain(domain, 5)
-		# tooltip 
+		# tooltip
 		@groupPaths.selectAll('path').each (d) ->
 			data  = countries[d.properties.iso_a3]
 			value = ""
 			if data?
-				value = data[serie] or ""
+				value = data["value"] or ""
 			country_name = if data? then data["Country name"] else ""
 			append       = if data? then data["Append Sign (€,%, Mio, etc)"] or "" else ""
 			if country_name
@@ -244,8 +266,8 @@ class Map
 							x: 10
 							y: -20
 		# zoom + move + color animation
-		zoom      = zoom or 1
-		center    = center or [0,0]
+		zoom      = STORIES[@story_selected].zoom or 1
+		center    = STORIES[@story_selected].center or [0,0]
 		@groupPaths.selectAll('path')
 			.attr('fill', 'white')
 			.transition()
@@ -254,7 +276,7 @@ class Map
 				.attr 'fill', (d) -> # color countries using the color scale
 					country = countries[d.properties.iso_a3]
 					if country?
-						value = countries[d.properties.iso_a3][serie]
+						value = countries[d.properties.iso_a3]["value"]
 						if value? then scale(value) else undefined
 					else
 						"white"

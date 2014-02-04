@@ -100,4 +100,8 @@ body:
 			transition-duration: .25s
 			transition-property: fill
 
+	.switch:
+		position:absolute
+		bottom: 10px
+		left: 40px
 // EOF
