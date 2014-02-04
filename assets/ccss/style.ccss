@@ -71,7 +71,6 @@ body:
 	&.reduced:
 		transform : "rotate(-90deg)"
 		top       : -250px
-		left      : -150px
 		&:hover:
 			> .reduce, .increase:
 				transform : "rotate(-90deg)"
