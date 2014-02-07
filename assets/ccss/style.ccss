@@ -73,7 +73,7 @@ body:
 		transform : "rotate(-90deg)"
 		&:hover:
 			> .reduce, .increase:
-				transform : "rotate(-90deg)"
+				transform : "rotate(90deg)"
 	> .title:
 		font-size: 1.5em
 	> .reduce, .increase:

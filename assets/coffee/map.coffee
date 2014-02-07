@@ -10,10 +10,15 @@
 # Last mod : 07-Feb-2014
 # -----------------------------------------------------------------------------
 
-STORIES = {
+# NOTE: List all the stories
+# key should be the prefix of the story file in static/data
+# you can provide some properties like:
+#	center : [lon, lat]
+#	zoom   : int (normal=1)
+STORIES = { 
 	"project-1"
 	"project-2" :
-		center : [-300,-240]
+		center : [19.020662, 42.583409]
 		zoom   : 2
 	"project-3"
 }
@@ -266,12 +271,14 @@ class Map
 							y: -20
 		# zoom + move + color animation
 		zoom      = STORIES[@story_selected].zoom or 1
-		center    = STORIES[@story_selected].center or [0,0]
+		center    = @projection(STORIES[@story_selected].center)
+		offset_x  = - (center[0] * zoom - @width / 2)
+		offset_y  = - (center[1] * zoom - @height / 2)
 		@groupPaths.selectAll('path')
 			.attr('fill', (d) -> d3.select(this).attr("fill") or "white")
 			.transition()
 				.duration(2000)
-				.attr("transform", "scale(#{zoom})translate(#{center[0]},#{center[1]})")
+				.attr("transform", "translate(#{offset_x},#{offset_y})scale(#{zoom})")
 				.attr 'fill', (d) -> # color countries using the color scale
 					country = countries[d.properties.iso_a3]
 					if country?
