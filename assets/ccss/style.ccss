@@ -66,11 +66,11 @@ body:
 	box-shadow          : 2px 2px 10px rgb(46, 45, 45)
 	transition-duration : .25s
 	transition-property : all
+	transform-origin    : 0 0
 	&:hover, &.reduced:
 		cursor           : pointer
 	&.reduced:
 		transform : "rotate(-90deg)"
-		top       : -250px
 		&:hover:
 			> .reduce, .increase:
 				transform : "rotate(-90deg)"
