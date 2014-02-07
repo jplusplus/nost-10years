@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 27-Jan-2014
-# Last mod : 03-Feb-2014
+# Last mod : 07-Feb-2014
 # -----------------------------------------------------------------------------
 
 STORIES = {
@@ -164,7 +164,7 @@ class Map
 	# Define default config
 	CONFIG =
 		initial_zoom   : 500
-		initial_center : [10, 53]
+		initial_center : [10, 49]
 
 	constructor: (navigation, map, stories) ->
 		@story_selected = undefined
@@ -190,12 +190,12 @@ class Map
 		@svg = d3.select(".map")
 			.insert("svg" , ":first-child")
 			.attr("width" , @width)
-			.attr("height",@height)
+			.attr("height", @height)
 
 		# Create projection
 		@projection = d3.geo.mercator()
 			.center(CONFIG.initial_center)
-			.scale(CONFIG.initial_zoom)
+			.scale(@width * .7)
 			.translate([@width/2, @height/2])
 
 		# Create the path
@@ -210,7 +210,6 @@ class Map
 	onStorySelected : (e, story_key) =>
 		@story_selected = story_key
 		@drawMap(story_key)
-		console.log @stories[@story_selected]
 		infos = @stories[@story_selected].infos
 		if infos.Serie1? and infos.Serie2?
 			@uis.switch_button.find("label[for=serie1]").text(infos.Serie1)
@@ -269,7 +268,7 @@ class Map
 		zoom      = STORIES[@story_selected].zoom or 1
 		center    = STORIES[@story_selected].center or [0,0]
 		@groupPaths.selectAll('path')
-			.attr('fill', 'white')
+			.attr('fill', (d) -> d3.select(this).attr("fill") or "white")
 			.transition()
 				.duration(2000)
 				.attr("transform", "scale(#{zoom})translate(#{center[0]},#{center[1]})")
