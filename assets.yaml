@@ -19,5 +19,8 @@ js_all:
     - "../assets/js/chroma.js"
     - "../assets/js/jquery.qtip.js"
     - contents:
+      - "../assets/coffee/navigation.coffee"
+      - "../assets/coffee/panel.coffee"
+      - "../assets/coffee/banner.coffee"
       - "../assets/coffee/map.coffee"
       filters: coffeescript

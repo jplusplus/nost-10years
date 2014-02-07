@@ -22,5 +22,30 @@
 
 		{% block extra_js %}{% endblock %}
 
+		<script type="text/javascript">
+
+			// NOTE: List all the stories
+			// key must be the prefix of the story file in static/data/
+			// you can provide some properties like:
+			// 		center     : [lon, lat]
+			// 		zoom       : int(default=1)
+			// 		scale_type : log|quantiles|k-means|linear(default)
+
+			var STORIES = {
+				"n-ost_Project_1" : {},
+				// "project2" : {
+				// 	center     : [19.020662, 42.583409], // balkans
+				// 	zoom       : 1.4
+				// },
+				// "project3" : {
+				// 	center     : [19.408317, 52.1212], // poland
+				// 	scale_type : "log"
+				// }
+			};
+
+			var navigation = new Navigation();
+			navigation.start();
+		</script>
+
 	</body>
 </html>
