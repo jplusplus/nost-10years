@@ -98,7 +98,11 @@ class Map
 	drawChoroplethMap: (serie=1) =>
 		countries = @stories.get(@story_selected).data
 		# scale
-		values = countries.values().map((d)->d["serie#{serie}"]).filter((d) -> d? and not isNaN(d))
+		values = []
+		for country in countries.values()
+			values.push(country["serie1"])
+			values.push(country["serie2"])
+		values =values.filter((d) -> d? and not isNaN(d))
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
 		scale  = chroma.scale(CONFIG.color_scale).domain(domain, 5, STORIES[@story_selected]['scale_type'])
 		 # zoom + move + color animation
@@ -134,7 +138,7 @@ class Map
 		countries = story.data.values()
 		# keep only row with value to show
 		countries = countries.filter (c) ->
-			c["serie1"]? and not isNaN(c["serie1"]) and c["serie2"]? and not isNaN(c["serie2"])
+			c["serie#{serie}"]? and not isNaN(c["serie#{serie}"])
 		# scale
 		values = []
 		for country in countries
@@ -155,7 +159,7 @@ class Map
 				.attr("stroke"   , (d) -> chroma(d.color).darker()) # border color
 				.attr("transform", @drawEuropeMap(@story_selected))
 
-		#  init symbols
+		#  init symbols: image link, position ...
 		@groupSymbols.selectAll("image")
 			.data(countries).enter()
 			.append("image", ".all-symbols")
@@ -167,7 +171,7 @@ class Map
 				.attr("y"          , (d) => @path.centroid(@map.filter((f) -> f.properties["iso_a3"] == d["Country ISO Code"])[0])[1]  - scale(d["serie#{serie}"])/2)
 				.attr("opacity"    , 0)
 
-		# redraw
+		# redraw, set the symbol size
 		@groupSymbols.selectAll("image")
 			.transition()
 				.duration(CONFIG.map_transition)
