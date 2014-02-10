@@ -1,7 +1,7 @@
 n-host : Map for the 10th anniversary of the EU-enlargement
 ===========================================================
 
-Berlin - Jan 2014
+Berlin, January 2014
 
 ## The project
 
