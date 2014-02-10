@@ -1,7 +1,7 @@
 // Style your life with CleverCSS
 
 MAP_COLOR        = #D6D6D6
-MAP_STROKE       = $MAP_COLOR.darken(50%)
+MAP_STROKE       = #9f9f9f
 MAP_STROKE_WIDTH = .3px
 PANEL_STORY_COLOR = #FFD784
 
@@ -89,7 +89,7 @@ body:
 .map:
 	margin-left:0
 	box-shadow :-6px 0px 9px -4px #6B6262
-	background-color: rgb(250, 250, 250)
+	background-color: #F0EEEE
 	.all-path:
 		fill        : $MAP_COLOR
 		stroke      : $MAP_STROKE

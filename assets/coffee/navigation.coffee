@@ -43,9 +43,13 @@ class Navigation
 		for o, i in Array(results.length/2) # read the array 2 by 2 (infos and data)
 			infos     = results[i + i][ 0]
 			data      = results[i + i + 1]
-			story_id  = _.keys(STORIES)[i]
-			series    = d3.map()
+			# data
+			infos.is_symbol = infos["Symbol map (Yes or No). If No, it's a Choropleth maps"].toLowerCase() == "yes"
+			# series
+			series = d3.map()
 			series.set(line["Country ISO Code"], line) for line in data
+			# save stories
+			story_id  = _.keys(STORIES)[i]
 			@stories.set story_id,
 				infos  : infos
 				data   : series
