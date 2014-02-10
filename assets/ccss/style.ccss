@@ -59,21 +59,21 @@ body:
 	position            : absolute
 	max-width           : 500px
 	top                 : 30px
-	left                : 30px 
+	right               : 30px 
 	background-color    : "rgba(0, 0, 0, 0.7)"
 	color               : white
 	padding             : 20px
 	box-shadow          : 2px 2px 10px rgb(46, 45, 45)
 	transition-duration : .25s
 	transition-property : all
-	transform-origin    : 0 0
+	transform-origin    : top right
 	&:hover, &.reduced:
 		cursor           : pointer
 	&.reduced:
-		transform : "rotate(-90deg)"
+		transform : "rotate(90deg)"
 		&:hover:
 			> .reduce, .increase:
-				transform : "rotate(90deg)"
+				transform : "rotate(-90deg)"
 	> .title:
 		font-size: 1.5em
 	> .reduce, .increase:
@@ -81,10 +81,8 @@ body:
 		transition-duration : .25s
 		position : absolute
 		margin   : 5px
-	> .reduce:
+	> .reduce, > .increase:
 		right: 0
-	> .increase:
-		left: 0
 
 //--------------------------------------------
 // MAP
