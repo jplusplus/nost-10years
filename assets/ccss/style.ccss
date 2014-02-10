@@ -88,7 +88,7 @@ body:
 // MAP
 .map:
 	margin-left:0
-	box-shadow :-6px 0px 9px -4px #6B6262
+	box-shadow : "-6px 0px 9px -4px rgba(87, 73, 73, 0.7)"
 	background-color: #F0EEEE
 	.all-path:
 		fill        : $MAP_COLOR
