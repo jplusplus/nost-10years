@@ -19,6 +19,8 @@ class Map
 	CONFIG =
 		initial_zoom   : 530
 		initial_center : [24.247769, 50.117286]
+		new_countries  : ["BGR","EST","LVA","LTU","POL","ROU","SVK","SVN","CZE","HUN"] # large border
+
 
 	constructor: (navigation, map, stories) ->
 		@story_selected = undefined
@@ -133,6 +135,7 @@ class Map
 			.enter()
 				.append("path")
 				.attr("d", @path)
+				.classed "new-eu-country", (d) -> d.properties.iso_a3 in CONFIG.new_countries
 
 	tooltip: (d) =>
 		data  = @stories.get(@story_selected).data[d.properties.iso_a3]

@@ -103,6 +103,8 @@ body:
 			opacity:.18
 			&:hover:
 				opacity:1
+		.new-eu-country:
+			stroke-width:.1em
 	.switch:
 		position:absolute
 		bottom: 10px
