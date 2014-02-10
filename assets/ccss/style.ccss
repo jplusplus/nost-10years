@@ -98,8 +98,11 @@ body:
 		stroke-width: $MAP_STROKE_WIDTH
 		path:
 			transition-duration: .25s
-			transition-property: fill
-
+			transition-property: fill, opacity
+		.discret:
+			opacity:.18
+			&:hover:
+				opacity:1
 	.switch:
 		position:absolute
 		bottom: 10px

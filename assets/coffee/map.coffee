@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 27-Jan-2014
-# Last mod : 07-Feb-2014
+# Last mod : 10-Feb-2014
 # -----------------------------------------------------------------------------
 #
 #    Europe MAP
@@ -96,7 +96,7 @@ class Map
 		# 		line["value"] = parseFloat(line["serie#{serie}"]) or undefined
 		# 		countries[line['Country ISO Code']] = line
 		# scale
-		values = countries.values().map((d)->d["serie#{serie}"]).filter((d) -> d?)
+		values = countries.values().map((d)->d["serie#{serie}"]).filter((d) -> d? and not isNaN(d))
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
 		scale  = chroma.scale("YlOrRd").domain(domain, 5, STORIES[@story_selected]['scale_type'])
 		# tooltip
@@ -107,14 +107,21 @@ class Map
 		offset_x  = - (center[0] * zoom - @width / 2)
 		offset_y  = - (center[1] * zoom - @height / 2)
 		@groupPaths.selectAll('path')
-			.attr('fill', (d) -> d3.select(this).attr("fill") or "white")
+			.attr 'fill', (d) ->
+				country = countries.get(d.properties.iso_a3)
+				if country
+					d3.select(this).classed("discret", country["starred_country(y/n)"] == "no")
+				d3.select(this).attr("fill") or "white"
 			.transition()
 				.duration(1000)
 				.attr 'fill', (d) -> # color countries using the color scale
 					country = countries.get(d.properties.iso_a3)
 					if country?
-						value = countries.get(d.properties.iso_a3)["serie#{serie}"]
-						if value? then scale(value) else undefined
+						# star or unstar country
+						# colorize country
+						value = country["serie#{serie}"]
+						color = scale(value)
+						return if value? then color.hex() else undefined
 					else
 						"white"
 				.attr("transform", "translate(#{offset_x},#{offset_y})scale(#{zoom})")
