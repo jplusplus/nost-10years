@@ -84,19 +84,14 @@ class Map
 
 	drawMap: (story_key) =>
 		story  = @stories.get(@story_selected)
-		symbol = story.infos["Symbol map (Yes or No). If No, it's a Choropleth maps"] == "Yes"
+		symbol = story.infos["Symbol map (Yes or No). If No, it's a Choropleth maps"].toLowerCase() == "yes"
 		if symbol
 			@drawSymbolMap()
 		else
-			@drawChoroplethMap(1)
+			@drawChoroplethMap()
 
 	drawChoroplethMap: (serie=1) =>
 		countries = @stories.get(@story_selected).data
-		# for line in @stories[@story_selected].data
-		# 	if line['Country ISO Code']? and line['Country ISO Code'] != ""
-		# 		# cast
-		# 		line["value"] = parseFloat(line["serie#{serie}"]) or undefined
-		# 		countries[line['Country ISO Code']] = line
 		# scale
 		values = countries.values().map((d)->d["serie#{serie}"]).filter((d) -> d? and not isNaN(d))
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
@@ -110,23 +105,29 @@ class Map
 		offset_y  = - (center[1] * zoom - @height / 2)
 		@groupPaths.selectAll('path')
 			.attr 'fill', (d) ->
+				# star or unstar country
 				country = countries.get(d.properties.iso_a3)
 				if country
 					d3.select(this).classed("discret", country["starred_country(y/n)"] == "no")
+				# init color before transition
 				d3.select(this).attr("fill") or "white"
 			.transition()
 				.duration(1000)
 				.attr 'fill', (d) -> # color countries using the color scale
 					country = countries.get(d.properties.iso_a3)
 					if country?
-						# star or unstar country
 						# colorize country
 						value = country["serie#{serie}"]
-						color = scale(value)
-						return if value? then color.hex() else undefined
+						color =  if value? then scale(value).hex() else undefined
 					else
-						"white"
+						color = "white"
+					d.color = color
+					return color
+				.attr("stroke", (d) -> chroma(d.color).darker()) # border color
 				.attr("transform", "translate(#{offset_x},#{offset_y})scale(#{zoom})")
+
+	drawSymbolMap: (serie=1) =>
+
 
 	drawEuropeMap: =>
 		# Create every countries
