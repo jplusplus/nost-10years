@@ -16,7 +16,8 @@
 settings = 
 	Map :
 		map_transition    : 1000
-		initial_center    : [24.247769, 50.117286]
+		ratio             : .8
+		initial_center    : [23.247769, 50.117286]
 		symbol_scale      : [20, 60]
 		map_default_color : "#D6D6D6"
 		color_scale       : "YlOrRd" # http://colrd.com/palette/19079/
