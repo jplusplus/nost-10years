@@ -23,6 +23,10 @@ class Map
 		map_default_color : "#D6D6D6"
 		color_scale       : "YlOrRd" # http://colrd.com/palette/19079/
 		new_countries     : ["BGR","EST","LVA","LTU","POL","ROU","SVK","SVN","CZE","HUN"] # for larger border
+		countries_centers : d3.map # fix the symbol position for countries which are not well positioned by centroid
+			"FRA" : [2.462206 , 46.623965]
+			"FIN" : [25.072069, 61.177713]
+			"SUE" : [14.613085, 57.87023 ]
 
 	constructor: (navigation, map, stories) ->
 		@story_selected = undefined
@@ -161,27 +165,42 @@ class Map
 				.duration(CONFIG.map_transition)
 				.attr 'fill', (d) ->
 					color   = CONFIG.map_default_color
-					d.color = color
+					d.color = color # save color in the path object
 				.attr("stroke"   , (d) -> chroma(d.color).darker()) # border color
 				.attr("transform", @drawEuropeMap(@story_selected))
-		get_feature_from_symbol = (d) -> that.map.filter((f) -> f.properties["iso_a3"] == d["Country ISO Code"])
+		get_symbol_position = (symbol_data) ->
+			###
+			return the wanted positions to place the symbol.
+			If the position is fixed in CONFIG.countries_centers, use these values.
+			Otherwise, use the centroid of the country.
+			Substract the half of the symbol size to the x and y offset in order to return the symbol center position
+			###
+			country_code = symbol_data["Country ISO Code"]
+			if country_code in CONFIG.countries_centers.keys()
+				centroid = CONFIG.countries_centers.get(country_code)
+				centroid = that.projection(centroid)
+			else
+				feature  = that.map.filter((f) -> f.properties["iso_a3"] == country_code)
+				centroid = that.path.centroid(feature[0])
+			return centroid
+					# substract the half of the symbol size to the x and y offset in order to return the symbol center position
+					.map((position) -> position - scale(symbol_data["serie#{serie}"])/2)
 		#  init symbols: image link, position ...
 		@groupSymbols.selectAll("image")
 			.data(countries).enter()
 			.append("image", ".all-symbols")
 				.classed("discret" , (d) -> d["starred_country(y/n)"] == "no")
-				.attr("xlink:href" , (d) -> return "static/symbols/smiley.png")
-				.attr("width"      , (d) -> 0)
-				.attr("height"     , (d) -> 0)
-				.attr("x"          , (d) => @path.centroid(get_feature_from_symbol(d)[0])[0]  - scale(d["serie#{serie}"])/2)
-				.attr("y"          , (d) => @path.centroid(get_feature_from_symbol(d)[0])[1]  - scale(d["serie#{serie}"])/2)
-				.attr("opacity"    , 0)
-				.on "mouseover", (d) ->
-					color = (p) -> if p.properties["iso_a3"] == d["Country ISO Code"] then "#C1BF39" else p.color
+				.attr("xlink:href" ,        "static/symbols/smiley.png")
+				.attr("width"      ,        0)
+				.attr("height"     ,        0)
+				.attr("x"          , (d) -> get_symbol_position(d)[0])
+				.attr("y"          , (d) -> get_symbol_position(d)[1])
+				.attr("opacity"    ,        0)
+				.on "mouseover"    , (d) ->
 					# colorize the country
+					color = (p) -> if p.properties["iso_a3"] == d["Country ISO Code"] then "#C1BF39" else p.color
 					that.groupPaths.selectAll("path").attr "fill", color
-				.on "mouseout", (d) -> that.groupPaths.selectAll("path").attr "fill", (p) -> p.color
-
+				.on "mouseout"     , (d) -> that.groupPaths.selectAll("path").attr "fill", (p) -> p.color
 		# redraw, set the symbol size
 		@groupSymbols.selectAll("image")
 			.transition()
@@ -189,7 +208,6 @@ class Map
 				.attr("opacity", 1)
 				.attr("width"  , (d) -> scale(d["serie#{serie}"]))
 				.attr("height" , (d) -> scale(d["serie#{serie}"]))
-
 		# tooltip
 		@groupSymbols.selectAll("image").each @tooltip(serie=serie)
 
