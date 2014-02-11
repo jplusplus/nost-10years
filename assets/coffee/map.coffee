@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 27-Jan-2014
-# Last mod : 10-Feb-2014
+# Last mod : 11-Feb-2014
 # -----------------------------------------------------------------------------
 #
 #    Europe MAP
@@ -29,8 +29,9 @@ class Map
 		@navigation     = navigation
 		@map            = map
 		@stories        = stories
+		@ui             = $(".map")
 		@uis =
-			switch_button : $(".switch", ".map")
+			switch_button : $(".switch", @ui)
 
 		@relayout()
 
@@ -85,8 +86,11 @@ class Map
 		@drawMap(@story_selected, serie)
 
 	drawMap: (story_key, serie=1) =>
-		# reset tooltip
-		@destroyTooltip()
+		# reset tooltip, destroy everything
+		$("image").qtip('destroy', true)
+		$("path") .qtip('destroy', true)
+		# remove legend
+		$(".scale").remove()
 		story  = @stories.get(@story_selected)
 		# select the right method
 		if story.infos.is_symbol
@@ -131,6 +135,8 @@ class Map
 				.attr("transform", @computeZoom(@story_selected))
 		# tooltip
 		@groupPaths.selectAll('path').each @tooltip(serie=serie)
+		# legend
+		@showLegend(scale)
 
 	drawSymbolMap: (serie=1) =>
 		that      = this
@@ -199,11 +205,6 @@ class Map
 		offset_y  = - (center[1] * zoom - @height / 2)
 		return "translate(#{offset_x},#{offset_y})scale(#{zoom})"
 
-	destroyTooltip: =>
-		### Destroy all the tooltips ###
-		$("image").qtip('destroy', true)
-		$("path") .qtip('destroy', true)
-
 	tooltip: (serie) =>
 		### use the @story_selected to create tooltip depending of the given serie ###
 		that = this
@@ -223,7 +224,66 @@ class Map
 					position:
 						target: 'mouse'
 						adjust:
-							x: 10
+							x:  10
 							y: -20
+
+	showLegend : (scale) =>
+		that = this
+		# remove old legend
+		$legend = $(".scale")
+		$legend.remove()
+		# show value legend
+		$legend       = $("<div />").addClass("scale")
+		domains       = scale.domain()
+		legend_size   = 300
+		domains_delta = domains[domains.length - 1] - domains[0]
+		offset        = 0
+		max_height    = 0
+		size_by_value = true
+		label_size    = 0
+		$legend.css "width", legend_size
+		_.each domains, (step, i) ->
+			size_by_value = false  if (domains[i] - domains[i - 1]) / domains_delta * legend_size < 20  if i > 0
+			return
+		# rounded_domains = dw.utils.smartRound(domains, 1)
+		rounded_domains   = utils.smartRound(domains, 0)
+		_.each domains, (step, index) ->
+			# for each segment, we adding a domain in the legend and a sticker
+			if index < domains.length - 1
+				delta = domains[index + 1] - step
+				color = scale(step)
+				label = rounded_domains[index]
+				size  = (if size_by_value then delta / domains_delta * legend_size else legend_size / (domains.length - 1))
+				# setting step
+				$step = $("<div class='step'></div>")
+				$sticker = $("<span class='sticker'></span>").appendTo($legend)
+				$step.css
+					width: size
+					"background-color": color.hex()
+				# settings ticker
+				$sticker.css "left", offset
+				if index > 0
+					label_size += size
+					if label_size < 30
+						label = ""
+					else
+						label_size = 0
+					$("<div />").addClass("value").html(label).appendTo $sticker
+				else
+					$sticker.remove()
+				# add hover effect to highlight regions
+				$step.hover ((e) ->
+					step_color = chroma.color($(e.target).css("background-color")).hex()
+					opacity    = (path) -> if path.color == step_color then 1 else .2
+					that.groupPaths.selectAll("path").attr("opacity", opacity)
+				), ->
+					that.groupPaths.selectAll("path").attr("opacity", 1)
+
+				$legend.append $step
+				offset += size
+
+		# title
+		$("<div />").prependTo $legend
+		@ui.after $legend
 
 # EOF
