@@ -164,18 +164,23 @@ class Map
 					d.color = color
 				.attr("stroke"   , (d) -> chroma(d.color).darker()) # border color
 				.attr("transform", @drawEuropeMap(@story_selected))
-
+		get_feature_from_symbol = (d) -> that.map.filter((f) -> f.properties["iso_a3"] == d["Country ISO Code"])
 		#  init symbols: image link, position ...
 		@groupSymbols.selectAll("image")
 			.data(countries).enter()
 			.append("image", ".all-symbols")
-				.classed("discret", (d) -> d["starred_country(y/n)"] == "no")
+				.classed("discret" , (d) -> d["starred_country(y/n)"] == "no")
 				.attr("xlink:href" , (d) -> return "static/symbols/smiley.png")
 				.attr("width"      , (d) -> 0)
 				.attr("height"     , (d) -> 0)
-				.attr("x"          , (d) => @path.centroid(@map.filter((f) -> f.properties["iso_a3"] == d["Country ISO Code"])[0])[0]  - scale(d["serie#{serie}"])/2)
-				.attr("y"          , (d) => @path.centroid(@map.filter((f) -> f.properties["iso_a3"] == d["Country ISO Code"])[0])[1]  - scale(d["serie#{serie}"])/2)
+				.attr("x"          , (d) => @path.centroid(get_feature_from_symbol(d)[0])[0]  - scale(d["serie#{serie}"])/2)
+				.attr("y"          , (d) => @path.centroid(get_feature_from_symbol(d)[0])[1]  - scale(d["serie#{serie}"])/2)
 				.attr("opacity"    , 0)
+				.on "mouseover", (d) ->
+					color = (p) -> if p.properties["iso_a3"] == d["Country ISO Code"] then "#C1BF39" else p.color
+					# colorize the country
+					that.groupPaths.selectAll("path").attr "fill", color
+				.on "mouseout", (d) -> that.groupPaths.selectAll("path").attr "fill", (p) -> p.color
 
 		# redraw, set the symbol size
 		@groupSymbols.selectAll("image")
