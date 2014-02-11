@@ -197,11 +197,8 @@ class Map
 					# colorize the country
 					color = (p) -> if p.properties["iso_a3"] == d["Country ISO Code"] then "#C1BF39" else p.color
 					that.groupPaths.selectAll("path").attr "fill", color
-					#rotate
-					# d3.select(this).transition().duration(1000).attr("transform", "rotate(90)")
 				.on "mouseout"     , (d) -> 
 					that.groupPaths.selectAll("path").attr "fill", (p) -> p.color
-					# d3.select(this).transition().duration(1000).attr("transform", "rotate(0)")
 
 		# redraw, set the symbol size
 		@groupSymbols.selectAll("image")
@@ -259,7 +256,6 @@ class Map
 		# remove old legend
 		@uis.scale.html("")
 		# show value legend
-		# $legend       = $("<div />").addClass("scale")
 		domains       = scale.domain()
 		legend_size   = 300
 		domains_delta = domains[domains.length - 1] - domains[0]
@@ -271,7 +267,6 @@ class Map
 		_.each domains, (step, i) ->
 			size_by_value = false  if (domains[i] - domains[i - 1]) / domains_delta * legend_size < 20  if i > 0
 			return
-		# rounded_domains = dw.utils.smartRound(domains, 1)
 		rounded_domains   = utils.smartRound(domains, 0)
 		_.each domains, (step, index) ->
 			# for each segment, we adding a domain in the legend and a sticker
@@ -306,7 +301,5 @@ class Map
 					that.groupPaths.selectAll("path").attr("opacity", 1)
 				that.uis.scale.append $step
 				offset += size
-		# @uis.scale. $legend
 
-		console.log @uis.scale
 # EOF
