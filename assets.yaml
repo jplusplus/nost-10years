@@ -19,6 +19,7 @@ js_all:
     - "../assets/js/chroma.js"
     - "../assets/js/jquery.qtip.js"
     - contents:
+      - "../assets/coffee/settings.coffee"
       - "../assets/coffee/utils.coffee"
       - "../assets/coffee/navigation.coffee"
       - "../assets/coffee/panel.coffee"

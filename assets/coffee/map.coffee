@@ -15,7 +15,7 @@
 # -----------------------------------------------------------------------------
 class Map
 
-	# Define default config
+	# Define default settings.Map
 	CONFIG =
 		map_transition    : 1000
 		initial_center    : [24.247769, 50.117286]
@@ -56,7 +56,7 @@ class Map
 
 		# Create projection
 		@projection = d3.geo.mercator()
-			.center(CONFIG.initial_center)
+			.center(settings.Map.initial_center)
 			.scale(@width * .7)
 			.translate([@width/2, @height/2])
 
@@ -112,7 +112,7 @@ class Map
 			values.push(country["serie2"])
 		values =values.filter((d) -> d? and not isNaN(d))
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
-		scale  = chroma.scale(CONFIG.color_scale).domain(domain, 5, STORIES[@story_selected]['scale_type'])
+		scale  = chroma.scale(settings.Map.color_scale).domain(domain, 5, STORIES[@story_selected]['scale_type'])
 		 # zoom + move + color animation
 		@groupPaths.selectAll('path')
 			.attr 'fill', (d) ->
@@ -121,9 +121,9 @@ class Map
 				if country
 					d3.select(this).classed("discret", country["starred_country(y/n)"] == "no")
 				# init color before transition
-				d3.select(this).attr("fill") or CONFIG.map_default_color
+				d3.select(this).attr("fill") or settings.Map.map_default_color
 			.transition()
-				.duration(CONFIG.map_transition)
+				.duration(settings.Map.map_transition)
 				.attr 'fill', (d) -> # color countries using the color scale
 					country = countries.get(d.properties.iso_a3)
 					if country?
@@ -131,7 +131,7 @@ class Map
 						value = country["serie#{serie}"]
 						color =  if value? then scale(value).hex() else undefined
 					else
-						color = CONFIG.map_default_color
+						color = settings.Map.map_default_color
 					d.color = color
 					return color
 				.attr("stroke", (d) -> chroma(d.color).darker()) # border color
@@ -156,28 +156,28 @@ class Map
 			values.push(country["serie2"])
 		scale  = d3.scale.linear()
 			.domain([Math.min.apply(Math, values), Math.max.apply(Math, values)])
-			.range(CONFIG.symbol_scale)
+			.range(settings.Map.symbol_scale)
 		@groupPaths.selectAll('path')
 			.attr 'fill', (d) ->
 				# init color before transition
-				d3.select(this).attr("fill") or CONFIG.map_default_color
+				d3.select(this).attr("fill") or settings.Map.map_default_color
 			.transition()
-				.duration(CONFIG.map_transition)
+				.duration(settings.Map.map_transition)
 				.attr 'fill', (d) ->
-					color   = CONFIG.map_default_color
+					color   = settings.Map.map_default_color
 					d.color = color # save color in the path object
 				.attr("stroke"   , (d) -> chroma(d.color).darker()) # border color
 				.attr("transform", @drawEuropeMap(@story_selected))
 		get_symbol_position = (symbol_data) ->
 			###
 			return the wanted positions to place the symbol.
-			If the position is fixed in CONFIG.countries_centers, use these values.
+			If the position is fixed in settings.Map.countries_centers, use these values.
 			Otherwise, use the centroid of the country.
 			Substract the half of the symbol size to the x and y offset in order to return the symbol center position
 			###
 			country_code = symbol_data["Country ISO Code"]
-			if country_code in CONFIG.countries_centers.keys()
-				centroid = CONFIG.countries_centers.get(country_code)
+			if country_code in settings.Map.countries_centers.keys()
+				centroid = settings.Map.countries_centers.get(country_code)
 				centroid = that.projection(centroid)
 			else
 				feature  = that.map.filter((f) -> f.properties["iso_a3"] == country_code)
@@ -204,7 +204,7 @@ class Map
 		# redraw, set the symbol size
 		@groupSymbols.selectAll("image")
 			.transition()
-				.duration(CONFIG.map_transition)
+				.duration(settings.Map.map_transition)
 				.attr("opacity", 1)
 				.attr("width"  , (d) -> scale(d["serie#{serie}"]))
 				.attr("height" , (d) -> scale(d["serie#{serie}"]))
@@ -218,12 +218,12 @@ class Map
 			.enter()
 				.insert("path", ".all-symbols")
 				.attr("d", @path)
-				.classed "new-eu-country", (d) -> d.properties.iso_a3 in CONFIG.new_countries
+				.classed "new-eu-country", (d) -> d.properties.iso_a3 in settings.Map.new_countries
 
 	computeZoom: (story) =>
 		### Return the translation instruction as string ex: "translate(1,2)scale(1)"" ###
 		zoom      = STORIES[story].zoom or 1
-		center    = @projection(STORIES[story].center or CONFIG.initial_center)
+		center    = @projection(STORIES[story].center or settings.Map.initial_center)
 		offset_x  = - (center[0] * zoom - @width  / 2)
 		offset_y  = - (center[1] * zoom - @height / 2)
 		return "translate(#{offset_x},#{offset_y})scale(#{zoom})"
