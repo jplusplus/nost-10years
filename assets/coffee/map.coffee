@@ -301,12 +301,10 @@ class Map
 					that.groupPaths.selectAll("path").attr("opacity", opacity)
 				), ->
 					that.groupPaths.selectAll("path").attr("opacity", 1)
-
 				$legend.append $step
 				offset += size
-
 		# title
-		$("<div />").prependTo $legend
+		$("<div />").html(@stories.get(@story_selected).infos["Legend text"]).prependTo $legend
 		@ui.after $legend
 
 # EOF

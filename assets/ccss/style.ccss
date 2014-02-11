@@ -108,10 +108,10 @@ body:
 		bottom   : 0px
 		left     : 40px
 .scale:
-	position : absolute
-	right    : 0
-	bottom   : 0px
-	height   : 40px
+	position   : absolute
+	right      : 0
+	bottom     : 20px
+	text-align : right
 	.scale_title:
 		font-size  : 1.2em
 		line-height: 1.8em
