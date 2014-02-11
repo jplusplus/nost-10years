@@ -16,7 +16,7 @@
 class Map
 
 	# Define default settings
-	CONFIG = settings.Map
+	CONFIG = settings.map
 
 	constructor: (navigation, map, stories) ->
 		@story_selected = undefined
@@ -102,7 +102,7 @@ class Map
 			values.push(country["serie2"])
 		values =values.filter((d) -> d? and not isNaN(d))
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
-		scale  = chroma.scale(CONFIG.color_scale).domain(domain, 5, STORIES[@story_selected]['scale_type'])
+		scale  = chroma.scale(CONFIG.color_scale).domain(domain, 5, settings.stories[@story_selected]['scale_type'])
 		 # zoom + move + color animation
 		@groupPaths.selectAll('path')
 			.attr 'fill', (d) ->
@@ -217,8 +217,8 @@ class Map
 
 	computeZoom: (story) =>
 		### Return the translation instruction as string ex: "translate(1,2)scale(1)"" ###
-		zoom      = STORIES[story].zoom or 1
-		center    = @projection(STORIES[story].center or CONFIG.initial_center)
+		zoom      = settings.stories[story].zoom or 1
+		center    = @projection(settings.stories[story].center or CONFIG.initial_center)
 		offset_x  = - (center[0] * zoom - @width  / 2)
 		offset_y  = - (center[1] * zoom - @height / 2)
 		return "translate(#{offset_x},#{offset_y})scale(#{zoom})"

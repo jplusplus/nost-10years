@@ -25,7 +25,8 @@ class Navigation
 	start: =>
 		q = queue()
 		q.defer(d3.json, "static/europe.topo.json")
-		for story of STORIES
+		for story of settings.stories
+			console.log story
 			q.defer d3.csv,  "static/data/#{story}-infos.csv"
 			q.defer d3.csv,  "static/data/#{story}-data.csv", (d) ->
 				d.serie1 = parseFloat d.serie1
@@ -49,7 +50,7 @@ class Navigation
 			series = d3.map()
 			series.set(line["Country ISO Code"], line) for line in data
 			# save stories
-			story_id  = _.keys(STORIES)[i]
+			story_id  = _.keys(settings.stories)[i]
 			@stories.set story_id,
 				infos  : infos
 				data   : series

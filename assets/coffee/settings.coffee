@@ -14,7 +14,7 @@
 #
 # -----------------------------------------------------------------------------
 settings = 
-	Map :
+	map :
 		map_transition    : 1000 # ms
 		ratio             : .8
 		initial_center    : [23.247769, 50.117286] # lon/lat
@@ -26,5 +26,20 @@ settings =
 			"FRA" : [2.462206 , 46.623965] # lon/lat
 			"FIN" : [25.072069, 61.177713]
 			"SUE" : [14.613085, 57.87023 ]
+
+	# NOTE: List all the stories
+	# key must be the prefix of the story file in static/data/
+	# you can provide some properties like:
+	# 		center     : [lon, lat]
+	# 		zoom       : int(default=1)
+	# 		scale_type : log|quantiles|k-means|linear(default)
+	stories :
+		"der-frust-zieht-nach-suden" : {}
+		"corruption-italy-vs-the-balkans" :
+			zoom       : 1.4
+			center     : [19.020662, 42.583409] # balkans
+		"poland-the-eu-s-biggest-apple-producer" :
+			# center     : [19.408317, 52.1212] # poland
+			scale_type : "log"
 
 # EOF
