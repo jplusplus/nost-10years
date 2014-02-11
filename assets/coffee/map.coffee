@@ -25,7 +25,10 @@ class Map
 		@stories        = stories
 		@ui             = $(".map")
 		@uis =
-			switch_button : $(".switch", @ui)
+			legend        : $(".legend       ", @ui)
+			scale         : $(".legend .scale", @ui)
+			title         : $(".legend .title", @ui)
+			switch_button : $(".switch"       , @ui)
 
 		@relayout()
 
@@ -84,7 +87,9 @@ class Map
 		$("image").qtip('destroy', true)
 		$("path") .qtip('destroy', true)
 		# remove legend
-		$(".scale").remove()
+		@uis.scale.html("")
+		# remove title
+		@uis.title.html("")
 		story  = @stories.get(@story_selected)
 		# select the right method
 		if story.infos.is_symbol
@@ -92,6 +97,8 @@ class Map
 		else
 			@groupSymbols.selectAll("image").remove()
 			@drawChoroplethMap(serie)
+		# show title
+		@showTitle()
 
 	drawChoroplethMap: (serie=1) =>
 		countries = @stories.get(@story_selected).data
@@ -244,14 +251,15 @@ class Map
 						adjust:
 							x:  10
 							y: -20
+	showTitle : (title=null) =>
+		@uis.title.html(title or @stories.get(@story_selected).infos["Legend text"])
 
 	showLegend : (scale) =>
 		that = this
 		# remove old legend
-		$legend = $(".scale")
-		$legend.remove()
+		@uis.scale.html("")
 		# show value legend
-		$legend       = $("<div />").addClass("scale")
+		# $legend       = $("<div />").addClass("scale")
 		domains       = scale.domain()
 		legend_size   = 300
 		domains_delta = domains[domains.length - 1] - domains[0]
@@ -259,7 +267,7 @@ class Map
 		max_height    = 0
 		size_by_value = true
 		label_size    = 0
-		$legend.css "width", legend_size
+		@uis.legend.css "width", legend_size
 		_.each domains, (step, i) ->
 			size_by_value = false  if (domains[i] - domains[i - 1]) / domains_delta * legend_size < 20  if i > 0
 			return
@@ -274,7 +282,7 @@ class Map
 				size  = (if size_by_value then delta / domains_delta * legend_size else legend_size / (domains.length - 1))
 				# setting step
 				$step = $("<div class='step'></div>")
-				$sticker = $("<span class='sticker'></span>").appendTo($legend)
+				$sticker = $("<span class='sticker'></span>").appendTo(that.uis.scale)
 				$step.css
 					width: size
 					"background-color": color.hex()
@@ -296,10 +304,9 @@ class Map
 					that.groupPaths.selectAll("path").attr("opacity", opacity)
 				), ->
 					that.groupPaths.selectAll("path").attr("opacity", 1)
-				$legend.append $step
+				that.uis.scale.append $step
 				offset += size
-		# title
-		$("<div />").html(@stories.get(@story_selected).infos["Legend text"]).prependTo $legend
-		@ui.after $legend
+		# @uis.scale. $legend
 
+		console.log @uis.scale
 # EOF

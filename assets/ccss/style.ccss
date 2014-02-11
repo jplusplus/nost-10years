@@ -107,31 +107,27 @@ body:
 		position :absolute
 		bottom   : 0px
 		left     : 40px
-.scale:
+.legend:
 	position   : absolute
-	right      : 0
 	bottom     : 20px
+	right      : 0
 	text-align : right
-	.scale_title:
-		font-size  : 1.2em
-		line-height: 1.8em
-		font-weight: bold
-		position: absolute
-	.step:
-		display : inline-block
-		height  : 11px
-	.sticker:
-		position    : absolute
-		border-left : 1px solid #000
-		height      : 15px
-		.value:
-			width      : 100px
-			position   : absolute
-			left       : -50px
-			text-align : center
-			top        : 16px
-			font-size  : 11px
-		&.first:
-			border-left: 0
+	.scale:
+		.step:
+			display : inline-block
+			height  : 11px
+		.sticker:
+			position    : absolute
+			border-left : 1px solid #000
+			height      : 15px
+			.value:
+				width      : 100px
+				position   : absolute
+				left       : -50px
+				text-align : center
+				top        : 16px
+				font-size  : 11px
+			&.first:
+				border-left: 0
 
 // EOF
