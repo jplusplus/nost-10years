@@ -119,6 +119,16 @@ class Map
 				if country
 					d.is_discrete = country["starred_country(y/n)"]!= "yes"
 				return d.is_discrete
+			.attr "stroke", (d) ->
+				# save the color to animate the filling
+				country = countries.get(d.properties.iso_a3)
+				if country?
+					value = country["serie#{serie}"]
+					color =  if value? then scale(value).hex() else undefined
+				else
+					color = d3.select(this).attr("fill")
+				d.color = color
+				return chroma(color).darker().hex()
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr 'fill', (d) -> # color countries using the color scale
@@ -131,12 +141,6 @@ class Map
 						color = d3.select(this).attr("fill")
 					d.color = color
 					return color
-				.attr "stroke", (d) ->
-					country = countries.get(d.properties.iso_a3)
-					if country
-						chroma(d.color).darker().hex() # border color
-					else
-						d3.select(this).attr("stroke")
 				# zoom + move
 				.attr("transform", @computeZoom(@story_selected))
 		# tooltip
