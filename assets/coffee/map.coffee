@@ -221,6 +221,10 @@ class Map
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr("opacity", 1)
+				.attr "transform", (d)->
+					return that.computeZoom(that.story_selected)\# add the zoom transformation
+						# add the transformation to use the center of the picture as placed point
+						+ "translate(#{-scale(d["serie#{serie}"])/2}, #{-scale(d["serie#{serie}"])/2})"
 				.attr("width"  , (d) -> scale(d["serie#{serie}"]))
 				.attr("height" , (d) -> scale(d["serie#{serie}"]))
 		# tooltip
@@ -250,11 +254,12 @@ class Map
 
 	computeZoom: (story) =>
 		### Return the translation instruction as string ex: "translate(1,2)scale(1)"" ###
-		zoom      = settings.stories[story].zoom or 1
-		center    = @projection(settings.stories[story].center or CONFIG.initial_center)
-		offset_x  = - (center[0] * zoom - @width  / 2)
-		offset_y  = - (center[1] * zoom - @height / 2)
-		return "translate(#{offset_x},#{offset_y})scale(#{zoom})"
+		scale          = settings.stories[story].zoom or 1
+		center         = @projection(settings.stories[story].center or CONFIG.initial_center)
+		offset_x       = - (center[0] * scale - @width  / 2)
+		offset_y       = - (center[1] * scale - @height / 2)
+		transformation = "translate(#{offset_x},#{offset_y})scale(#{scale})"
+		return transformation
 
 	tooltip: (serie) =>
 		### use the @story_selected to create tooltip depending of the given serie ###
