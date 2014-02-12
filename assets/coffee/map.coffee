@@ -154,17 +154,38 @@ class Map
 		scale  = d3.scale.linear()
 			.domain([Math.min.apply(Math, values), Math.max.apply(Math, values)])
 			.range(CONFIG.symbol_scale)
+
+		# map
 		@groupPaths.selectAll('path')
 			.attr 'fill', (d) ->
 				# init color before transition
 				d3.select(this).attr("fill") or CONFIG.map_default_color
+			.on "mouseover", (d) ->
+				country = that.stories.get(that.story_selected).data.get(d.properties["iso_a3"])
+				d3.select(this).attr("fill", if country then "#C1BF39" else null)
+			.on "mouseout",  (d) ->
+				d3.select(this).attr("fill", CONFIG.map_default_color)
+			.classed "discret", (d) => 
+				country = @stories.get(@story_selected).data.get(d.properties["iso_a3"])
+				return country and country["starred_country(y/n)"] == "no"
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr 'fill', (d) ->
 					color   = CONFIG.map_default_color
 					d.color = color # save color in the path object
+					return color
 				.attr("stroke"   , (d) -> chroma(d.color).darker()) # border color
-				.attr("transform", @drawEuropeMap(@story_selected))
+				.attr("transform", @computeZoom(@story_selected))
+
+		#  init symbols: image link, position ...
+		@groupSymbols.selectAll("image")
+			.data(countries)
+				.enter()
+				.append("image"        , ".all-symbols")
+					.attr("width"      , 0)
+					.attr("height"     , 0)
+					.attr("opacity"    , 0)
+
 		get_symbol_position = (symbol_data) ->
 			###
 			return the wanted positions to place the symbol.
@@ -182,33 +203,27 @@ class Map
 			return centroid
 					# substract the half of the symbol size to the x and y offset in order to return the symbol center position
 					.map((position) -> position - scale(symbol_data["serie#{serie}"])/2)
-		#  init symbols: image link, position ...
-		@groupSymbols.selectAll("image")
-			.data(countries).enter()
-			.append("image", ".all-symbols")
-				.classed("discret" , (d) -> d["starred_country(y/n)"] == "no")
-				.attr("xlink:href" ,        "static/symbols/smiley.png")
-				.attr("width"      ,        0)
-				.attr("height"     ,        0)
-				.attr("x"          , (d) -> get_symbol_position(d)[0])
-				.attr("y"          , (d) -> get_symbol_position(d)[1])
-				.attr("opacity"    ,        0)
-				.on "mouseover"    , (d) ->
-					# colorize the country
-					color = (p) -> if p.properties["iso_a3"] == d["Country ISO Code"] then "#C1BF39" else p.color
-					that.groupPaths.selectAll("path").attr "fill", color
-				.on "mouseout"     , (d) -> 
-					that.groupPaths.selectAll("path").attr "fill", (p) -> p.color
 
 		# redraw, set the symbol size
 		@groupSymbols.selectAll("image")
+			.attr("x"          , (d) -> get_symbol_position(d)[0])
+			.attr("y"          , (d) -> get_symbol_position(d)[1])
+			.classed("discret" , (d) -> d["starred_country(y/n)"] == "no")
+			.attr("xlink:href" ,     -> settings.stories[that.story_selected].symbol or "static/symbols/smiley.png")
+			.on "mouseover"    , (d) ->
+				# colorize the country
+				color = ((p) -> if p.properties["iso_a3"] == d["Country ISO Code"] then "#C1BF39" else p.color)
+				that.groupPaths.selectAll("path").attr("fill", color)
+			.on "mouseout"     , (d) ->
+				that.groupPaths.selectAll("path").attr("fill", (p) -> p.color)
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr("opacity", 1)
 				.attr("width"  , (d) -> scale(d["serie#{serie}"]))
 				.attr("height" , (d) -> scale(d["serie#{serie}"]))
 		# tooltip
-		@groupSymbols.selectAll("image").each @tooltip(serie=serie)
+		# @groupSymbols.selectAll("image").each(@tooltip(serie=serie))
+		# @groupPaths.selectAll('path').each(@tooltip(serie=serie))
 
 	drawEuropeMap: =>
 		### Create every countries ###
@@ -217,6 +232,7 @@ class Map
 			.enter()
 				.insert("path", ".all-symbols")
 				.attr("d", @path)
+				.attr("stroke", (d) -> chroma(CONFIG.map_default_color).darker()) # border color
 				.classed "new-eu-country", (d) -> d.properties.iso_a3 in CONFIG.new_countries
 
 	computeZoom: (story) =>

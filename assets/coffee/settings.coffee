@@ -33,13 +33,15 @@ settings =
 	# 		center     : [lon, lat]
 	# 		zoom       : int(default=1)
 	# 		scale_type : log|quantiles|k-means|linear(default)
+	# 		symbol     : path to symbol image file
 	stories :
-		"der-frust-zieht-nach-suden" : {}
-		"corruption-italy-vs-the-balkans" :
-			zoom       : 1.4
-			center     : [19.020662, 42.583409] # balkans
-		"poland-the-eu-s-biggest-apple-producer" :
-			# center     : [19.408317, 52.1212] # poland
-			scale_type : "log"
+		"der-frust"        : {}
+		"korruption-score" :
+			symbol   : "static/symbols/korruption-score.jpg"
+		"export"           :
+			zoom     : 1.2
+			center   : [19.490972, 48.708142] # slavakia
+		"landwirschaft"    :
+			symbol   : "static/symbols/landwirschaft.png"
 
 # EOF
