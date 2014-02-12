@@ -18,9 +18,11 @@ settings =
 		map_transition    : 1000 # ms
 		ratio             : .8
 		initial_center    : [23.247769, 50.117286] # lon/lat
-		symbol_scale      : [20, 60] # in pixel
-		map_default_color : "#D6D6D6"
+		symbol_scale      : [10, 60] # in pixel
+		map_default_color : "#A6E2FF"
+		non_eu_color      : "#D6D6D6"
 		color_scale       : "YlOrRd" # http://colrd.com/palette/19079/
+		eu_countries      : ["DEU", "AUT", "BEL", "BGR", "CYP", "HRV", "DNK", "ESP", "EST", "FIN", "FRA", "GRC", "HUN", "IRL", "ITA", "LVA", "LTU", "MLT", "LUX", "NLD", "POL", "PRT", "CZE", "ROU", "GBR", "SVK", "SVN", "SWE"]
 		new_countries     : ["BGR","EST","LVA","LTU","POL","ROU","SVK","SVN","CZE","HUN"] # for larger border
 		countries_centers : d3.map # fix the symbol position for countries which are not well positioned by centroid
 			"FRA" : [2.462206 , 46.623965] # lon/lat
@@ -38,6 +40,8 @@ settings =
 		"der-frust"        : {}
 		"korruption-score" :
 			symbol   : "static/symbols/korruption-score.jpg"
+			zoom     : 1.4
+			center   : [19.020662, 42.583409]
 		"export"           :
 			zoom     : 1.2
 			center   : [19.490972, 48.708142] # slavakia

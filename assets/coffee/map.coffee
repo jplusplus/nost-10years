@@ -115,23 +115,30 @@ class Map
 			.attr 'fill', (d) ->
 				# star or unstar country
 				country = countries.get(d.properties.iso_a3)
+				nui = d3.select(this)
+				nui.attr("fill", nui.attr("fill"))
 				if country
-					d3.select(this).classed("discret", country["starred_country(y/n)"] == "no")
-				# init color before transition
-				d3.select(this).attr("fill") or CONFIG.map_default_color
+					nui.classed("discret", country["starred_country(y/n)"] == "no")
+				else
+					nui.attr("fill")
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr 'fill', (d) -> # color countries using the color scale
 					country = countries.get(d.properties.iso_a3)
 					if country?
-						# colorize country
-						value = country["serie#{serie}"]
-						color =  if value? then scale(value).hex() else undefined
+					# 	# colorize country
+					# 	value = country["serie#{serie}"]
+					# 	color =  if value? then scale(value).hex() else undefined
 					else
-						color = CONFIG.map_default_color
+						color = d3.select(this).attr("fill")
 					d.color = color
 					return color
-				.attr("stroke", (d) -> chroma(d.color).darker()) # border color
+				.attr "stroke", (d) ->
+					country = countries.get(d.properties.iso_a3)
+					if country
+						chroma(d.color).darker().hex() # border color
+					else
+						d3.select(this).attr("stroke")
 				# zoom + move
 				.attr("transform", @computeZoom(@story_selected))
 		# tooltip
@@ -154,30 +161,22 @@ class Map
 		scale  = d3.scale.linear()
 			.domain([Math.min.apply(Math, values), Math.max.apply(Math, values)])
 			.range(CONFIG.symbol_scale)
-
 		# map
 		@groupPaths.selectAll('path')
-			.attr 'fill', (d) ->
-				# init color before transition
-				d3.select(this).attr("fill") or CONFIG.map_default_color
 			.on "mouseover", (d) ->
-				country = that.stories.get(that.story_selected).data.get(d.properties["iso_a3"])
-				# that.groupSymbols.selectAll("image").filter((s) ->
-				# 	s["Country ISO Code"] == d.properties["iso_a3"]
-				# ).classed("discret", false)
-				d3.select(this).attr("fill", if country then "#C1BF39" else null)
+				nui_symb = that.groupSymbols.selectAll("image").filter((s) -> s["Country ISO Code"] == d.properties["iso_a3"])
+				nui_symb.classed("discret", false)
 			.on "mouseout",  (d) ->
-				d3.select(this).attr("fill", CONFIG.map_default_color)
-			.classed "discret", (d) => 
+				nui_symb = that.groupSymbols.selectAll("image").filter((s) -> s["Country ISO Code"] == d.properties["iso_a3"])
+				nui_symb.classed("discret", d.is_discrete)
+			.classed "discret", (d) =>
 				country = @stories.get(@story_selected).data.get(d.properties["iso_a3"])
-				return country and country["starred_country(y/n)"] == "no"
+				d.is_discrete = true
+				if country
+					d.is_discrete = country["starred_country(y/n)"]!= "yes"
+				return d.is_discrete
 			.transition()
 				.duration(CONFIG.map_transition)
-				.attr 'fill', (d) ->
-					color   = CONFIG.map_default_color
-					d.color = color # save color in the path object
-					return color
-				.attr("stroke"   , (d) -> chroma(d.color).darker()) # border color
 				.attr("transform", @computeZoom(@story_selected))
 
 		#  init symbols: image link, position ...
@@ -216,18 +215,21 @@ class Map
 			.attr("xlink:href" ,     -> settings.stories[that.story_selected].symbol or "static/symbols/smiley.png")
 			.on "mouseover"    , (d) ->
 				# colorize the country
-				color = ((p) -> if p.properties["iso_a3"] == d["Country ISO Code"] then "#C1BF39" else p.color)
-				that.groupPaths.selectAll("path").attr("fill", color)
+				# color = ((p) -> if p.properties["iso_a3"] == d["Country ISO Code"] then "#C1BF39" else p.color)
+				that.groupPaths.selectAll("path").filter((p) -> p.properties["iso_a3"] == d["Country ISO Code"])
+					.classed("discret", false)
 			.on "mouseout"     , (d) ->
-				that.groupPaths.selectAll("path").attr("fill", (p) -> p.color)
+				that.groupPaths.selectAll("path").filter((p) -> p.properties["iso_a3"] == d["Country ISO Code"])
+					.classed("discret", (p) -> p.is_discrete)
+				# that.groupPaths.selectAll("path").attr("fill", (p) -> p.color)
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr("opacity", 1)
 				.attr("width"  , (d) -> scale(d["serie#{serie}"]))
 				.attr("height" , (d) -> scale(d["serie#{serie}"]))
 		# tooltip
-		# @groupSymbols.selectAll("image").each(@tooltip(serie=serie))
-		# @groupPaths.selectAll('path').each(@tooltip(serie=serie))
+		@groupSymbols.selectAll("image").each(@tooltip(serie=serie))
+		@groupPaths.selectAll('path').each(@tooltip(serie=serie))
 
 	drawEuropeMap: =>
 		### Create every countries ###
@@ -235,8 +237,19 @@ class Map
 			.data(@map)
 			.enter()
 				.insert("path", ".all-symbols")
+		@groupPaths.selectAll("path")
 				.attr("d", @path)
-				.attr("stroke", (d) -> chroma(CONFIG.map_default_color).darker()) # border color
+				.attr("fill"  , (d) -> 
+					if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
+						return CONFIG.map_default_color
+					else
+						return CONFIG.non_eu_color
+				)
+				.attr "stroke", (d) ->
+					if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
+						return chroma(CONFIG.map_default_color).darker() # border color
+					else
+						return CONFIG.non_eu_color
 				.classed "new-eu-country", (d) -> d.properties.iso_a3 in CONFIG.new_countries
 
 	computeZoom: (story) =>
