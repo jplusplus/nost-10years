@@ -1,4 +1,4 @@
-Country ISO Code,Country name,serie1,serie2,Append Sign (€.%. Mio. etc),starred_country(y/n)
+Country ISO Code,Country name,serie1,serie2,"Append Sign (€.%. Mio. etc)",starred_country(y/n)
 BEL,Belgien,,,Milliarden €,no
 BGR,Bulgarien,4,12,Milliarden €,yes
 DNK,Dänemark,,,Milliarden €,no

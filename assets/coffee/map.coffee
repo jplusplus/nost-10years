@@ -178,13 +178,13 @@ class Map
 				.attr("transform", @computeZoom(@story_selected))
 
 		#  init symbols: image link, position ...
-		@groupSymbols.selectAll("image")
-			.data(countries)
-				.enter()
-				.append("image"        , ".all-symbols")
-					.attr("width"      , 0)
-					.attr("height"     , 0)
-					.attr("opacity"    , 0)
+		@symbol =@groupSymbols.selectAll("image").data(countries)
+		@symbol.enter()
+			.append("image"        , ".all-symbols")
+				.attr("width"      , 0)
+				.attr("height"     , 0)
+				.attr("opacity"    , 0)
+		@symbol.exit().remove()
 
 		get_symbol_position = (symbol_data) ->
 			###
@@ -230,6 +230,7 @@ class Map
 		# tooltip
 		@groupSymbols.selectAll("image").each(@tooltip(serie=serie))
 		@groupPaths.selectAll('path').each(@tooltip(serie=serie))
+		return
 
 	drawEuropeMap: =>
 		### Create every countries ###
@@ -263,25 +264,29 @@ class Map
 
 	tooltip: (serie) =>
 		### use the @story_selected to create tooltip depending of the given serie ###
-		that = this
-		return (d) ->
-			# retrieve data, depending of the element type (feature or symbol)
-			data  = if d.properties? then that.stories.get(that.story_selected).data.get(d.properties.iso_a3) else d
-			country_name = if data? then data["Country name"]                      else ""
-			value        = if data? then data["serie#{serie}"]               or "" else ""
-			append       = if data? then data["Append Sign (€,%, Mio, etc)"] or "" else ""
-			if country_name
-				$(this).qtip
-					content: "#{country_name}<br/><strong>#{value} #{append}</strong>"
-					style:
-						theme: 'qtip-dark'
-						tip:
-							corner: false
-					position:
-						target: 'mouse'
-						adjust:
-							x:  10
-							y: -20
+		return ((context) ->
+			(d) ->
+				console.log "coucou", d
+				# retrieve data, depending of the element type (feature or symbol)
+				data  = if d.properties? then context.stories.get(context.story_selected).data.get(d.properties.iso_a3) else d
+				country_name = if data? then data["Country name"]                      else ""
+				value        = if data? then data["serie#{serie}"]               or "" else ""
+				append       = if data? then data["Append Sign (€,%, Mio, etc)"] or "" else ""
+				if country_name == "Ungarn"
+					console.log value, append, d
+				if country_name
+					$(this).qtip
+						content: "#{country_name}<br/><strong>#{value} #{append}</strong>"
+						style:
+							theme: 'qtip-dark'
+							tip:
+								corner: false
+						position:
+							target: 'mouse'
+							adjust:
+								x:  10
+								y: -20
+		)(this)
 	showTitle : (title=null) =>
 		@uis.title.html(title or @stories.get(@story_selected).infos["Legend text"])
 

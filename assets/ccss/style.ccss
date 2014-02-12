@@ -95,14 +95,14 @@ body:
 		stroke      : $MAP_STROKE
 		stroke-width: $MAP_STROKE_WIDTH
 		path:
-			transition-duration: .25s
+			transition-duration: .75s
 			transition-property: fill, opacity
-		.discret:
-			opacity:.18
-			&:hover:
-				opacity:1
-		.new-eu-country:
-			stroke-width:.1em
+			&.discret:
+				opacity:.18
+				&:hover:
+					opacity:1
+			&.new-eu-country:
+				stroke-width:.1em
 	.switch:
 		position :absolute
 		bottom   : 0px
