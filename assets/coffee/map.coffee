@@ -115,21 +115,10 @@ class Map
 		@groupPaths.selectAll('path')
 			.classed "discret", (d) ->
 				country = countries.get(d.properties.iso_a3)
-				# country["starred_country(y/n)"] == "no"
-				# country = @stories.get(@story_selected).data.get(d.properties["iso_a3"])
 				d.is_discrete = true
 				if country
 					d.is_discrete = country["starred_country(y/n)"]!= "yes"
 				return d.is_discrete
-			# .attr 'fill', (d) ->
-				# # star or unstar country
-				# country = countries.get(d.properties.iso_a3)
-				# nui = d3.select(this)
-				# nui.attr("fill", nui.attr("fill"))
-				# if country
-				# 	nui.classed("discret", country["starred_country(y/n)"] == "no")
-				# else
-				# 	nui.attr("fill")
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr 'fill', (d) -> # color countries using the color scale
@@ -142,12 +131,12 @@ class Map
 						color = d3.select(this).attr("fill")
 					d.color = color
 					return color
-				# .attr "stroke", (d) ->
-				# 	country = countries.get(d.properties.iso_a3)
-				# 	if country
-				# 		chroma(d.color).darker().hex() # border color
-				# 	else
-				# 		d3.select(this).attr("stroke")
+				.attr "stroke", (d) ->
+					country = countries.get(d.properties.iso_a3)
+					if country
+						chroma(d.color).darker().hex() # border color
+					else
+						d3.select(this).attr("stroke")
 				# zoom + move
 				.attr("transform", @computeZoom(@story_selected))
 		# tooltip
@@ -224,13 +213,11 @@ class Map
 			.attr("xlink:href" ,     -> settings.stories[that.story_selected].symbol or "static/symbols/smiley.png")
 			.on "mouseover"    , (d) ->
 				# colorize the country
-				# color = ((p) -> if p.properties["iso_a3"] == d["Country ISO Code"] then "#C1BF39" else p.color)
 				that.groupPaths.selectAll("path").filter((p) -> p.properties["iso_a3"] == d["Country ISO Code"])
 					.classed("discret", false)
 			.on "mouseout"     , (d) ->
 				that.groupPaths.selectAll("path").filter((p) -> p.properties["iso_a3"] == d["Country ISO Code"])
 					.classed("discret", (p) -> p.is_discrete)
-				# that.groupPaths.selectAll("path").attr("fill", (p) -> p.color)
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr("opacity", 1)
