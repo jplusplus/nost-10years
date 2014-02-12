@@ -156,6 +156,7 @@ class Map
 		for country in countries
 			values.push(country["serie1"])
 			values.push(country["serie2"])
+		values = values.filter((n) -> not isNaN(n))
 		scale  = d3.scale.linear()
 			.domain([Math.min.apply(Math, values), Math.max.apply(Math, values)])
 			.range(CONFIG.symbol_scale)
@@ -266,14 +267,11 @@ class Map
 		### use the @story_selected to create tooltip depending of the given serie ###
 		return ((context) ->
 			(d) ->
-				console.log "coucou", d
 				# retrieve data, depending of the element type (feature or symbol)
 				data  = if d.properties? then context.stories.get(context.story_selected).data.get(d.properties.iso_a3) else d
 				country_name = if data? then data["Country name"]                      else ""
 				value        = if data? then data["serie#{serie}"]               or "" else ""
 				append       = if data? then data["Append Sign (€,%, Mio, etc)"] or "" else ""
-				if country_name == "Ungarn"
-					console.log value, append, d
 				if country_name
 					$(this).qtip
 						content: "#{country_name}<br/><strong>#{value} #{append}</strong>"

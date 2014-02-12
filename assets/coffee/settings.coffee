@@ -38,15 +38,17 @@ settings =
 	# 		scale_type : log|quantiles|k-means|linear(default)
 	# 		symbol     : path to symbol image file
 	stories :
-		"der-frust"        : {}
-		"korruption-score" :
+		"n-ost_Project_1"  : {}
+		"n-ost_Project_2"  : {}
+		"n-ost_Project_3"  :
 			symbol   : "static/symbols/korruption-score.jpg"
 			zoom     : 1.4
 			center   : [19.020662, 42.583409]
-		"export"           :
-			zoom     : 1.2
-			center   : [19.490972, 48.708142] # slavakia
-		"landwirschaft"    :
+		"n-ost_Project_4"  :
 			symbol   : "static/symbols/landwirschaft.png"
+		"n-ost_Project_5b" : {}
+		"n-ost_Project_5"  : {}
+		"n-ost_Project_6b" : {}
+		"n-ost_Project_6"  : {}
 
 # EOF
