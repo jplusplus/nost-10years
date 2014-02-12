@@ -162,6 +162,9 @@ class Map
 				d3.select(this).attr("fill") or CONFIG.map_default_color
 			.on "mouseover", (d) ->
 				country = that.stories.get(that.story_selected).data.get(d.properties["iso_a3"])
+				# that.groupSymbols.selectAll("image").filter((s) ->
+				# 	s["Country ISO Code"] == d.properties["iso_a3"]
+				# ).classed("discret", false)
 				d3.select(this).attr("fill", if country then "#C1BF39" else null)
 			.on "mouseout",  (d) ->
 				d3.select(this).attr("fill", CONFIG.map_default_color)
@@ -201,8 +204,9 @@ class Map
 				feature  = that.map.filter((f) -> f.properties["iso_a3"] == country_code)
 				centroid = that.path.centroid(feature[0])
 			return centroid
+					# FIXME: this code causes an offset before the transition
 					# substract the half of the symbol size to the x and y offset in order to return the symbol center position
-					.map((position) -> position - scale(symbol_data["serie#{serie}"])/2)
+					# .map((position) -> position - scale(symbol_data["serie#{serie}"])/2)
 
 		# redraw, set the symbol size
 		@groupSymbols.selectAll("image")
