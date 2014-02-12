@@ -86,6 +86,7 @@ class Map
 		# reset tooltip, destroy everything
 		$("image").qtip('destroy', true)
 		$("path") .qtip('destroy', true)
+		@drawEuropeMap()
 		# remove legend
 		@uis.scale.html("")
 		# remove title
@@ -112,33 +113,41 @@ class Map
 		scale  = chroma.scale(CONFIG.color_scale).domain(domain, 5, settings.stories[@story_selected]['scale_type'])
 		 # zoom + move + color animation
 		@groupPaths.selectAll('path')
-			.attr 'fill', (d) ->
-				# star or unstar country
+			.classed "discret", (d) ->
 				country = countries.get(d.properties.iso_a3)
-				nui = d3.select(this)
-				nui.attr("fill", nui.attr("fill"))
+				# country["starred_country(y/n)"] == "no"
+				# country = @stories.get(@story_selected).data.get(d.properties["iso_a3"])
+				d.is_discrete = true
 				if country
-					nui.classed("discret", country["starred_country(y/n)"] == "no")
-				else
-					nui.attr("fill")
+					d.is_discrete = country["starred_country(y/n)"]!= "yes"
+				return d.is_discrete
+			# .attr 'fill', (d) ->
+				# # star or unstar country
+				# country = countries.get(d.properties.iso_a3)
+				# nui = d3.select(this)
+				# nui.attr("fill", nui.attr("fill"))
+				# if country
+				# 	nui.classed("discret", country["starred_country(y/n)"] == "no")
+				# else
+				# 	nui.attr("fill")
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr 'fill', (d) -> # color countries using the color scale
 					country = countries.get(d.properties.iso_a3)
 					if country?
 					# 	# colorize country
-					# 	value = country["serie#{serie}"]
-					# 	color =  if value? then scale(value).hex() else undefined
+						value = country["serie#{serie}"]
+						color =  if value? then scale(value).hex() else undefined
 					else
 						color = d3.select(this).attr("fill")
 					d.color = color
 					return color
-				.attr "stroke", (d) ->
-					country = countries.get(d.properties.iso_a3)
-					if country
-						chroma(d.color).darker().hex() # border color
-					else
-						d3.select(this).attr("stroke")
+				# .attr "stroke", (d) ->
+				# 	country = countries.get(d.properties.iso_a3)
+				# 	if country
+				# 		chroma(d.color).darker().hex() # border color
+				# 	else
+				# 		d3.select(this).attr("stroke")
 				# zoom + move
 				.attr("transform", @computeZoom(@story_selected))
 		# tooltip
