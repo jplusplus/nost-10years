@@ -56,11 +56,11 @@ body:
 // BANNER
 .banner:
 	position            : absolute
-	max-width           : 500px
+	max-width           : 35%
 	top                 : 30px
 	right               : 30px 
-	background-color    : "rgba(0, 0, 0, 0.7)"
-	color               : white
+	background-color    : "rgba(255, 255, 255, 0.8)"
+	color               : black
 	padding             : 20px
 	box-shadow          : 2px 2px 10px rgb(46, 45, 45)
 	transition-duration : .25s
