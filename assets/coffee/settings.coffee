@@ -42,8 +42,6 @@ settings =
 		"n-ost_Project_2"  : {}
 		"n-ost_Project_3"  :
 			symbol   : "static/symbols/korruption-score.jpg"
-			zoom     : 1.4
-			center   : [19.020662, 42.583409]
 		"n-ost_Project_4"  :
 			symbol   : "static/symbols/landwirschaft.png"
 		"n-ost_Project_5b" : {}
