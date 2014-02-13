@@ -1,9 +1,12 @@
 // Style your life with CleverCSS
 
-MAP_COLOR        = #E74646
-MAP_STROKE       = #9f9f9f
-MAP_STROKE_WIDTH = .3px
-PANEL_STORY_COLOR = #FFD784
+MAP_COLOR           = #E74646
+MAP_STROKE          = #9f9f9f
+MAP_STROKE_WIDTH    = .1em
+MAP_UE_STROKE       = black
+MAP_UE_STROKE_WIDTH = .15em
+PANEL_STORY_COLOR   = #FFD784
+SUBPANEL_COLOR      = #FFFFFF
 
 .template:
 	display:none
@@ -28,13 +31,18 @@ body:
 		overflow: hidden
 		margin-bottom : 10px
 		box-shadow: 3px 0px 6px black
+		background-color: $SUBPANEL_COLOR
 		> .title:
 			background-color : #313131
 			color            : white
 			span.title:
 				padding-left     : 10px
 		.story:
-			padding:5px
+			background: url(../img/carre.png) no-repeat scroll 5px 8px $SUBPANEL_COLOR
+			padding: 0 0 0 20px
+			line-height: 24px
+			transition-property: background-color
+			transition-duration: .25s
 			&:hover:
 				background-color : $PANEL_STORY_COLOR
 				cursor           : pointer
@@ -95,8 +103,8 @@ body:
 			transition-duration: .75s
 			transition-property: fill, opacity
 			&.new-eu-country:
-				stroke-width:.1em
-				stroke:black
+				stroke-width:$MAP_UE_STROKE_WIDTH
+				stroke:$MAP_UE_STROKE
 		.discret:
 				opacity:.18
 				&:hover:
