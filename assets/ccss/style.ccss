@@ -99,6 +99,7 @@ body:
 			transition-property: fill, opacity
 			&.new-eu-country:
 				stroke-width:.1em
+				stroke:black
 		.discret:
 				opacity:.18
 				&:hover:
