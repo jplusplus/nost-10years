@@ -253,7 +253,7 @@ class Map
 				)
 				.attr "stroke", (d) ->
 					if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
-						return chroma(CONFIG.map_default_color).darker() # border color
+						return chroma(CONFIG.map_default_color).brighten() # border color
 					else
 						return CONFIG.non_eu_color
 				.classed "new-eu-country", (d) -> d.properties.iso_a3 in CONFIG.new_countries

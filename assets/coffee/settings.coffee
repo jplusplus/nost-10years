@@ -19,7 +19,7 @@ settings =
 		ratio             : .8
 		initial_center    : [23.247769, 50.117286] # lon/lat
 		symbol_scale      : [10, 60] # in pixel
-		map_default_color : "#A6E2FF"
+		map_default_color : "#003399"
 		non_eu_color      : "#D6D6D6"
 		color_scale       : "YlOrRd" # http://colrd.com/palette/19079/
 		# NOTE: Please excuse us to remove HRV (Croatie) from europe here. The topic is about the UE of 25.
