@@ -25,10 +25,11 @@ class Map
 		@stories        = stories
 		@ui             = $(".map")
 		@uis =
-			legend        : $(".legend       ", @ui)
-			scale         : $(".legend .scale", @ui)
-			title         : $(".legend .title", @ui)
-			switch_button : $(".switch"       , @ui)
+			legend        : $(".legend"        , @ui)
+			scale         : $(".legend .scale" , @ui)
+			title         : $(".legend .title" , @ui)
+			source        : $(".legend .source", @ui)
+			switch_button : $(".switch"        , @ui)
 
 		@relayout()
 
@@ -91,10 +92,10 @@ class Map
 		$("path") .qtip('destroy', true)
 		#reset the color if needed
 		@resetMapColor(reset_color) if reset_color
-		# remove legend
+		# remove legend, title and source
 		@uis.scale.html("")
-		# remove title
 		@uis.title.html("")
+		@uis.source.html("")
 		story  = @stories.get(@story_selected)
 		# select the right method
 		if story.infos.is_symbol
@@ -102,8 +103,9 @@ class Map
 		else
 			@groupSymbols.selectAll("image").remove()
 			@drawChoroplethMap(serie)
-		# show title
-		@showTitle()
+		# show title ans sources
+		@setTitle()
+		@setSource()
 
 	drawChoroplethMap: (serie=1) =>
 		countries = @stories.get(@story_selected).data
@@ -306,8 +308,17 @@ class Map
 								x:  10
 								y: -20
 		)(this)
-	showTitle : (title=null) =>
+
+	setTitle : (title=null) =>
 		@uis.title.html(title or @stories.get(@story_selected).infos["Legend text"])
+
+	setSource: (source_text=null, source_url=null) =>
+		if not source_text? and not source_url?
+			info = @stories.get(@story_selected).infos
+			source_text = info["Title of the source"]
+			source_url  = info["Url of the source"]
+		nui = $("<a />").attr("href", source_url).html(source_text)
+		@uis.source.html(nui)
 
 	showLegend : (scale) =>
 		that = this
