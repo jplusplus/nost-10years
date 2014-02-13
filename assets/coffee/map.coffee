@@ -65,12 +65,15 @@ class Map
 		@drawMap(@story_selected) if @story_selected?
 
 	onStorySelected : (e, story_key) =>
+		previous_story =  @stories.get(@story_selected)
 		# save the selected story
 		@story_selected = story_key
 		# update the map
-		@drawMap(story_key, serie=1, reset_color=true)
-		# update switch button
 		infos = @stories.get(@story_selected).infos
+		# don't reset color between 2 choropleth maps
+		reset_color = not (previous_story and not previous_story.infos.is_symbol and not infos.is_symbol)
+		@drawMap(story_key, serie=1, reset_color=reset_color)
+		# update switch button
 		if infos.Serie1? and infos.Serie2?
 			@uis.switch_button.find("label[for=serie1]").text(infos.Serie1)
 			@uis.switch_button.find("label[for=serie2]").text(infos.Serie2)
