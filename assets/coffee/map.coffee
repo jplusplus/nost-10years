@@ -46,6 +46,7 @@ class Map
 			.insert("svg" , ":first-child")
 			.attr("width" , @width)
 			.attr("height", @height)
+		@ui.css("width" , @width)
 
 		# Create projection
 		@projection = d3.geo.mercator()
