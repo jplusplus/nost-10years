@@ -6,7 +6,7 @@ MAP_STROKE_WIDTH    = .1em
 MAP_UE_STROKE       = black
 MAP_UE_STROKE_WIDTH = .15em
 PANEL_STORY_COLOR   = #FFD784
-SUBPANEL_COLOR      = #FFFFFF
+SUBPANEL_COLOR      = rgba(167, 166, 155, 0.72)
 
 .template:
 	display:none
@@ -26,19 +26,17 @@ body:
 .panel.stories:
 	margin-bottom  : -99999px
 	padding-bottom : 99999px
-	background-color : rgb(241, 237, 205)
+	background: url("../img/squared_metal.png")
 	.subpanel:
 		overflow: hidden
 		margin-bottom : 10px
-		box-shadow: 3px 0px 6px black
-		background-color: $SUBPANEL_COLOR
 		> .title:
 			background-color : #313131
 			color            : white
 			span.title:
 				padding-left     : 10px
 		.story:
-			background: url(../img/carre.png) no-repeat scroll 5px 8px $SUBPANEL_COLOR
+			background: "url(../img/carre.png) no-repeat scroll 5px 8px rgba(167, 166, 155, 0.6)"
 			padding: 0 0 0 20px
 			line-height: 24px
 			transition-property: background-color
@@ -46,11 +44,6 @@ body:
 			&:hover:
 				background-color : $PANEL_STORY_COLOR
 				cursor           : pointer
-				> .title:
-					background-color: #313131.darken(50%)
-				> .description:
-					padding-left: 10px
-					margin-right: -10px
 			&.active:
 				background-color : $PANEL_STORY_COLOR
 		.title:
