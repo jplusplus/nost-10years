@@ -26,8 +26,8 @@ class Navigation
 		q = queue()
 		q.defer(d3.json, "static/europe.topo.json")
 		for story of settings.stories
-			q.defer d3.csv,  "static/data/#{story}_Infos.csv"
-			q.defer d3.csv,  "static/data/#{story}_Data.csv", (d) ->
+			q.defer d3.csv,  "static/projects/#{story}_Infos.csv"
+			q.defer d3.csv,  "static/projects/#{story}_Data.csv", (d) ->
 				d.serie1 = parseFloat d.serie1
 				d.serie2 = parseFloat d.serie2
 				return d

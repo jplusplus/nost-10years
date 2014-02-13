@@ -31,7 +31,7 @@ settings =
 			"SUE" : [14.613085, 57.87023 ]
 
 	# NOTE: List all the stories
-	# key must be the prefix of the story file in static/data/
+	# key must be the prefix of the story file in static/projects/
 	# you can provide some properties like:
 	# 		center     : [lon, lat]
 	# 		zoom       : int(default=1)
