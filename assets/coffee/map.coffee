@@ -53,11 +53,10 @@ class Map
 			.center(CONFIG.initial_center)
 			.scale(@width * CONFIG.ratio)
 			.translate([@width/2, @height/2])
-
 		# Create the path
 		@path  = d3.geo.path().projection(@projection)
 		@group = @svg.append("g")
-		# Create the group of path and add graticule
+		# Create the group of path
 		@groupPaths   = @group.append("g").attr("class", "all-path")
 		@groupSymbols = @groupPaths.append("g").attr("class", "all-symbols")
 		@drawEuropeMap()
@@ -65,8 +64,11 @@ class Map
 		@drawMap(@story_selected) if @story_selected?
 
 	onStorySelected : (e, story_key) =>
+		# save the selected story
 		@story_selected = story_key
-		@drawMap(story_key)
+		# update the map
+		@drawMap(story_key, serie=1, reset_color=true)
+		# update switch button
 		infos = @stories.get(@story_selected).infos
 		if infos.Serie1? and infos.Serie2?
 			@uis.switch_button.find("label[for=serie1]").text(infos.Serie1)
@@ -83,11 +85,12 @@ class Map
 		serie  = parseInt(value.replace("serie", ""))
 		@drawMap(@story_selected, serie)
 
-	drawMap: (story_key, serie=1) =>
+	drawMap: (story_key, serie=1, reset_color=false) =>
 		# reset tooltip, destroy everything
 		$("image").qtip('destroy', true)
 		$("path") .qtip('destroy', true)
-		@drawEuropeMap()
+		#reset the color if needed
+		@resetMapColor(reset_color) if reset_color
 		# remove legend
 		@uis.scale.html("")
 		# remove title
@@ -120,18 +123,18 @@ class Map
 				if country
 					d.is_discrete = country["starred_country(y/n)"]!= "yes"
 				return d.is_discrete
-			.attr "stroke", (d) ->
-				# save the color to animate the filling
-				country = countries.get(d.properties.iso_a3)
-				if country?
-					value = country["serie#{serie}"]
-					color =  if value? then scale(value).hex() else undefined
-				else
-					color = d3.select(this).attr("fill")
-				d.color = color
-				return chroma(color).darker().hex()
 			.transition()
 				.duration(CONFIG.map_transition)
+				.attr "stroke", (d) ->
+					# save the color to animate the filling
+					country = countries.get(d.properties.iso_a3)
+					if country?
+						value = country["serie#{serie}"]
+						color =  if value? then scale(value).hex() else undefined
+					else
+						color = d3.select(this).attr("fill")
+					d.color = color
+					return chroma(color).darker().hex()
 				.attr 'fill', (d) -> # color countries using the color scale
 					country = countries.get(d.properties.iso_a3)
 					if country?
@@ -239,25 +242,38 @@ class Map
 		return
 
 	drawEuropeMap: =>
-		### Create every countries ###
+		###
+		Create every countries
+		Set a classe new-eu-country for new countries
+		Colorize them with 2 colors (UE countries or other)
+		Colorize the border
+		###
 		@groupPaths.selectAll("path")
 			.data(@map)
 			.enter()
 				.insert("path", ".all-symbols")
+				.classed("new-eu-country", (d) -> d.properties.iso_a3 in CONFIG.new_countries)
+			.attr("d", @path)
+		@resetMapColor()
+
+	resetMapColor: =>
+		###
+		Colorize them with 2 colors (UE countries or other)
+		Colorize the border
+		###
 		@groupPaths.selectAll("path")
-				.attr("d", @path)
-				.attr("fill"  , (d) -> 
-					if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
-						return CONFIG.map_default_color
-					else
-						return CONFIG.non_eu_color
-				)
-				.attr "stroke", (d) ->
-					if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
-						return chroma(CONFIG.map_default_color).brighten() # border color
-					else
-						return CONFIG.non_eu_color
-				.classed "new-eu-country", (d) -> d.properties.iso_a3 in CONFIG.new_countries
+			.transition().duration(0) # cancel the previous transition if exists
+			.attr("fill"  , (d) -> 
+				if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
+					return CONFIG.map_default_color
+				else
+					return CONFIG.non_eu_color
+			)
+			.attr "stroke", (d) ->
+				if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
+					return chroma(CONFIG.map_default_color).brighten() # border color
+				else
+					return CONFIG.non_eu_color
 
 	computeZoom: (story) =>
 		### Return the translation instruction as string ex: "translate(1,2)scale(1)"" ###
