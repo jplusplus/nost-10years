@@ -159,8 +159,8 @@ class Map
 		story     = @stories.get(@story_selected)
 		countries = story.data.values()
 		# keep only row with value to show
-		countries = countries.filter (c) ->
-			c["serie#{serie}"]? and not isNaN(c["serie#{serie}"])
+		# countries = countries.filter (c) ->
+		# 	c["serie#{serie}"]? and not isNaN(c["serie#{serie}"])
 		# scale
 		values = []
 		for country in countries
@@ -236,12 +236,11 @@ class Map
 					return that.computeZoom(that.story_selected)\# add the zoom transformation
 						# add the transformation to use the center of the picture as placed point
 						+ "translate(#{-scale(d["serie#{serie}"])/2}, #{-scale(d["serie#{serie}"])/2})"
-				.attr("width"  , (d) -> scale(d["serie#{serie}"]))
-				.attr("height" , (d) -> scale(d["serie#{serie}"]))
+				.attr("width"  , (d) -> if isNaN(d["serie#{serie}"]) then 0 else scale(d["serie#{serie}"]))
+				.attr("height" , (d) -> if isNaN(d["serie#{serie}"]) then 0 else scale(d["serie#{serie}"]))
 		# tooltip
 		@groupSymbols.selectAll("image").each(@tooltip(serie=serie))
 		@groupPaths.selectAll('path').each(@tooltip(serie=serie))
-		return
 
 	drawEuropeMap: =>
 		###
