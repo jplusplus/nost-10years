@@ -24,33 +24,30 @@ body:
 	margin-bottom  : -99999px
 	padding-bottom : 99999px
 	background-color : rgb(241, 237, 205)
-	.story:
+	.subpanel:
 		overflow: hidden
-		padding-bottom: 5px
 		margin-bottom : 10px
 		box-shadow: 3px 0px 6px black
-		&:hover:
-			background-color : $PANEL_STORY_COLOR
-			cursor           : pointer
-			> .title:
-				background-color: #313131.darken(50%)
-			> .description:
-				padding-left: 10px
-				margin-right: -10px
-		&.active:
-			background-color : $PANEL_STORY_COLOR
-			.title:
-				font-weight: bold
-				color: $PANEL_STORY_COLOR
 		> .title:
 			background-color : #313131
 			color            : white
 			span.title:
 				padding-left     : 10px
-		> .description:
-			transition-property: all
-			transition-duration: .25s
-			padding-left:5px
+		.story:
+			padding:5px
+			&:hover:
+				background-color : $PANEL_STORY_COLOR
+				cursor           : pointer
+				> .title:
+					background-color: #313131.darken(50%)
+				> .description:
+					padding-left: 10px
+					margin-right: -10px
+			&.active:
+				background-color : $PANEL_STORY_COLOR
+		.title:
+			font-size:1em
+			color: $PANEL_STORY_COLOR
 
 //--------------------------------------------
 // BANNER

@@ -23,9 +23,15 @@ class Panel
 			story_tmpl: $(".story.template", ".panel.stories")
 
 		# init the panel
-		@setStories(stories)
+		# NOTE: disable because the panel is now static.
+		# See templates/partials/panel.html
+		# @setStories(stories)
+
 		#bind events
 		$(document).on("storySelected", @onStorySelected)
+		@selectStories().on "click", (e) =>
+			story_key = $(e.currentTarget).attr('data-story')
+			@navigation.selectStory(story_key)
 
 	selectStories: => $(".story:not(.template)", @uis.panel)
 
@@ -35,10 +41,6 @@ class Panel
 		for item in stories.entries()
 			nui = @createStory(item.key, item.value)
 			@uis.panel.append(nui) # add to DOM
-		# bind events
-		@selectStories().on "click", (e) =>
-			story_key = $(e.currentTarget).attr('data-story')
-			@navigation.selectStory(story_key)
 
 	createStory: (key, story) =>
 		### Clone from a template a story item and fill out the field ###
