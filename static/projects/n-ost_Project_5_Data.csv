@@ -1,28 +1,28 @@
 Country ISO Code,Country name,serie1,serie2,"Append Sign (€,%, Mio, etc)",starred_country(y/n)
-BEL,Belgien,34,,%,yes
-BGR,Bulgarien,34,,%,yes
-DNK,Dänemark,23,,%,yes
-DEU,Deutschland,30,,%,yes
-EST,Estland,37,,%,yes
-FIN,Finnland,31,,%,yes
-FRA,Frankreich,39,,%,yes
-GRC,Griechenland,30,,%,yes
-GBR,Großbritannien,37,,%,yes
-IRL,Irland,39,,%,yes
-ITA,Italien,33,,%,yes
-LVA,Lettland,41,,%,yes
-LTU,Litauen,41,,%,yes
-LUX,Luxemburg,25,,%,yes
-MLT,Malta,23,,%,yes
-NLD,Niederlande,29,,%,yes
-AUT,Österreich,29,,%,yes
-POL,Polen,36,,%,yes
-PRT,Portugal,32,,%,yes
-ROU,Rumänien,32,,%,yes
-SWE,Schweden,31,,%,yes
-SVK,Slowakei,35,,%,yes
-SVN,Slowenien,35,,%,yes
-ESP,Spanien,34,,%,yes
-CZE,Tschechien,28,,%,yes
-HUN,Ungarn,36,,%,yes
-CYP,Zypern,13,,%,yes
+BEL,Belgien,318.9,,Tsd Tonnen,no
+BGR,Bulgarien,38.4,30.9,Tsd Tonnen,no
+DNK,Dänemark,32.1,18.7,Tsd Tonnen,no
+DEU,Deutschland,818,972.4,Tsd Tonnen,yes
+EST,Estland,0.7,1,Tsd Tonnen,no
+FIN,Finnland,2.8,4.8,Tsd Tonnen,no
+FRA,Frankreich,2123.1,1382.9,Tsd Tonnen,yes
+GRC,Griechenland,202.5,251,Tsd Tonnen,no
+GBR,Großbritannien,143.9,375,Tsd Tonnen,no
+IRL,Irland,,,,no
+ITA,Italien,1953.8,1939,Tsd Tonnen,yes
+LVA,Lettland,36.1,9.4,Tsd Tonnen,no
+LTU,Litauen,83.7,63.8,Tsd Tonnen,no
+LUX,Luxemburg,3.9,1.6,Tsd Tonnen,no
+MLT,Malta,0,0,Tsd Tonnen,no
+NLD,Niederlande,359,281,Tsd Tonnen,no
+AUT,Österreich,422.6,262.1,Tsd Tonnen,no
+POL,Polen,2427.8,2877,Tsd Tonnen,yes
+PRT,Portugal,285,220.8,Tsd Tonnen,no
+ROU,Rumänien,802,453.8,Tsd Tonnen,no
+SWE,Schweden,21.5,,Tsd Tonnen,no
+SVK,Slowakei,34.1,44.7,Tsd Tonnen,no
+SVN,Slowenien,101.6,55.3,Tsd Tonnen,no
+ESP,Spanien,888.1,481.5,Tsd Tonnen,yes
+CZE,Tschechien,144.2,118.7,Tsd Tonnen,no
+HUN,Ungarn,507.5,614,Tsd Tonnen,yes
+CYP,Zypern,9.5,7.3,Tsd Tonnen,no

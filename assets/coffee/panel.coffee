@@ -20,20 +20,18 @@ class Panel
 		@stories    = stories
 		@uis = 
 			panel     : $(".panel.stories")
-			story_tmpl: $(".story.template", ".panel.stories")
+			story_tmpl: $(".subpanel.template", ".panel.stories")
 
 		# init the panel
-		# NOTE: disable because the panel is now static.
-		# See templates/partials/panel.html
-		# @setStories(stories)
+		@setStories(stories)
 
 		#bind events
 		$(document).on("storySelected", @onStorySelected)
 		@selectStories().on "click", (e) =>
-			story_key = $(e.currentTarget).attr('data-story')
+			story_key = $(e.currentTarget).find('.story').attr('data-story')
 			@navigation.selectStory(story_key)
 
-	selectStories: => $(".story:not(.template)", @uis.panel)
+	selectStories: => $(".subpanel:not(.template)", @uis.panel)
 
 	setStories: (stories) =>
 		### reset the stories list ###
@@ -45,9 +43,8 @@ class Panel
 	createStory: (key, story) =>
 		### Clone from a template a story item and fill out the field ###
 		nui = @uis.story_tmpl.clone().removeClass("template")
-		nui.find("span.title")  .html(story.infos['Title of the tab'])
-		nui.find(".description").html(story.infos['Title'])
-		nui.attr("data-story",key)
+		nui.find(".title")  .html(story.infos['Title of the tab'])
+		nui.find(".story").html(story.infos['Title']).attr("data-story",key)
 		return nui
 
 	onStorySelected: (e, story) =>

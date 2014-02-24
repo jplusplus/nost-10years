@@ -1,6 +1,6 @@
 // Style your life with CleverCSS
 
-MAP_COLOR           = #E74646
+MAP_COLOR           = #D6D6D6
 MAP_STROKE          = #9f9f9f
 MAP_STROKE_WIDTH    = .1em
 MAP_UE_STROKE       = black
