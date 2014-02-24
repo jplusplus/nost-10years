@@ -94,7 +94,7 @@ class Map
 		$("image").qtip('destroy', true)
 		$("path") .qtip('destroy', true)
 		#reset the color if needed
-		@resetMapColor(reset_color) if reset_color
+		@resetMapColor() if reset_color
 		# remove legend, title and source
 		@uis.scale.html("")
 		@uis.title.html("")
@@ -145,7 +145,10 @@ class Map
 					if country?
 					# 	# colorize country
 						value = country["serie#{serie}"]
-						color =  if value? then scale(value).hex() else undefined
+						if value? and not isNaN(value)
+							color = scale(value).hex()
+						else # there is no data for this country
+							color = CONFIG.map_default_color
 					else
 						color = d3.select(this).attr("fill")
 					d.color = color
