@@ -167,7 +167,11 @@ class Map
 			values.push(country["serie1"])
 			values.push(country["serie2"])
 		values = values.filter((n) -> not isNaN(n))
-		range  = CONFIG.symbol_scale.slice() # copy the array to be able to reverse it just after if needed
+		if settings.stories[that.story_selected].symbol_scale?
+			# copy the array to be able to reverse it just after if needed
+			range  = settings.stories[that.story_selected].symbol_scale.slice() 
+		else
+			range  = CONFIG.symbol_scale.slice()
 		if settings.stories[that.story_selected].reverse_scale? and settings.stories[that.story_selected].reverse_scale
 			range = range.reverse()
 		scale  = d3.scale.linear()

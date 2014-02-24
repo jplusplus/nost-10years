@@ -47,6 +47,7 @@ settings =
 			symbol        : "static/symbols/landwirschaft.png"
 		"n-ost_Project_7"  :
 			symbol        : "static/symbols/zigaretten.png"
+			symbol_scale  : [20, 100]
 		"n-ost_Project_8"  : {}
 		"n-ost_Project_9b" : {}
 		"n-ost_Project_9"  : {}
