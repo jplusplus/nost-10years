@@ -27,8 +27,8 @@ class Panel
 
 		#bind events
 		$(document).on("storySelected", @onStorySelected)
-		@selectStories().on "click", (e) =>
-			story_key = $(e.currentTarget).find('.story').attr('data-story')
+		@selectStories().find('.story').on "click", (e) =>
+			story_key = $(e.currentTarget).attr('data-story')
 			@navigation.selectStory(story_key)
 
 	selectStories: => $(".subpanel:not(.template)", @uis.panel)

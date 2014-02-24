@@ -93,7 +93,7 @@ body:
 		stroke      : $MAP_STROKE
 		stroke-width: $MAP_STROKE_WIDTH
 		path:
-			transition-duration: .75s
+			transition-duration: .25s
 			transition-property: fill, opacity
 			&.new-eu-country:
 				stroke-width:$MAP_UE_STROKE_WIDTH
