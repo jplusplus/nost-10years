@@ -26,8 +26,8 @@ settings =
 		new_countries     : ["BGR","EST","LVA","LTU","POL","ROU","SVK","SVN","CZE","HUN"] # for larger border
 		countries_centers : d3.map # fix the symbol position for countries which are not well positioned by centroid
 			"FRA" : [2.462206 , 46.623965] # lon/lat
-			"FIN" : [25.072069, 61.177713]
-			"SUE" : [14.613085, 57.87023 ]
+			"FIN" : [25.045633, 60.221414]
+			"SWE" : [15.333719, 57.754753]
 
 	# NOTE: List all the stories
 	# key must be the prefix of the story file in static/projects/
