@@ -26,19 +26,19 @@ body:
 .panel.stories:
 	margin-bottom  : -99999px
 	padding-bottom : 99999px
-	background: url("../img/squared_metal.png")
+	background     : url("../img/squared_metal.png")
 	.subpanel:
-		overflow: hidden
+		overflow      : hidden
 		margin-bottom : 10px
 		> .title:
 			background-color : #313131
 			color            : white
 			span.title:
-				padding-left     : 10px
+				padding-left : 10px
 		.story:
-			background: "url(../img/carre.png) no-repeat scroll 5px 8px rgba(167, 166, 155, 0.6)"
-			padding: 0 0 0 20px
-			line-height: 24px
+			background         : "url(../img/carre.png) no-repeat scroll 5px 8px rgba(167, 166, 155, 0.6)"
+			padding            : 5px 0 0 20px
+			font-size          : .9em
 			transition-property: background-color
 			transition-duration: .25s
 			&:hover:
@@ -47,8 +47,8 @@ body:
 			&.active:
 				background-color : $PANEL_STORY_COLOR
 		.title:
-			font-size:1em
-			color: $PANEL_STORY_COLOR
+			font-size :1em
+			color     : $PANEL_STORY_COLOR
 
 //--------------------------------------------
 // BANNER
