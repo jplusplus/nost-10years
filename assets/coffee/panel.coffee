@@ -43,7 +43,7 @@ class Panel
 	createStory: (key, story) =>
 		### Clone from a template a story item and fill out the field ###
 		nui = @uis.story_tmpl.clone().removeClass("template")
-		nui.find(".title")  .html(story.infos['Title of the tab'])
+		nui.find(".title").html(nui.find(".title").html() + story.infos['Title of the tab'])
 		nui.find(".story").html(story.infos['Title']).attr("data-story",key)
 		return nui
 
