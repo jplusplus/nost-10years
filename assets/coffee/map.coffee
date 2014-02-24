@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 27-Jan-2014
-# Last mod : 11-Feb-2014
+# Last mod : 24-Feb-2014
 # -----------------------------------------------------------------------------
 #
 #    Europe MAP
@@ -161,18 +161,18 @@ class Map
 		that      = this
 		story     = @stories.get(@story_selected)
 		countries = story.data.values()
-		# keep only row with value to show
-		# countries = countries.filter (c) ->
-		# 	c["serie#{serie}"]? and not isNaN(c["serie#{serie}"])
 		# scale
 		values = []
 		for country in countries
 			values.push(country["serie1"])
 			values.push(country["serie2"])
 		values = values.filter((n) -> not isNaN(n))
+		range  = CONFIG.symbol_scale.slice() # copy the array to be able to reverse it just after if needed
+		if settings.stories[that.story_selected].reverse_scale? and settings.stories[that.story_selected].reverse_scale
+			range = range.reverse()
 		scale  = d3.scale.linear()
 			.domain([Math.min.apply(Math, values), Math.max.apply(Math, values)])
-			.range(CONFIG.symbol_scale)
+			.range(range)
 		# map
 		@groupPaths.selectAll('path')
 			.on "mouseover", (d) ->

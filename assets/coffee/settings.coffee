@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 11-Feb-2014
-# Last mod : 11-Feb-2014
+# Last mod : 24-Feb-2014
 # -----------------------------------------------------------------------------
 #
 #    SETTINGS
@@ -40,12 +40,13 @@ settings =
 		"n-ost_Project_1"  : {}
 		"n-ost_Project_2"  : {}
 		"n-ost_Project_3"  :
-			symbol   : "static/symbols/korruption-score.jpg"
+			symbol        : "static/symbols/korruption-score.jpg"
+			reverse_scale : true
 		"n-ost_Project_4"  : {}
 		"n-ost_Project_5"  :
-			symbol   : "static/symbols/landwirschaft.png"
+			symbol        : "static/symbols/landwirschaft.png"
 		"n-ost_Project_7"  :
-			symbol   : "static/symbols/zigaretten.png"
+			symbol        : "static/symbols/zigaretten.png"
 		"n-ost_Project_8"  : {}
 		"n-ost_Project_9b" : {}
 		"n-ost_Project_9"  : {}
