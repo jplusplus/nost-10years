@@ -48,7 +48,7 @@ class Panel
 		return nui
 
 	onStorySelected: (e, story) =>
-		@selectStories().each (i, nui) ->
+		@selectStories().find(".story").each (i, nui) ->
 			$(nui).toggleClass("active", $(nui).attr('data-story') == story)
 
 # EOF
