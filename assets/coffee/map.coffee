@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 27-Jan-2014
-# Last mod : 24-Feb-2014
+# Last mod : 25-Feb-2014
 # -----------------------------------------------------------------------------
 #
 #    Europe MAP
@@ -18,10 +18,11 @@ class Map
 	# Define default settings
 	CONFIG = settings.map
 
-	constructor: (navigation, map, stories) ->
+	constructor: (navigation, map, accessions, stories) ->
 		@story_selected = undefined
 		@navigation     = navigation
 		@map            = map
+		@accessions     = accessions
 		@stories        = stories
 		@ui             = $(".map")
 		@uis =
@@ -32,6 +33,15 @@ class Map
 			switch_button : $(".switch"        , @ui)
 
 		@relayout()
+
+		# tooltip for accession dates
+		that = this
+		@groupPaths.selectAll('path').each (d) ->
+			accession = that.accessions.get(d.properties.iso_a3)
+			if accession
+				params =
+					content : "#{accession['Country name']}<br/><strong>#{accession['date']}</strong>"
+				$(this).qtip _.defaults(params, CONFIG.tooltip_style)
 
 		#bind events
 		$(document).on("storySelected", @onStorySelected)
@@ -60,8 +70,9 @@ class Map
 		# Create the group of path
 		@groupPaths   = @group.append("g").attr("class", "all-path")
 		@groupSymbols = @groupPaths.append("g").attr("class", "all-symbols")
+		# draw the europe map
 		@drawEuropeMap()
-		# draw the map if a story is selected
+		# draw the choroplet or symbol map if a story is selected
 		@drawMap(@story_selected) if @story_selected?
 
 	onStorySelected : (e, story_key) =>
@@ -306,17 +317,9 @@ class Map
 				value        = if data? then data["serie#{serie}"]or "k. A." else ""
 				append       = if data? and value != "k. A." then data["Append Sign (€,%, Mio, etc)"] or "" else ""
 				if country_name
-					$(this).qtip
+					params =
 						content: "#{country_name}<br/><strong>#{value} #{append}</strong>"
-						style:
-							theme: 'qtip-dark'
-							tip:
-								corner: false
-						position:
-							target: 'mouse'
-							adjust:
-								x:  40
-								y: -20
+					$(this).qtip _.defaults(params, CONFIG.tooltip_style)
 		)(this)
 
 	setTitle : (title=null) =>

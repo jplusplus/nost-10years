@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 27-Jan-2014
-# Last mod : 24-Feb-2014
+# Last mod : 25-Feb-2014
 # -----------------------------------------------------------------------------
 #
 #    NAVIGATION
@@ -25,6 +25,7 @@ class Navigation
 	start: =>
 		q = queue()
 		q.defer(d3.json, "static/europe.topo.json")
+		q.defer(d3.csv, "static/join.csv")
 		for story of settings.stories
 			q.defer d3.csv,  "static/projects/#{story}_Infos.csv"
 			q.defer d3.csv,  "static/projects/#{story}_Data.csv", (d) ->
@@ -34,15 +35,18 @@ class Navigation
 		q.awaitAll(@loadedDataCallback)
 
 	loadedDataCallback: (error, results) =>
-		# get map data
+		# (1) get map data
 		map          = results[0]
 		geo_features = topojson.feature(map, map.objects.admin0).features
-		# get stories
+		# (2) get main map data
+		accessions = d3.map()
+		accessions.set(line["Country ISO Code"], line) for line in results[1]
+		# (3) get stories
 		@stories = d3.map()
-		results  = results.slice(1) # remove the map
+		results  = results.slice(2) # remove the map (1) and the main data (2)
 		for o, i in Array(results.length/2) # read the array 2 by 2 (infos and data)
-			infos     = results[i + i][ 0]
-			data      = results[i + i + 1]
+			infos     = results[i * 2][ 0]
+			data      = results[i * 2 + 1]
 			# data
 			infos.is_symbol = infos["Symbol map (Yes or No). If No, it's a Choropleth maps"].toLowerCase() == "yes"
 			# series
@@ -54,7 +58,7 @@ class Navigation
 				infos  : infos
 				data   : series
 		# instanciate widgets
-		@map    = new Map(this  , geo_features, @stories)
+		@map    = new Map(this  , geo_features, accessions, @stories)
 		@panel  = new Panel(this, @stories)
 		@banner = new Banner(this)
 

@@ -28,6 +28,17 @@ settings =
 			"FRA" : [2.462206 , 46.623965] # lon/lat
 			"FIN" : [25.045633, 60.221414]
 			"SWE" : [15.333719, 57.754753]
+		# Style for tooltip
+		tooltip_style :
+			style:
+				theme: 'qtip-dark'
+				tip:
+					corner: false
+			position:
+				target: 'mouse'
+				adjust:
+					x:  40
+					y: -20 
 
 	# NOTE: List all the stories
 	# key must be the prefix of the story file in static/projects/
