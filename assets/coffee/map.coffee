@@ -206,7 +206,6 @@ class Map
 				.attr("width"   , 0)
 				.attr("height"  , 0)
 				.attr("opacity" , 0)
-				.attr("image-rendering", "optimizeQuality")
 		@symbol.exit().remove()
 
 		get_symbol_position = (symbol_data) ->

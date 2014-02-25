@@ -97,8 +97,9 @@ body:
 	.all-path:
 		path:
 			stroke-width: $MAP_STROKE_WIDTH
-			transition-duration: .25s
+			transition-duration: .25s, .75s
 			transition-property: fill, opacity
+			transition-delay: 0, 1.2s
 			// &.new-eu-country:
 		.discret:
 				&:hover:
