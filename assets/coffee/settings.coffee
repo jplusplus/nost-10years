@@ -32,7 +32,8 @@ settings =
 		nb_buckets : 7 # number of buckets for choroplet map
 		# Style for tooltip
 		tooltip_style :
-			style:
+			style: # http://qtip2.com/options#style
+				classes : "qtip-dark qtip-tipsy"
 				tip:
 					corner: false
 			position:
