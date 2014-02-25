@@ -62,6 +62,11 @@ class Navigation
 		@panel  = new Panel(this, @stories)
 		@banner = new Banner(this)
 
+		# remove the loading class
+		setTimeout(-> 
+			$("body").removeClass("loading")
+		, 500)
+
 	selectStory: (story) =>
 		@selected_story = story
 		$(document).trigger("storySelected", story)

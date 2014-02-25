@@ -16,7 +16,7 @@
 settings = 
 	map :
 		map_transition    : 250 # ms
-		ratio             : .8
+		ratio             : .7
 		initial_center    : [23.247769, 50.117286] # lon/lat
 		symbol_scale      : [10, 60] # in pixel
 		map_default_color : "#003399"

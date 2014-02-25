@@ -5,7 +5,7 @@ MAP_STROKE          = #9f9f9f
 MAP_STROKE_WIDTH    = .1em
 MAP_UE_STROKE       = black
 MAP_UE_STROKE_WIDTH = .15em
-PANEL_STORY_COLOR   = #FFD784
+PANEL_STORY_COLOR   = white
 SUBPANEL_COLOR      = rgba(167, 166, 155, 0.72)
 
 .template:
@@ -22,34 +22,39 @@ body:
 	white-space: nowrap
 
 //--------------------------------------------
-// PANEL
-.panel.stories:
-	margin-bottom  : -99999px
-	padding-bottom : 99999px
-	background     : url("../img/squared_metal.png")
-	.subpanel:
-		overflow      : hidden
-		margin-bottom : 10px
-		> .title:
-			background-color : #313131
-			color            : white
-			span.title:
-				padding-left : 10px
-		.story:
-			background         : "url(../img/carre.png) no-repeat scroll 5px 8px rgba(167, 166, 155, 0.6)"
-			padding            : 5px 0 0 20px
-			font-size          : .9em
-			line-height        : 1.2em
-			transition-property: background-color
-			transition-duration: .25s
-			&:hover:
-				background-color : $PANEL_STORY_COLOR
-				cursor           : pointer
-			&.active:
-				background-color : $PANEL_STORY_COLOR
-		.title:
-			font-size :1em
-			color     : $PANEL_STORY_COLOR
+// PANELS
+.panel-left:
+	.stories:
+		margin-bottom  : -99999px
+		padding-bottom : 99999px
+		background     : url("../img/squared_metal.png")
+		.subpanel:
+			position      : relative
+			overflow      : hidden
+			margin-bottom : 10px
+			> .title:
+				background-color : #313131
+				color            : white
+				span.title:
+					padding-left : 10px
+			.story:
+				background         : "url(../img/carre.png) no-repeat scroll 5px 8px rgba(167, 166, 155, 0.6)"
+				padding            : 5px 0 0 20px
+				font-size          : .9em
+				line-height        : 1.2em
+				transition-property: background-color
+				transition-duration: .25s
+				&:hover:
+					background-color : $PANEL_STORY_COLOR
+					cursor           : pointer
+				&.active:
+					background-color : $PANEL_STORY_COLOR
+			.title:
+				font-size :1em
+				color     : $PANEL_STORY_COLOR
+
+.panel-right:
+	z-index : 4
 
 //--------------------------------------------
 // BANNER
@@ -62,8 +67,8 @@ body:
 	color               : black
 	padding             : 20px
 	box-shadow          : 2px 2px 10px rgb(46, 45, 45)
-	transition-duration : .25s
 	transition-property : all
+	transition-duration : .25s
 	transform-origin    : top right
 	&:hover, &.reduced:
 		cursor           : pointer
@@ -75,8 +80,8 @@ body:
 	> .title:
 		font-size: 1.5em
 	> .reduce, .increase:
-		transition-property : transform
-		transition-duration : .25s
+		//transition-property : transform
+		//transition-duration : .25s
 		position : absolute
 		margin   : 5px
 	> .reduce, > .increase:
@@ -85,10 +90,10 @@ body:
 //--------------------------------------------
 // MAP
 .map:
-	margin-left:0
-	box-shadow : "-6px 0px 9px -4px rgba(87, 73, 73, 0.7)"
+	margin-left     :0
+	box-shadow      : "-6px 0px 9px -4px rgba(87, 73, 73, 0.7)"
 	background-color: #F0EEEE
-	width: 100%
+	width           : 100%
 	.all-path:
 		fill        : $MAP_COLOR
 		stroke      : $MAP_STROKE
@@ -97,8 +102,10 @@ body:
 			transition-duration: .25s
 			transition-property: fill, opacity
 			&.new-eu-country:
-				stroke-width:$MAP_UE_STROKE_WIDTH
-				stroke:$MAP_UE_STROKE
+				fill        : $MAP_COLOR
+				stroke      : $MAP_STROKE
+				//stroke-width:$MAP_UE_STROKE_WIDTH
+				//stroke:$MAP_UE_STROKE
 		.discret:
 				opacity:.18
 				&:hover:
@@ -132,5 +139,50 @@ body:
 				border-left: 0
 	.source:
 		margin-top: 10px
+
+// Loader
+.subpanel:
+	transition-property: right
+	transition-duration: .75s
+	&:nth-child(1):
+		transition-delay: .25s
+	&:nth-child(2):
+		transition-delay: .35s
+	&:nth-child(3):
+		transition-delay: .45s
+	&:nth-child(4):
+		transition-delay: .55s
+	&:nth-child(5):
+		transition-delay: .65s
+	&:nth-child(6):
+		transition-delay: .75s
+	&:nth-child(7):
+		transition-delay: .85s
+	&:nth-child(8):
+		transition-delay: .95s
+	&:nth-child(9):
+		transition-delay: 1.15s
+	&:nth-child(10):
+		transition-delay: 1.25s
+	&:nth-child(11):
+		transition-delay: 1.35s
+	&:nth-child(12):
+		transition-delay: 1.45s
+	&:nth-child(13):
+		transition-delay: 1.55s
+	right: 0
+
+.all-path:
+	transition-property: opacity
+	transition-duration: .50s
+	opacity: 1
+
+.loading:
+	.subpanel:
+		right: -500px
+	.all-path:
+		opacity: 0
+	.banner:
+		top : -600px
 
 // EOF
