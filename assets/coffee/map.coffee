@@ -141,16 +141,6 @@ class Map
 				return d.is_discrete
 			.transition()
 				.duration(CONFIG.map_transition)
-				.attr "stroke", (d) ->
-					# save the color to animate the filling
-					country = countries.get(d.properties.iso_a3)
-					if country?
-						value = country["serie#{serie}"]
-						color =  if value? then scale(value).hex() else undefined
-					else
-						color = d3.select(this).attr("fill")
-					d.color = color
-					return chroma(color).darker().hex()
 				.attr 'fill', (d) -> # color countries using the color scale
 					country = countries.get(d.properties.iso_a3)
 					if country?
@@ -159,7 +149,7 @@ class Map
 						if value? and not isNaN(value)
 							color = scale(value).hex()
 						else # there is no data for this country
-							color = CONFIG.map_default_color
+							color = CONFIG.eu_color
 					else
 						color = d3.select(this).attr("fill")
 					d.color = color
@@ -287,14 +277,18 @@ class Map
 		@groupPaths.selectAll("path")
 			.transition().duration(0) # cancel the previous transition if exists
 			.attr("fill"  , (d) -> 
-				if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
-					return CONFIG.map_default_color
+				if d.properties["iso_a3"] in CONFIG.new_countries
+					return CONFIG.new_eu_color
+				else if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
+					return CONFIG.eu_color
 				else
 					return CONFIG.non_eu_color
 			)
 			.attr "stroke", (d) ->
-				if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
-					return chroma(CONFIG.map_default_color).brighten() # border color
+				if d.properties["iso_a3"] in CONFIG.new_countries
+					return chroma(CONFIG.new_eu_color).brighten() # border color
+				else if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
+					return chroma(CONFIG.eu_color).brighten() # border color
 				else
 					return CONFIG.non_eu_color
 

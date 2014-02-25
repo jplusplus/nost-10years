@@ -19,11 +19,12 @@ settings =
 		ratio             : .7
 		initial_center    : [23.247769, 50.117286] # lon/lat
 		symbol_scale      : [10, 60] # in pixel
-		map_default_color : "#003399"
+		eu_color          : "#517FDD"
+		new_eu_color      : "#003399"
 		non_eu_color      : "#D6D6D6" #put the same value in style.ccss for $MAP_COLOR
 		color_scale       : "YlOrRd" # http://colrd.com/palette/19079/
 		eu_countries      : ["DEU", "AUT", "HRV", "BEL", "BGR", "CYP", "DNK", "ESP", "EST", "FIN", "FRA", "GRC", "HUN", "IRL", "ITA", "LVA", "LTU", "MLT", "LUX", "NLD", "POL", "PRT", "CZE", "ROU", "GBR", "SVK", "SVN", "SWE"]
-		new_countries     : ["BGR","EST","LVA","LTU","POL","ROU","SVK","SVN","CZE","HUN"] # for larger border
+		new_countries     : ["BGR","HRV","EST","LVA","LTU","POL","ROU","SVK","SVN","CZE","HUN"] # for larger border
 		countries_centers : d3.map # fix the symbol position for countries which are not well positioned by centroid
 			"FRA" : [2.462206 , 46.623965] # lon/lat
 			"FIN" : [25.045633, 60.221414]
@@ -32,14 +33,13 @@ settings =
 		# Style for tooltip
 		tooltip_style :
 			style:
-				theme: 'qtip-dark'
 				tip:
 					corner: false
 			position:
 				target: 'mouse'
 				adjust:
 					x:  40
-					y: -20 
+					y: -10 
 
 	# NOTE: List all the stories
 	# key must be the prefix of the story file in static/projects/

@@ -95,17 +95,11 @@ body:
 	background-color: #F0EEEE
 	width           : 100%
 	.all-path:
-		fill        : $MAP_COLOR
-		stroke      : $MAP_STROKE
-		stroke-width: $MAP_STROKE_WIDTH
 		path:
+			stroke-width: $MAP_STROKE_WIDTH
 			transition-duration: .25s
 			transition-property: fill, opacity
-			&.new-eu-country:
-				fill        : $MAP_COLOR
-				stroke      : $MAP_STROKE
-				//stroke-width:$MAP_UE_STROKE_WIDTH
-				//stroke:$MAP_UE_STROKE
+			// &.new-eu-country:
 		.discret:
 				opacity:.18
 				&:hover:
