@@ -28,6 +28,7 @@ settings =
 			"FRA" : [2.462206 , 46.623965] # lon/lat
 			"FIN" : [25.045633, 60.221414]
 			"SWE" : [15.333719, 57.754753]
+		nb_buckets : 7 # number of buckets for choroplet map
 		# Style for tooltip
 		tooltip_style :
 			style:
