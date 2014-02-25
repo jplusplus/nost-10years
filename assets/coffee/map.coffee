@@ -378,9 +378,13 @@ class Map
 				$step.hover ((e) ->
 					step_color = chroma.color($(e.target).css("background-color")).hex()
 					opacity    = (path) -> if path.color == step_color then 1 else .2
-					that.groupPaths.selectAll("path").attr("opacity", opacity)
+					that.groupPaths.selectAll("path")
+						.attr("opacity", opacity)
+						.classed("discret", false)
 				), ->
-					that.groupPaths.selectAll("path").attr("opacity", 1)
+					that.groupPaths.selectAll("path")
+						.attr("opacity", 1)
+						.classed("discret", (d) -> d.is_discrete)
 				that.uis.scale.append $step
 				offset += size
 
