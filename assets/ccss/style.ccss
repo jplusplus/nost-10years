@@ -101,9 +101,9 @@ body:
 			transition-property: fill, opacity
 			// &.new-eu-country:
 		.discret:
-				opacity:.18
 				&:hover:
 					opacity:1
+				opacity: .3
 	.switch:
 		position :absolute
 		bottom   : 0px
