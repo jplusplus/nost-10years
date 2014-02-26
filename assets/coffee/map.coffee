@@ -326,10 +326,11 @@ class Map
 			info = @stories.get(@story_selected).infos
 			source_text = info["Title of the source"]
 			source_url  = info["Url of the source"]
+		nui = $("<span />").html("Quelle : ")
 		if source_url
-			nui = $("<a target=\"_blank\" />").attr("href", source_url).html(source_text)
+			nui.append($("<a target=\"_blank\" />").attr("href", source_url).html(source_text))
 		else
-			nui = $("<span />").html(source_text)
+			nui.append($("<span />").html(source_text))
 		@uis.source.html(nui)
 
 	showLegend : (scale) =>
