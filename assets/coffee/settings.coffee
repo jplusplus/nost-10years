@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 11-Feb-2014
-# Last mod : 24-Feb-2014
+# Last mod : 26-Feb-2014
 # -----------------------------------------------------------------------------
 #
 #    SETTINGS
@@ -29,7 +29,7 @@ settings =
 			"FRA" : [2.462206 , 46.623965] # lon/lat
 			"FIN" : [25.045633, 60.221414]
 			"SWE" : [15.333719, 57.754753]
-		nb_buckets : 7 # number of buckets for choroplet map
+		nb_buckets : 6 # number of buckets for choroplet map
 		# Style for tooltip
 		tooltip_style :
 			style: # http://qtip2.com/options#style
@@ -45,10 +45,11 @@ settings =
 	# NOTE: List all the stories
 	# key must be the prefix of the story file in static/projects/
 	# you can provide some properties like:
-	# 		center     : [lon, lat]
-	# 		zoom       : int(default=1)
-	# 		scale_type : log|quantiles|k-means|linear(default)
-	# 		symbol     : path to symbol image file
+	# 		center       : [lon, lat]
+	# 		zoom         : int(default=1)
+	# 		scale_type   : log|quantiles|k-means|linear(default)
+	# 		symbol       : path to symbol image file
+	#       symbol_scale : range for symbols sizes [min, max] (default : value of settings.map.symbol_scale)
 	stories :
 		"n-ost_Project_1"  : {}
 		"n-ost_Project_2"  : {}
