@@ -63,7 +63,7 @@ settings =
 			nb_buckets : 4
 		"n-ost_Project_2"  : {}
 		"n-ost_Project_3"  :
-			symbol         : "static/symbols/korruption-score.jpg"
+			symbol         : "static/symbols/n-ost_Project_3_icon.png"
 			reverse_scale  : true
 		"n-ost_Project_4"  : {}
 		"n-ost_Project_5"  :
@@ -71,7 +71,8 @@ settings =
 		"n-ost_Project_7"  :
 			symbol         : "static/symbols/zigaretten.png"
 			symbol_scale   : [20, 100]
-		"n-ost_Project_8"  : {}
+		"n-ost_Project_8"  :
+			symbol         : "static/symbols/n-ost_Project_8_icon.png"
 		"n-ost_Project_9b" : {}
 		"n-ost_Project_9"  : {}
 
