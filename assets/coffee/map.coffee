@@ -32,7 +32,28 @@ class Map
 			source        : $(".legend .source", @ui)
 			switch_button : $(".switch"        , @ui)
 
+		# create elements
+		@svg = d3.select(".map")
+			.insert("svg" , ":first-child")
+		@svg.append("defs") # adding a pattern for stripped.png
+			.append('pattern')
+				.attr('id', 'stripped')
+				.attr('patternUnits', 'userSpaceOnUse')
+				.attr('width', 9)
+				.attr('height', 9)
+				.append("image")
+					.attr("xlink:href", "static/img/stripped.png")
+					.attr('width', 9)
+					.attr('height', 9)
+		@group        = @svg.append("g")
+		@groupPaths   = @group.append("g").attr("class", "all-path")
+		@groupSymbols = @groupPaths.append("g").attr("class", "all-symbols")
+
+		# draw the europe map
+		@drawEuropeMap()
+		# relayout with the current size
 		@relayout()
+		@resetMapColor()
 
 		# tooltip for accession dates
 		that = this
@@ -52,11 +73,10 @@ class Map
 		# Create svg tag
 		@width  = $(window).width() - $(".map").offset().left
 		@height = $(window).height()
-		d3.select(".map svg").remove()
-		@svg = d3.select(".map")
-			.insert("svg" , ":first-child")
+		@svg
 			.attr("width" , @width)
 			.attr("height", @height)
+
 		@ui.css("width" , @width)
 
 		# Create projection
@@ -66,12 +86,7 @@ class Map
 			.translate([@width/2, @height/2])
 		# Create the path
 		@path  = d3.geo.path().projection(@projection)
-		@group = @svg.append("g")
-		# Create the group of path
-		@groupPaths   = @group.append("g").attr("class", "all-path")
-		@groupSymbols = @groupPaths.append("g").attr("class", "all-symbols")
-		# draw the europe map
-		@drawEuropeMap()
+		@groupPaths.selectAll("path").attr("d", @path)
 		# draw the choroplet or symbol map if a story is selected
 		@drawMap(@story_selected) if @story_selected?
 
@@ -101,6 +116,7 @@ class Map
 		@drawMap(@story_selected, serie)
 
 	drawMap: (story_key, serie=1, reset_color=false) =>
+		that = this
 		# reset tooltip, destroy everything
 		$("image").qtip('destroy', true)
 		$("path") .qtip('destroy', true)
@@ -111,12 +127,29 @@ class Map
 		@uis.title.html("")
 		@uis.source.html("")
 		story  = @stories.get(@story_selected)
-		# select the right method
+		# set the discret countries
+		@groupPaths.selectAll('path')
+			.classed "discret", (d) ->
+				country = that.stories.get(that.story_selected).data.get(d.properties.iso_a3)
+				d.is_discrete = true
+				if country
+					d.is_discrete = country["starred_country(y/n)"]!= "yes"
+				return d.is_discrete
+		# select the right rendering method
 		if story.infos.is_symbol
 			@drawSymbolMap(serie)
 		else
 			@groupSymbols.selectAll("image").remove()
 			@drawChoroplethMap(serie)
+		# color borders
+		@groupPaths.selectAll('path')
+			.attr "stroke", (d) ->
+				color = d.color
+				try
+					stroke = if chroma.luminance(color) > .5 then "black" else "white"
+				catch e
+					stroke = "black"
+				return stroke
 		# show title ans sources
 		@setTitle()
 		@setSource()
@@ -135,12 +168,6 @@ class Map
 		scale  = chroma.scale(CONFIG.color_scale).domain(domain, nb_buckets, scale_type)
 		 # zoom + move + color animation
 		@groupPaths.selectAll('path')
-			.classed "discret", (d) ->
-				country = countries.get(d.properties.iso_a3)
-				d.is_discrete = true
-				if country
-					d.is_discrete = country["starred_country(y/n)"]!= "yes"
-				return d.is_discrete
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr 'fill', (d) -> # color countries using the color scale
@@ -152,6 +179,7 @@ class Map
 							color = scale(value).hex()
 						else # there is no data for this country
 							color = CONFIG.eu_color
+							color = "url(#stripped)"
 					else
 						color = d3.select(this).attr("fill")
 					d.color = color
@@ -191,16 +219,9 @@ class Map
 			.on "mouseout",  (d) ->
 				nui_symb = that.groupSymbols.selectAll("image").filter((s) -> s["Country ISO Code"] == d.properties["iso_a3"])
 				nui_symb.classed("discret", d.is_discrete)
-			.classed "discret", (d) =>
-				country = @stories.get(@story_selected).data.get(d.properties["iso_a3"])
-				d.is_discrete = true
-				if country
-					d.is_discrete = country["starred_country(y/n)"]!= "yes"
-				return d.is_discrete
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr("transform", @computeZoom(@story_selected))
-
 		#  init symbols: image link, position ...
 		@symbol = @groupSymbols.selectAll("image").data(countries)
 		@symbol.enter()
@@ -267,8 +288,6 @@ class Map
 			.enter()
 				.insert("path", ".all-symbols")
 				.classed("new-eu-country", (d) -> d.properties.iso_a3 in CONFIG.new_countries)
-			.attr("d", @path)
-		@resetMapColor()
 
 	resetMapColor: =>
 		###

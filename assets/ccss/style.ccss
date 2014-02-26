@@ -90,14 +90,15 @@ body:
 //--------------------------------------------
 // MAP
 .map:
+	cursor: crosshair
 	margin-left     :0
 	box-shadow      : "-6px 0px 9px -4px rgba(87, 73, 73, 0.7)"
 	background-color: #F0EEEE
 	width           : 100%
 	.all-path:
-		path:
-			stroke-width: $MAP_STROKE_WIDTH
-			stroke : $MAP_STROKE
+		stroke-width: $MAP_STROKE_WIDTH
+		stroke : $MAP_STROKE
+		//path:
 			// &.new-eu-country:
 		.discret:
 				&:hover:
