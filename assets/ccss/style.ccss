@@ -113,6 +113,8 @@ body:
 	right      : 0
 	text-align : right
 	max-width  : 300px
+	.title:
+		text-align: left
 	.scale:
 		.step:
 			display : inline-block
