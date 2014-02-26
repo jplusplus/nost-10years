@@ -130,7 +130,9 @@ class Map
 			values.push(country["serie2"])
 		values =values.filter((d) -> d? and not isNaN(d))
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
-		scale  = chroma.scale(CONFIG.color_scale).domain(domain, CONFIG.nb_buckets, settings.stories[@story_selected]['scale_type'])
+		nb_buckets = settings.stories[@story_selected].nb_buckets or CONFIG.nb_buckets
+		scale_type = settings.stories[@story_selected]['scale_type']
+		scale  = chroma.scale(CONFIG.color_scale).domain(domain, nb_buckets, scale_type)
 		 # zoom + move + color animation
 		@groupPaths.selectAll('path')
 			.classed "discret", (d) ->

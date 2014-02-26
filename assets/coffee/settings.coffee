@@ -45,13 +45,22 @@ settings =
 	# NOTE: List all the stories
 	# key must be the prefix of the story file in static/projects/
 	# you can provide some properties like:
-	# 		center       : [lon, lat]
-	# 		zoom         : int(default=1)
-	# 		scale_type   : log|quantiles|k-means|linear(default)
-	# 		symbol       : path to symbol image file
-	#       symbol_scale : range for symbols sizes [min, max] (default : value of settings.map.symbol_scale)
+	#
+	# * GENERAL
+	#   - center       : [lon, lat]
+	#   - zoom         : int(default=1)
+	#
+	# * CHOROPLETH MAP
+	#   - scale_type   : log|quantiles|k-means|linear(default)
+	#   - nb_buckets   : int (default : value of settings.map.nb_buckets)
+	#
+	# * SYMBOLS MAP
+	#   - symbol       : path to symbol image file
+	#   - symbol_scale : range for symbols sizes [min, max] (default : value of settings.map.symbol_scale)
+	#
 	stories :
-		"n-ost_Project_1"  : {}
+		"n-ost_Project_1"  :
+			nb_buckets : 4
 		"n-ost_Project_2"  : {}
 		"n-ost_Project_3"  :
 			symbol         : "static/symbols/korruption-score.jpg"
