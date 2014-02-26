@@ -42,7 +42,7 @@ class Map
 				.attr('width', 9)
 				.attr('height', 9)
 				.append("image")
-					.attr("xlink:href", "static/img/stripped.png")
+					.attr("xlink:href", CONFIG.stripped_image)
 					.attr('width', 9)
 					.attr('height', 9)
 		@group        = @svg.append("g")
@@ -169,8 +169,15 @@ class Map
 		nb_buckets = settings.stories[@story_selected].nb_buckets or CONFIG.nb_buckets
 		scale_type = settings.stories[@story_selected]['scale_type']
 		scale  = chroma.scale(CONFIG.color_scale).domain(domain, nb_buckets, scale_type)
-		 # zoom + move + color animation
+		# zoom + move + color animation
+		stripped_tag = "url(#stripped)"
 		@groupPaths.selectAll('path')
+			# init the color if there is not for the transition. Otherwise it's black by default.
+			.attr "fill", (d) ->
+				if d.color == stripped_tag
+					return "white"
+				else
+					return d3.select(this).attr("fill")
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr 'fill', (d) -> # color countries using the color scale
@@ -182,7 +189,7 @@ class Map
 							color = scale(value).hex()
 						else # there is no data for this country
 							color = CONFIG.eu_color
-							color = "url(#stripped)"
+							color = stripped_tag
 					else
 						color = d3.select(this).attr("fill")
 					d.color = color

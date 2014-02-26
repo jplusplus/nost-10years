@@ -1,6 +1,6 @@
 // Style your life with CleverCSS
 
-MAP_COLOR           = #D6D6D6
+MAP_COLOR           = #d6d6d6
 MAP_STROKE          = #E3E3E3
 MAP_STROKE_WIDTH    = .06em
 MAP_UE_STROKE       = black
@@ -90,16 +90,14 @@ body:
 //--------------------------------------------
 // MAP
 .map:
-	cursor: crosshair
 	margin-left     :0
 	box-shadow      : "-6px 0px 9px -4px rgba(87, 73, 73, 0.7)"
 	background-color: #F0EEEE
 	width           : 100%
 	.all-path:
-		stroke-width: $MAP_STROKE_WIDTH
-		stroke : $MAP_STROKE
-		//path:
-			// &.new-eu-country:
+		fill         : $MAP_COLOR
+		stroke-width : $MAP_STROKE_WIDTH
+		stroke       : $MAP_STROKE
 		.discret:
 				&:hover:
 					opacity:1
