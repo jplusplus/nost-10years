@@ -275,6 +275,7 @@ class Map
 					.classed("discret", (p) -> p.is_discrete)
 			.transition()
 				.duration(CONFIG.map_transition)
+				.delay( (d, i) -> i * 25) # one by one animation
 				.attr("opacity", 1)
 				.attr "transform", (d)->
 					return that.computeZoom(that.story_selected)\# add the zoom transformation
