@@ -1,8 +1,8 @@
 // Style your life with CleverCSS
 
 MAP_COLOR           = #D6D6D6
-MAP_STROKE          = #9f9f9f
-MAP_STROKE_WIDTH    = .1em
+MAP_STROKE          = #E3E3E3
+MAP_STROKE_WIDTH    = .06em
 MAP_UE_STROKE       = black
 MAP_UE_STROKE_WIDTH = .15em
 PANEL_STORY_COLOR   = white
@@ -97,6 +97,7 @@ body:
 	.all-path:
 		path:
 			stroke-width: $MAP_STROKE_WIDTH
+			stroke : $MAP_STROKE
 			// &.new-eu-country:
 		.discret:
 				&:hover:

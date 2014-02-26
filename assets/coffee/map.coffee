@@ -285,13 +285,14 @@ class Map
 				else
 					return CONFIG.non_eu_color
 			)
-			.attr "stroke", (d) ->
-				if d.properties["iso_a3"] in CONFIG.new_countries
-					return chroma(CONFIG.new_eu_color).brighten() # border color
-				else if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
-					return chroma(CONFIG.eu_color).brighten() # border color
-				else
-					return CONFIG.non_eu_color
+			# NOTE: disable to have the same border everywhere
+			# .attr "stroke", (d) ->
+			# 	if d.properties["iso_a3"] in CONFIG.new_countries
+			# 		return chroma(CONFIG.new_eu_color).brighten() # border color
+			# 	else if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
+			# 		return chroma(CONFIG.eu_color).brighten() # border color
+			# 	else
+			# 		return CONFIG.non_eu_color
 
 	computeZoom: (story) =>
 		### Return the translation instruction as string ex: "translate(1,2)scale(1)"" ###
@@ -325,7 +326,10 @@ class Map
 			info = @stories.get(@story_selected).infos
 			source_text = info["Title of the source"]
 			source_url  = info["Url of the source"]
-		nui = $("<a />").attr("href", source_url).html(source_text)
+		if source_url
+			nui = $("<a target=\"_blank\" />").attr("href", source_url).html(source_text)
+		else
+			nui = $("<span />").html(source_text)
 		@uis.source.html(nui)
 
 	showLegend : (scale) =>
