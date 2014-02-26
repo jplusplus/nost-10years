@@ -21,7 +21,7 @@ settings =
 		symbol_scale      : [10, 60] # in pixel
 		eu_color          : "#517FDD"
 		new_eu_color      : "#003399"
-		non_eu_color      : "#D6D6D6" #put the same value in style.ccss for $MAP_COLOR
+		non_eu_color      : "#d6d6d6" #put the same value in style.ccss for $MAP_COLOR
 		color_scale       : "YlOrRd" # http://colrd.com/palette/19079/
 		eu_countries      : ["DEU", "AUT", "HRV", "BEL", "BGR", "CYP", "DNK", "ESP", "EST", "FIN", "FRA", "GRC", "HUN", "IRL", "ITA", "LVA", "LTU", "MLT", "LUX", "NLD", "POL", "PRT", "CZE", "ROU", "GBR", "SVK", "SVN", "SWE"]
 		new_countries     : ["BGR","HRV","EST","LVA","LTU","POL","ROU","SVK","SVN","CZE","HUN"] # for larger border

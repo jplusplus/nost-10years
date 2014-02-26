@@ -145,10 +145,13 @@ class Map
 		@groupPaths.selectAll('path')
 			.attr "stroke", (d) ->
 				color = d.color
-				try
-					stroke = if chroma.luminance(color) > .5 then "black" else "white"
-				catch e
-					stroke = "black"
+				if color == CONFIG.non_eu_color
+					stroke = "white"
+				else
+					try
+						stroke = if chroma.luminance(color) > .5 then "black" else "white"
+					catch e
+						stroke = "black"
 				return stroke
 		# show title ans sources
 		@setTitle()
