@@ -16,7 +16,6 @@
 settings = 
 	map :
 		map_transition    : 750 # ms
-		ratio             : .7
 		europe_bounds     : [[-11.09,33.64],[35.01,61.6]] # [[lon/lat],[lon/lat]]
 		symbol_scale      : [10, 60] # in pixel
 		stripped_image    : "static/img/stripped.png"
