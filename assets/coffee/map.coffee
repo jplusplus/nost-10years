@@ -81,9 +81,16 @@ class Map
 
 		# Create projection
 		@projection = d3.geo.mercator()
-			.center(CONFIG.initial_center)
-			.scale(@width * CONFIG.ratio)
-			.translate([@width/2, @height/2])
+			.scale(1)
+			.translate([0,0])
+		bounds = [[-11.09,35.09],[34.49,61.6]]
+		b = [@projection(bounds[0]), @projection(bounds[1])]
+		s = .95 / Math.min((b[1][0] - b[0][0]) / @width, (b[1][1] - b[0][1]) / @height)
+		s = Math.abs(s)
+		t = [-s * b[0][0], (@height - s * (b[1][1] + b[0][1])) / 2]
+		@projection
+			.scale(s)
+			.translate(t)
 		# Create the path
 		@path  = d3.geo.path().projection(@projection)
 		@groupPaths.selectAll("path").attr("d", @path)
@@ -309,11 +316,13 @@ class Map
 			.transition().duration(0) # cancel the previous transition if exists
 			.attr("fill"  , (d) -> 
 				if d.properties["iso_a3"] in CONFIG.new_countries
-					return CONFIG.new_eu_color
+					color = CONFIG.new_eu_color
 				else if d.properties["iso_a3"] in CONFIG.eu_countries # if in EU
-					return CONFIG.eu_color
+					color = CONFIG.eu_color
 				else
-					return CONFIG.non_eu_color
+					color = CONFIG.non_eu_color
+				d.color = color
+				return color
 			)
 			# NOTE: disable to have the same border everywhere
 			# .attr "stroke", (d) ->
@@ -327,11 +336,13 @@ class Map
 	computeZoom: (story) =>
 		### Return the translation instruction as string ex: "translate(1,2)scale(1)"" ###
 		scale          = settings.stories[story].zoom or 1
-		center         = @projection(settings.stories[story].center or CONFIG.initial_center)
+		center         = @projection(settings.stories[story].center or [0,0])
 		offset_x       = - (center[0] * scale - @width  / 2)
 		offset_y       = - (center[1] * scale - @height / 2)
 		transformation = "translate(#{offset_x},#{offset_y})scale(#{scale})"
-		return transformation
+		# return transformation
+		# FIXME : doesn't work since relayout compute the scale dynamically
+		return ""
 
 	tooltip: (serie) =>
 		### use the @story_selected to create tooltip depending of the given serie ###
