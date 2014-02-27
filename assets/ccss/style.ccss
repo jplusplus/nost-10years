@@ -1,13 +1,8 @@
 // Style your life with CleverCSS
 
-MAP_COLOR           = #d6d6d6
-MAP_STROKE          = #E3E3E3
-MAP_STROKE_WIDTH    = .06em
-MAP_UE_STROKE       = black
-MAP_UE_STROKE_WIDTH = .15em
-PANEL_STORY_COLOR   = white
-SUBPANEL_COLOR      = rgba(167, 166, 155, 0.72)
-
+PANEL_STORY_COLOR    = white
+SUBPANEL_COLOR       = rgba(167, 166, 155, 0.72)
+MAP_BACKGROUND_COLOR = #F1F1F1
 .template:
 	display:none
 
@@ -92,12 +87,9 @@ body:
 .map:
 	margin-left     :0
 	box-shadow      : "-6px 0px 9px -4px rgba(87, 73, 73, 0.7)"
-	background-color: #F0EEEE
+	background-color: $MAP_BACKGROUND_COLOR
 	width           : 100%
 	.all-path:
-		fill         : $MAP_COLOR
-		stroke-width : $MAP_STROKE_WIDTH
-		stroke       : $MAP_STROKE
 		.discret:
 				&:hover:
 					opacity:1

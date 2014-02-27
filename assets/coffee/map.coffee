@@ -146,12 +146,12 @@ class Map
 			.attr "stroke", (d) ->
 				color = d.color
 				if color == CONFIG.non_eu_color
-					stroke = "white"
+					stroke = CONFIG.stroke_light
 				else
 					try
-						stroke = if chroma.luminance(color) > .5 then "black" else "white"
+						stroke = if chroma.luminance(color) > .5 then CONFIG.stroke_dark else CONFIG.stroke_light
 					catch e
-						stroke = "black"
+						stroke = CONFIG.stroke_dark
 				return stroke
 		# show title ans sources
 		@setTitle()
