@@ -83,7 +83,7 @@ class Map
 		@projection = d3.geo.mercator()
 			.scale(1)
 			.translate([0,0])
-		bounds = [[-11.09,35.09],[34.49,61.6]]
+		bounds = CONFIG.europe_bounds
 		b = [@projection(bounds[0]), @projection(bounds[1])]
 		s = .95 / Math.min((b[1][0] - b[0][0]) / @width, (b[1][1] - b[0][1]) / @height)
 		s = Math.abs(s)
