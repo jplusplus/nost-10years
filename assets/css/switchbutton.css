@@ -6,7 +6,7 @@
   font-family: 'Lucida Grande', Verdana, sans-serif;
   position: relative;
   height: 26px;
-  width: 120px;
+  width: auto;
   margin: 20px auto;
   background: rgba(0, 0, 0, 0.25);
   border-radius: 3px;
@@ -18,7 +18,7 @@
   position: relative;
   z-index: 2;
   float: left;
-  width: 58px;
+  width:50%;
   line-height: 26px;
   font-size: 11px;
   color: rgba(255, 255, 255, 0.35);
@@ -31,16 +31,19 @@
 }
 
 .switch-label-off {
-  padding-left: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .switch-label-on {
-  padding-right: 2px;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 
 
 .switch-input {
   display: none;
+  left:0%;
 }
 .switch-input:checked + .switch-label {
   font-weight: bold;
@@ -58,7 +61,7 @@
   transition-property: color, text-shadow;
 }
 .switch-input:checked + .switch-label-on ~ .switch-selection {
-  left: 60px;
+  left: 50%;
   /* Note: left: 50%; doesn't transition in WebKit */
 }
 
@@ -68,7 +71,7 @@
   top: 2px;
   left: 2px;
   display: block;
-  width: 58px;
+  width: 50%;
   height: 22px;
   border-radius: 3px;
   background-color: #65bd63;
