@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 27-Jan-2014
-# Last mod : 25-Feb-2014
+# Last mod : 28-Feb-2014
 # -----------------------------------------------------------------------------
 #
 #    Europe MAP
@@ -70,26 +70,23 @@ class Map
 		@uis.switch_button.find("input.switch-input").on("change", @onSwitchButtonChange)
 		$(window).resize(@relayout())
 
-
 	relayout: =>
 		_relayout = =>
-			# Create svg tag
 			@width  = $(window).width() - $(".map").offset().left
 			@height = $(window).height()
 			@svg
 				.attr("width" , @width)
 				.attr("height", @height)
-
-			@ui.css("width" , @width)
-			@ui.css("height" , @height)
-
+			@ui.css 
+				width : @width
+				height: @height
 			# Create projection
 			@projection = d3.geo.mercator()
 				.scale(1)
 				.translate([0,0])
 			bounds = CONFIG.europe_bounds
 			b = [@projection(bounds[0]), @projection(bounds[1])]
-			banner_w = $(".banner").outerWidth(true)
+			banner_w = $(".banner").outerWidth(true) # use the banner width to keep space for it on the right
 			w = (b[1][0] - b[0][0] + (.6 * (banner_w / @width))) / @width
 			h = (b[1][1] - b[0][1]) / @height
 			s =  .95 / Math.max(Math.abs(w), Math.abs(h))
@@ -98,7 +95,7 @@ class Map
 				.scale(s)
 				.translate(t)
 			# Create the path
-			@path  = d3.geo.path().projection(@projection)
+			@path = d3.geo.path().projection(@projection)
 			@groupPaths.selectAll("path").attr("d", @path)
 			# draw the choroplet or symbol map if a story is selected
 			@drawMap(@story_selected) if @story_selected?
@@ -106,7 +103,6 @@ class Map
 		return =>
 			clearTimeout(timeout)
 			timeout = setTimeout(_relayout, 200)
-
 
 	onStorySelected : (e, story_key) =>
 		previous_story =  @stories.get(@story_selected)
@@ -346,14 +342,15 @@ class Map
 
 	computeZoom: (story) =>
 		### Return the translation instruction as string ex: "translate(1,2)scale(1)"" ###
-		scale          = settings.stories[story].zoom or 1
-		center         = @projection(settings.stories[story].center or [0,0])
-		offset_x       = - (center[0] * scale - @width  / 2)
-		offset_y       = - (center[1] * scale - @height / 2)
+		scale    = settings.stories[story].zoom or 1
+		offset_y = 0
+		offset_x = 0
+		if settings.stories[story].center?
+			center         = @projection(settings.stories[story].center)
+			offset_x       = - (center[0] * scale - @width  / 2)
+			offset_y       = - (center[1] * scale - @height / 2)
 		transformation = "translate(#{offset_x},#{offset_y})scale(#{scale})"
-		# return transformation
-		# FIXME : doesn't work since relayout compute the scale dynamically
-		return ""
+		return transformation
 
 	tooltip: (serie) =>
 		### use the @story_selected to create tooltip depending of the given serie ###
