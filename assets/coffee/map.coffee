@@ -155,7 +155,13 @@ class Map
 		else
 			@groupSymbols.selectAll("image").remove()
 			@drawChoroplethMap(serie)
-		# color borders
+		@colorBorder()
+		# show title ans sources
+		@setTitle()
+		@setSource()
+
+	colorBorder: =>
+		### color borders ###
 		@groupPaths.selectAll('path')
 			.attr "stroke", (d) ->
 				color = d.color
@@ -167,9 +173,6 @@ class Map
 					catch e
 						stroke = CONFIG.stroke_dark
 				return stroke
-		# show title ans sources
-		@setTitle()
-		@setSource()
 
 	drawChoroplethMap: (serie=1) =>
 		countries = @stories.get(@story_selected).data
@@ -313,6 +316,7 @@ class Map
 			.enter()
 				.insert("path", ".all-symbols")
 				.classed("new-eu-country", (d) -> d.properties.iso_a3 in CONFIG.new_countries)
+		@colorBorder()
 
 	resetMapColor: =>
 		###
