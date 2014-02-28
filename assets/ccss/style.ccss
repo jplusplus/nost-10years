@@ -105,12 +105,17 @@ body:
 		position :absolute
 		bottom   : 0px
 		left     : 40px
+
+//--------------------------------------------
+// LEGEND
 .legend:
 	position   : absolute
-	bottom     : 20px
+	bottom     : 10px
 	right      : 0
 	max-width  : 300px
+	font-size  : .8em
 	.scale:
+		margin-top : 10px
 		.step:
 			display : inline-block
 			height  : 11px
@@ -128,8 +133,9 @@ body:
 			&.first:
 				border-left: 0
 	.source:
-		margin-top: 10px
+		margin-top: 20px
 
+//--------------------------------------------
 // Loader
 .subpanel:
 	transition-property: right
