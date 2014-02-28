@@ -52,8 +52,9 @@ class Map
 		# draw the europe map
 		@drawEuropeMap()
 		# relayout with the current size
-		@relayout()
 		@resetMapColor()
+		# compute the map size
+		@relayout()()
 
 		# tooltip for accession dates
 		that = this
@@ -67,35 +68,43 @@ class Map
 		#bind events
 		$(document).on("storySelected", @onStorySelected)
 		@uis.switch_button.find("input.switch-input").on("change", @onSwitchButtonChange)
-		$(window).resize(@relayout)
+		$(window).resize(@relayout())
+
 
 	relayout: =>
-		# Create svg tag
-		@width  = $(window).width() - $(".map").offset().left
-		@height = $(window).height()
-		@svg
-			.attr("width" , @width)
-			.attr("height", @height)
+		_relayout = =>
+			# Create svg tag
+			@width  = $(window).width() - $(".map").offset().left
+			@height = $(window).height()
+			@svg
+				.attr("width" , @width)
+				.attr("height", @height)
 
-		@ui.css("width" , @width)
+			@ui.css("width" , @width)
 
-		# Create projection
-		@projection = d3.geo.mercator()
-			.scale(1)
-			.translate([0,0])
-		bounds = CONFIG.europe_bounds
-		b = [@projection(bounds[0]), @projection(bounds[1])]
-		s = .95 / Math.min((b[1][0] - b[0][0]) / @width, (b[1][1] - b[0][1]) / @height)
-		s = Math.abs(s)
-		t = [-s * b[0][0], (@height - s * (b[1][1] + b[0][1])) / 2]
-		@projection
-			.scale(s)
-			.translate(t)
-		# Create the path
-		@path  = d3.geo.path().projection(@projection)
-		@groupPaths.selectAll("path").attr("d", @path)
-		# draw the choroplet or symbol map if a story is selected
-		@drawMap(@story_selected) if @story_selected?
+			# Create projection
+			@projection = d3.geo.mercator()
+				.scale(1)
+				.translate([0,0])
+			bounds = CONFIG.europe_bounds
+			b = [@projection(bounds[0]), @projection(bounds[1])]
+			w = (b[1][0] - b[0][0]) / @width + ($(".banner").width() * .4)
+			h = (b[1][1] - b[0][1]) / @height
+			s =  Math.abs(.95 / Math.min(w, h))
+			t = [-s * b[0][0], (@height - s * (b[1][1] + b[0][1])) / 2]
+			@projection
+				.scale(s)
+				.translate(t)
+			# Create the path
+			@path  = d3.geo.path().projection(@projection)
+			@groupPaths.selectAll("path").attr("d", @path)
+			# draw the choroplet or symbol map if a story is selected
+			@drawMap(@story_selected) if @story_selected?
+		timeout = undefined
+		return =>
+			clearTimeout(timeout)
+			timeout = setTimeout(_relayout, 200)
+
 
 	onStorySelected : (e, story_key) =>
 		previous_story =  @stories.get(@story_selected)
