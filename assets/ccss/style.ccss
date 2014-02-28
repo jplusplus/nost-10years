@@ -8,8 +8,7 @@ MAP_BACKGROUND_COLOR = #F1F1F1
 
 body:
   overflow: hidden
-  font-family: 'Open Sans', sans-serif
-  //font-size: 1.2em
+  font-family: 'Open Sans Condensed', sans-serif
 
 .container-full:
 	margin: 0 auto
@@ -78,8 +77,9 @@ body:
 		font-size: 1.5em
 		line-height: 1em
 	> .description:
-		line-height: 1.2em
-		font-size : .9em
+		margin-top  : 10px
+		line-height : 1.2em
+		font-size   : .9em
 	> .reduce, .increase:
 		//transition-property : transform
 		//transition-duration : .25s
