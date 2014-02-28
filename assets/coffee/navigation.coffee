@@ -61,14 +61,22 @@ class Navigation
 		@map    = new Map(this  , geo_features, accessions, @stories)
 		@panel  = new Panel(this, @stories)
 		@banner = new Banner(this)
-
+		# init map from url
+		@readHash()
 		# remove the loading class
 		setTimeout(-> 
 			$("body").removeClass("loading")
 		, 500)
+		# bind events
+		$(window).on('hashchange', @readHash)
 
 	selectStory: (story) =>
 		@selected_story = story
+		window.location.hash = story
 		$(document).trigger("storySelected", story)
+
+	readHash: (e) =>
+		story = window.location.hash.slice(1)
+		@selectStory(story) if @stories.get(story)?
 
 # EOF

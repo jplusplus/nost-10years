@@ -5,6 +5,13 @@ Berlin, January 2014
 
 ## The project
 
+### Features
+
+* Read project from csv files
+* Settings file to custom how projects are shown
+* Custom zoom and scale for project
+* Deep linking
+
 ## Installation
 
 ### Dependances

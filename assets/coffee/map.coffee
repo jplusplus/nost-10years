@@ -112,7 +112,14 @@ class Map
 		infos = @stories.get(@story_selected).infos
 		# don't reset color between 2 choropleth maps
 		reset_color = not (previous_story and not previous_story.infos.is_symbol and not infos.is_symbol)
-		@drawMap(story_key, serie=1, reset_color=reset_color)
+		# @path could be undefined here, if call comes from url hash reader for instance
+		# then we try until it works
+		interval = setInterval( =>
+			if @path?
+				@drawMap(story_key, serie=1, reset_color=reset_color)
+				clearInterval(interval)
+		,100)
+		# @drawMap(story_key, serie=1, reset_color=reset_color)
 		# update switch button
 		if infos.Serie1? and infos.Serie2?
 			@uis.switch_button.find("label[for=serie1]").text(infos.Serie1)
