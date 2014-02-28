@@ -37,7 +37,7 @@ class Banner
 		@uis.description.html(description)
 
 	onStorySelected: (e, story_key) =>
-		title       = @navigation.stories.get(story_key).infos['Title']
+		title       = @navigation.stories.get(story_key).infos['Title of the tab']
 		description = @navigation.stories.get(story_key).infos['Introduction']
 		@update(title, description)
 		@show()
