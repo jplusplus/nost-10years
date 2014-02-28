@@ -69,11 +69,13 @@ settings =
 			reverse_scale  : true
 		"n-ost_Project_4"  : {}
 		"n-ost_Project_5"  :
+			symbol_scale   : [20, 100]
 			symbol         : "static/symbols/landwirschaft.png"
 		"n-ost_Project_7"  :
-			symbol         : "static/symbols/zigaretten.png"
+			symbol         : "static/symbols/n-ost_Project_7_icon.png"
 			symbol_scale   : [20, 100]
 		"n-ost_Project_8"  :
+			symbol_scale   : [20, 80]
 			symbol         : "static/symbols/n-ost_Project_8_icon.png"
 		"n-ost_Project_9b" : {}
 		"n-ost_Project_9"  : {}
