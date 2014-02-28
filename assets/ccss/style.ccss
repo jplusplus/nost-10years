@@ -25,17 +25,17 @@ body:
 		padding-bottom : 99999px
 		background     : url("../img/squared_metal.png")
 		.subpanel:
-			position      : relative
-			overflow      : hidden
-			margin-bottom : 10px
+			position : relative
+			overflow : hidden
 			> .title:
+				background         : "url(../img/carre.png) no-repeat scroll 4px 5px rgba(167, 166, 155, 0.6)"
+				padding-left : 17px
 				background-color : #313131
 				color            : white
 				span.title:
 					padding-left : 10px
 			.story:
-				background         : "url(../img/carre.png) no-repeat scroll 5px 8px rgba(167, 166, 155, 0.6)"
-				padding            : 5px 0 0 20px
+				padding            : 2px 0 2px 2px
 				font-size          : .9em
 				line-height        : 1.2em
 				transition-property: background-color
