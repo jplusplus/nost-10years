@@ -100,7 +100,7 @@ body:
 		.discret:
 				&:hover:
 					opacity:1
-				opacity: .3
+				opacity: .2
 	.switch:
 		position :absolute
 		bottom   : 0px

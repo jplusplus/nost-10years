@@ -24,13 +24,14 @@ settings =
 		non_eu_color      : "#d6d6d6"
 		stroke_dark       : "#3D3D3D"
 		stroke_light      : "white"
-		color_scale       : "YlOrRd" # http://colrd.com/palette/19079/
+		color_scale       : ['rgb(239,243,255)','rgb(198,219,239)','rgb(158,202,225)','rgb(107,174,214)','rgb(66,146,198)','rgb(33,113,181)','rgb(8,69,148)'] # http://colorbrewer2.org/?type=sequential&scheme=Blues&n=7
 		eu_countries      : ["DEU", "AUT", "HRV", "BEL", "BGR", "CYP", "DNK", "ESP", "EST", "FIN", "FRA", "GRC", "HUN", "IRL", "ITA", "LVA", "LTU", "MLT", "LUX", "NLD", "POL", "PRT", "CZE", "ROU", "GBR", "SVK", "SVN", "SWE"]
-		new_countries     : ["BGR","HRV","EST","LVA","LTU","POL","ROU","SVK","SVN","CZE","HUN"] # for larger border
+		new_countries     : ["BGR","HRV","EST","LVA","LTU","POL","ROU","SVK","SVN","CZE","HUN"]  # for larger border
 		countries_centers : d3.map # fix the symbol position for countries which are not well positioned by centroid
 			"FRA" : [2.462206 , 46.623965] # lon/lat
 			"FIN" : [25.045633, 60.221414]
 			"SWE" : [15.333719, 57.754753]
+			"RUS" : [34.615626, 53.217433]
 		nb_buckets : 6 # number of buckets for choroplet map
 		# Style for tooltip
 		tooltip_style :
@@ -81,7 +82,7 @@ settings =
 		"n-ost_Project_8"  :
 			symbol_scale   : [20, 80]
 			symbol         : "static/symbols/n-ost_Project_8_icon.png"
-		"n-ost_Project_9b" : {}
 		"n-ost_Project_9"  : {}
+		"n-ost_Project_9b" : {}
 
 # EOF
