@@ -21,6 +21,7 @@ body:
 // PANELS
 .panel-left:
 	.stories:
+  		font-family: 'Open Sans', sans-serif
 		margin-bottom  : -99999px
 		padding-bottom : 99999px
 		background     : url("../img/squared_metal.png")
@@ -57,7 +58,7 @@ body:
 .banner:
 	position            : absolute
 	max-width           : 35%
-	top                 : 10px
+	top                 : 20px
 	right               : 0px
 	background-color    : "rgba(255, 255, 255, 0.8)"
 	color               : black
@@ -79,7 +80,7 @@ body:
 	> .description:
 		margin-top  : 10px
 		line-height : 1.2em
-		font-size   : .9em
+		font-size   : 1em
 	> .reduce, .increase:
 		//transition-property : transform
 		//transition-duration : .25s
