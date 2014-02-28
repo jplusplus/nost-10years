@@ -49,16 +49,17 @@ settings =
 	# you can provide some properties like:
 	#
 	# * GENERAL
-	#   - center       : [lon, lat]
-	#   - zoom         : int(default=1)
+	#   - center        : [lon, lat]
+	#   - zoom          : int(default=1)
 	#
 	# * CHOROPLETH MAP
-	#   - scale_type   : log|quantiles|k-means|linear(default)
-	#   - nb_buckets   : int (default : value of settings.map.nb_buckets)
+	#   - scale_type    : log|quantiles|k-means|linear(default)
+	#   - nb_buckets    : int (default : value of settings.map.nb_buckets)
 	#
 	# * SYMBOLS MAP
-	#   - symbol       : path to symbol image file
-	#   - symbol_scale : range for symbols sizes [min, max] (default : value of settings.map.symbol_scale)
+	#   - symbol        : path to symbol image file
+	#   - symbol_scale  : range for symbols sizes [min, max] (default : value of settings.map.symbol_scale)
+	#   - reverse_scale : reverse the scale
 	#
 	stories :
 		"n-ost_Project_1"  :
