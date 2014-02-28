@@ -417,6 +417,8 @@ class Map
 				delta = domains[index + 1] - step
 				color = scale(step)
 				label = rounded_domains[index]
+				if index == domains.length - 2 and that.stories.get(that.story_selected).infos["append_sign"]?
+					label += " #{that.stories.get(that.story_selected).infos["append_sign"]}"
 				size  = (if size_by_value then delta / domains_delta * legend_size else legend_size / (domains.length - 1))
 				# setting step
 				$step = $("<div class='step'></div>")
