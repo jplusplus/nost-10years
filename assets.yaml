@@ -3,7 +3,6 @@ css_all:
   output: gen/style.css
   contents: 
     - "http://fonts.googleapis.com/css?family=Cabin"
-    - "http://fonts.googleapis.com/css?family=Open+Sans"
     - "../assets/css/*.css"
     - contents: "../assets/ccss/*.ccss"
       filters: clevercss

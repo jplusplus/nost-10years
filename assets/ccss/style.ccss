@@ -21,7 +21,6 @@ body:
 // PANELS
 .panel-left:
 	.stories:
-  		font-family: 'Open Sans', sans-serif
 		margin-bottom  : -99999px
 		padding-bottom : 99999px
 		background     : url("../img/squared_metal.png")
@@ -77,7 +76,6 @@ body:
 	> .title:
 		font-size: 1.5em
 		line-height: 1em
-  		font-family: 'Open Sans', sans-serif
 	> .description:
 		margin-top  : 10px
 		line-height : 1.2em

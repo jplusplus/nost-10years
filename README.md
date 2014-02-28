@@ -7,8 +7,10 @@ Berlin, January 2014
 
 ### Features
 
-* Read project from csv files
-* Settings file to custom how projects are shown
+* Read projects from csv files
+* Visualize them on a map (choropleth or symbols map)
+* Handles multiple data series
+* Settings file to custom how projects are shown ([settings.coffee](assets/coffee/settings.coffee))
 * Custom zoom and scale for project
 * Deep linking
 
