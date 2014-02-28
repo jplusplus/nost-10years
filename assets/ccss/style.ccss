@@ -8,7 +8,7 @@ MAP_BACKGROUND_COLOR = #F1F1F1
 
 body:
   overflow: hidden
-  font-family: 'Open Sans Condensed', sans-serif
+  font-family: 'Cabin', sans-serif
 
 .container-full:
 	margin: 0 auto
