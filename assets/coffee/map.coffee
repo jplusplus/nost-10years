@@ -346,9 +346,10 @@ class Map
 		offset_y = 0
 		offset_x = 0
 		if settings.stories[story].center?
-			center         = @projection(settings.stories[story].center)
-			offset_x       = - (center[0] * scale - @width  / 2)
-			offset_y       = - (center[1] * scale - @height / 2)
+			center    = @projection(settings.stories[story].center)
+			# removing the banner width also to center in the visible space
+			offset_x  = - (center[0] * scale - (@width - $(".banner").outerWidth(true))  / 2)
+			offset_y  = - (center[1] * scale - @height / 2)
 		transformation = "translate(#{offset_x},#{offset_y})scale(#{scale})"
 		return transformation
 
