@@ -16,7 +16,7 @@
 settings = 
 	map :
 		map_transition    : 750 # ms
-		europe_bounds     : [[-11.09,33.64],[35.01,61.6]] # [[lon/lat],[lon/lat]]
+		europe_bounds     : [[-11.7,33.6],[35.1,61.4]] # [[lon/lat],[lon/lat]]
 		symbol_scale      : [10, 60] # in pixel
 		stripped_image    : "static/img/stripped.png"
 		eu_color          : "#517FDD"

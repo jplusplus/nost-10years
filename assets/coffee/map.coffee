@@ -81,6 +81,7 @@ class Map
 				.attr("height", @height)
 
 			@ui.css("width" , @width)
+			@ui.css("height" , @height)
 
 			# Create projection
 			@projection = d3.geo.mercator()
@@ -88,9 +89,10 @@ class Map
 				.translate([0,0])
 			bounds = CONFIG.europe_bounds
 			b = [@projection(bounds[0]), @projection(bounds[1])]
-			w = (b[1][0] - b[0][0]) / @width + ($(".banner").width() * .4)
+			banner_w = $(".banner").outerWidth(true)
+			w = (b[1][0] - b[0][0] + (.6 * (banner_w / @width))) / @width
 			h = (b[1][1] - b[0][1]) / @height
-			s =  Math.abs(.95 / Math.min(w, h))
+			s =  .95 / Math.max(Math.abs(w), Math.abs(h))
 			t = [-s * b[0][0], (@height - s * (b[1][1] + b[0][1])) / 2]
 			@projection
 				.scale(s)

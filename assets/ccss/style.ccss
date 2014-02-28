@@ -8,6 +8,7 @@ MAP_BACKGROUND_COLOR = #F1F1F1
 
 body:
   overflow: hidden
+  //font-size: 1.2em
 
 .container-full:
 	margin: 0 auto
@@ -56,8 +57,8 @@ body:
 .banner:
 	position            : absolute
 	max-width           : 35%
-	top                 : 30px
-	right               : 30px 
+	top                 : 10px
+	right               : 0px
 	background-color    : "rgba(255, 255, 255, 0.8)"
 	color               : black
 	padding             : 20px
@@ -74,6 +75,9 @@ body:
 				transform : "rotate(-90deg)"
 	> .title:
 		font-size: 1.5em
+		line-height: 1em
+	> .description:
+		line-height: 1.2em
 	> .reduce, .increase:
 		//transition-property : transform
 		//transition-duration : .25s
