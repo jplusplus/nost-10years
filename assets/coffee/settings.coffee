@@ -31,6 +31,7 @@ settings =
 			"FRA" : [2.462206 , 46.623965] # lon/lat
 			"FIN" : [25.045633, 60.221414]
 			"SWE" : [15.333719, 57.754753]
+			"RUS" : [34.615626, 53.217433]
 		nb_buckets : 6 # number of buckets for choroplet map
 		# Style for tooltip
 		tooltip_style :
@@ -81,7 +82,7 @@ settings =
 		"n-ost_Project_8"  :
 			symbol_scale   : [20, 80]
 			symbol         : "static/symbols/n-ost_Project_8_icon.png"
-		"n-ost_Project_9b" : {}
 		"n-ost_Project_9"  : {}
+		"n-ost_Project_9b" : {}
 
 # EOF
