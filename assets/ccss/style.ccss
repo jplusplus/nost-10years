@@ -88,7 +88,8 @@ body:
 	margin-left     :0
 	box-shadow      : "-6px 0px 9px -4px rgba(87, 73, 73, 0.7)"
 	background-color: $MAP_BACKGROUND_COLOR
-	width           : 100%
+	width           : 200% // on fx we need to fill all the right panel like that
+	height          : 9999999px
 	.all-path:
 		.discret:
 				&:hover:
