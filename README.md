@@ -32,6 +32,10 @@ and install virtualenv
 
 	$ make install
 
+### Run the server
+
+	$ make run
+
 #### No Python dependances
 
 * [CoffeeScript](http://coffeescript.org/)
