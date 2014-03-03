@@ -48,7 +48,7 @@ class Navigation
 			infos     = results[i * 2][ 0]
 			data      = results[i * 2 + 1]
 			# data
-			infos.is_symbol = infos["Symbol map (Yes or No). If No, it's a Choropleth maps"].toLowerCase() == "yes"
+			infos.is_symbol = infos["Symbol map (Yes or No). If No it's a Choropleth maps"].toLowerCase() == "yes"
 			# series
 			series = d3.map()
 			for line in data
