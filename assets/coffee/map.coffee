@@ -98,7 +98,7 @@ class Map
 			@path = d3.geo.path().projection(@projection)
 			@groupPaths.selectAll("path").attr("d", @path)
 			# draw the choroplet or symbol map if a story is selected
-			@drawMap(@story_selected) if @story_selected?
+			@drawMap(@story_selected, serie=@serie) if @story_selected?
 		timeout = undefined
 		return =>
 			clearTimeout(timeout)
@@ -119,7 +119,6 @@ class Map
 				@drawMap(story_key, serie=1, reset_color=reset_color)
 				clearInterval(interval)
 		,100)
-		# @drawMap(story_key, serie=1, reset_color=reset_color)
 		# update switch button
 		if infos.Serie1? and infos.Serie2?
 			@uis.switch_button.find("label[for=serie1]").text(infos.Serie1)
@@ -138,6 +137,7 @@ class Map
 
 	drawMap: (story_key, serie=1, reset_color=false, is_new_story=true) =>
 		that = this
+		@serie = serie
 		# reset tooltip, destroy everything
 		$("image").qtip('destroy', true)
 		$("path") .qtip('destroy', true)
