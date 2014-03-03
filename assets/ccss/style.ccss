@@ -106,8 +106,8 @@ body:
 	//		image-rendering: "-webkit-optimize-contrast"
 	.switch:
 		position :absolute
-		bottom   : 0px
-		left     : 40px
+		bottom   : -10px
+		left     : 30px
 
 //--------------------------------------------
 // LEGEND
