@@ -47,7 +47,7 @@ class Map
 					.attr('height', 9)
 		@group        = @svg.append("g")
 		@groupPaths   = @group.append("g").attr("class", "all-path")
-		@groupSymbols = @groupPaths.append("g").attr("class", "all-symbols")
+		@groupSymbols = @group.append("g").attr("class", "all-symbols")
 
 		# draw the europe map
 		@drawEuropeMap()
@@ -77,7 +77,7 @@ class Map
 			@svg
 				.attr("width" , @width)
 				.attr("height", @height)
-			@ui.css 
+			@ui.css
 				width : @width
 				height: @height
 			# Create projection
@@ -134,9 +134,9 @@ class Map
 	onSwitchButtonChange: (e) =>
 		value = @uis.switch_button.find("input.switch-input:checked").val()
 		serie  = parseInt(value.replace("serie", ""))
-		@drawMap(@story_selected, serie)
+		@drawMap(@story_selected, serie, reset_color=false, is_new_story=false)
 
-	drawMap: (story_key, serie=1, reset_color=false) =>
+	drawMap: (story_key, serie=1, reset_color=false, is_new_story=true) =>
 		that = this
 		# reset tooltip, destroy everything
 		$("image").qtip('destroy', true)
@@ -158,10 +158,10 @@ class Map
 				return d.is_discrete
 		# select the right rendering method
 		if story.infos.is_symbol
-			@drawSymbolMap(serie)
+			@drawSymbolMap(serie, is_new_story=is_new_story)
 		else
 			@groupSymbols.selectAll("image").remove()
-			@drawChoroplethMap(serie)
+			@drawChoroplethMap(serie, is_new_story=is_new_story)
 		@colorBorder()
 		# show title ans sources
 		@setTitle()
@@ -181,7 +181,7 @@ class Map
 						stroke = CONFIG.stroke_dark
 				return stroke
 
-	drawChoroplethMap: (serie=1) =>
+	drawChoroplethMap: (serie=1, is_new_story) =>
 		countries = @stories.get(@story_selected).data
 		# scale
 		values = []
@@ -225,7 +225,7 @@ class Map
 		# legend
 		@showLegend(scale)
 
-	drawSymbolMap: (serie=1) =>
+	drawSymbolMap: (serie=1, is_new_story) =>
 		that      = this
 		story     = @stories.get(@story_selected)
 		countries = story.data.values()
@@ -299,7 +299,7 @@ class Map
 					.classed("discret", (p) -> p.is_discrete)
 			.transition()
 				.duration(CONFIG.map_transition)
-				.delay( (d, i) -> i * 25) # one by one animation
+				.delay( (d, i) -> if is_new_story then i * 25 else 0) # one by one animation
 				.attr("opacity", 1)
 				.attr "transform", (d)->
 					return that.computeZoom(that.story_selected)\# add the zoom transformation
