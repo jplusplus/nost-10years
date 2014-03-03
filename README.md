@@ -14,6 +14,8 @@ Berlin, January 2014
 * Custom zoom and scale for project
 * Deep linking
 
+![Screenshot](screenshot.png "Screenshot")
+
 ## Installation
 
 ### Dependances
