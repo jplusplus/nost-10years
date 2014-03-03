@@ -287,6 +287,8 @@ class Map
 				.attr("y"       , (d) -> get_symbol_position(d)[1])
 		@symbol.exit().remove()
 
+		# init size if we come from a different story
+		@groupSymbols.selectAll("image").attr("width", 0).attr("height", 0) if is_new_story
 		# redraw, set the symbol size
 		@groupSymbols.selectAll("image")
 			.classed("discret" , (d) -> d["starred_country(y/n)"] == "no")
