@@ -256,15 +256,8 @@ class Map
 			.transition()
 				.duration(CONFIG.map_transition)
 				.attr("transform", @computeZoom(@story_selected))
-		#  init symbols: image link, position ...
-		@symbol = @groupSymbols.selectAll("image").data(countries)
-		@symbol.enter()
-			.append("image"     , ".all-symbols")
-				.attr("width"   , 0)
-				.attr("height"  , 0)
-				.attr("opacity" , 0)
-		@symbol.exit().remove()
 
+		#  init symbols: image link, position ...
 		get_symbol_position = (symbol_data) ->
 			###
 			return the wanted positions to place the symbol.
@@ -284,10 +277,18 @@ class Map
 					# substract the half of the symbol size to the x and y offset in order to return the symbol center position
 					# .map((position) -> position - scale(symbol_data["serie#{serie}"])/2)
 
+		@symbol = @groupSymbols.selectAll("image").data(countries)
+		@symbol.enter()
+			.append("image"     , ".all-symbols")
+				.attr("width"   , 0)
+				.attr("height"  , 0)
+				.attr("opacity" , 0)
+				.attr("x"       , (d) -> get_symbol_position(d)[0])
+				.attr("y"       , (d) -> get_symbol_position(d)[1])
+		@symbol.exit().remove()
+
 		# redraw, set the symbol size
 		@groupSymbols.selectAll("image")
-			.attr("x"          , (d) -> get_symbol_position(d)[0])
-			.attr("y"          , (d) -> get_symbol_position(d)[1])
 			.classed("discret" , (d) -> d["starred_country(y/n)"] == "no")
 			.attr("xlink:href" ,     -> settings.stories[that.story_selected].symbol or "static/symbols/smiley.png")
 			.on "mouseover"    , (d) ->
