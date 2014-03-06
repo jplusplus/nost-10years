@@ -70,9 +70,6 @@ body:
 		cursor           : pointer
 	&.reduced:
 		transform : "rotate(90deg)"
-		&:hover:
-			> .reduce, .increase:
-				transform : "rotate(-90deg)"
 	> .title:
 		font-size: 1.5em
 		line-height: 1em
