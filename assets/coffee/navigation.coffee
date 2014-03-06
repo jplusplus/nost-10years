@@ -53,7 +53,7 @@ class Navigation
 			series = d3.map()
 			for line in data
 				series.set(line["Country ISO Code"], line)
-				if not infos.append_sign? and line["Append Sign (€,%, Mio, etc)"]?
+				if not infos.append_sign? and line["Append Sign (€,%, Mio, etc)"]? and line["Append Sign (€,%, Mio, etc)"]
 					infos.append_sign = line["Append Sign (€,%, Mio, etc)"]
 			# save stories
 			story_id  = _.keys(settings.stories)[i]
