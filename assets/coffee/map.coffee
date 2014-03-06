@@ -156,6 +156,10 @@ class Map
 				if country
 					d.is_discrete = country["starred_country(y/n)"]!= "yes"
 				return d.is_discrete
+			.classed "is_in_data", (d) ->
+				country = that.stories.get(that.story_selected).data.get(d.properties.iso_a3)
+				d.is_in_data = country?
+				return d.is_in_data
 		# select the right rendering method
 		if story.infos.is_symbol
 			@drawSymbolMap(serie, is_new_story=is_new_story)

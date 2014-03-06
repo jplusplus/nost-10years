@@ -98,9 +98,9 @@ body:
 	height          : 9999999px
 	.all-path:
 		.discret:
-				&:hover:
-					opacity:1
-				opacity: .2
+			opacity: .2
+			&.is_in_data:hover:
+				opacity:1
 	//.all-symbols:
 	//	image:
 	//		image-rendering: "-webkit-optimize-contrast"
