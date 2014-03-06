@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 11-Feb-2014
-# Last mod : 28-Feb-2014
+# Last mod : 06-Mar-2014
 # -----------------------------------------------------------------------------
 #
 #    SETTINGS
@@ -32,6 +32,7 @@ settings =
 			"FIN" : [25.045633, 60.221414]
 			"SWE" : [15.333719, 57.754753]
 			"RUS" : [34.615626, 53.217433]
+			"CYP" : [34.718967, 35.44419]
 		nb_buckets : 6 # number of buckets for choroplet map
 		# Style for tooltip
 		tooltip_style :
