@@ -28,8 +28,8 @@ body:
 			position : relative
 			overflow : hidden
 			> .title:
-				background         : "url(../img/carre.png) no-repeat scroll 4px 5px rgba(167, 166, 155, 0.6)"
-				padding-left : 17px
+				background       : "url(../img/carre.png) no-repeat scroll 4px 5px rgba(167, 166, 155, 0.6)"
+				padding-left     : 17px
 				background-color : #313131
 				color            : white
 				span.title:
