@@ -1,4 +1,4 @@
-Country ISO Code,Country name,serie1,serie2,Append Sign (€.%. Mio. etc),starred_country(y/n)
+Country ISO Code,Country name,serie1,serie2,"Append Sign (€,%, Mio, etc)",starred_country(y/n)
 BEL,Belgien,6.6,6.95,,no
 BGR,Bulgarien,3.8,4.5,,no
 DNK,Dänemark,8.1,8.35,,no
@@ -10,6 +10,7 @@ GRC,Griechenland,5.7,3.95,,yes
 GBR,Großbritannien,7,7.3,,no
 IRL,Irland,7,6.7,,no
 ITA,Italien,6.1,5.25,,yes
+HRV,Kroatien,,,,no
 LVA,Lettland,5.3,5.7,,no
 LTU,Litauen,5.2,5.6,,no
 LUX,Luxemburg,7.2,7.35,,no

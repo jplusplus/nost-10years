@@ -1,28 +1,29 @@
 Country ISO Code,Country name,serie1,serie2,"Append Sign (€,%, Mio, etc)",starred_country(y/n)
 BEL,Belgien,,,,no
-BGR,Bulgarien,4,12,Milliarden €,yes
+BGR,Bulgarien,49,48,%,yes
 DNK,Dänemark,,,,no
 DEU,Deutschland,,,,no
-EST,Estland,3,8,Milliarden €,no
+EST,Estland,69,64,%,no
 FIN,Finnland,,,,no
 FRA,Frankreich,,,,no
 GRC,Griechenland,,,,no
 GBR,Großbritannien,,,,no
 IRL,Irland,,,,no
 ITA,Italien,,,,no
-LVA,Lettland,2,7,Milliarden €,yes
-LTU,Litauen,4,14,Milliarden €,yes
+HRV,Kroatien,,,,no
+LVA,Lettland,42,44,%,yes
+LTU,Litauen,51,55,%,yes
 LUX,Luxemburg,,,,no
 MLT,Malta,,,,no
 NLD,Niederlande,,,,no
 AUT,Österreich,,,,no
-POL,Polen,39,110,Milliarden €,no
+POL,Polen,33,39,%,no
 PRT,Portugal,,,,no
-ROU,Rumänien,12,32,Milliarden €,no
+ROU,Rumänien,35,31,%,no
 SWE,Schweden,,,,no
-SVK,Slowakei,17,53,Milliarden €,yes
-SVN,Slowenien,9,19,Milliarden €,no
+SVK,Slowakei,76,71,%,yes
+SVN,Slowenien,54,58,%,no
 ESP,Spanien,,,,no
-CZE,Tschechien,38,99,Milliarden €,no
-HUN,Ungarn,32,63,Milliarden €,no
+CZE,Tschechien,59,59,%,no
+HUN,Ungarn,61,78,%,no
 CYP,Zypern,,,,no
