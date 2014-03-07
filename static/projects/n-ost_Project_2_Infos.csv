@@ -1,3 +1,3 @@
 "Symbol map (Yes or No). If No, it's a Choropleth maps",Title of the tab,Title,Introduction,Legend text,Title of the source,Url of the source,Serie1,Serie2
 No,Export-Boom dank EU,Keine Krise: In Osteuropa boomt die Wirtschaft.,"Ein Kontinent in der Krise? Schaut man auf die Export-Zahlen mancher osteuropäische EU-Mitgliedsländer, mag man das kaum glauben. Lettland, Litauen, Bulgarien und die Slowakei etwa exportieren heute mehr als dreimal so viel in den EU-Binnenmarkt wie noch vor zehn Jahren. <br> Artikel: <a href=""http://www.google.com"" target=""_blank"">Start-Ups aus dem Osten</a>
-",Export in den EU-Binnenmarkt in Milliarden Euro pro Jahr,The World Bank,http://data.worldbank.org/indicator/NE.EXP.GNFS.ZS,2003,2009
+",Export in den EU-Binnenmarkt pro Jahr in % vom BIP,The World Bank,http://data.worldbank.org/indicator/NE.EXP.GNFS.ZS,2003,2009
