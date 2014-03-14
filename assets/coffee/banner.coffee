@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 27-Jan-2014
-# Last mod : 07-Feb-2014
+# Last mod : 14-Mar-2014
 # -----------------------------------------------------------------------------
 #
 #    BANNER
@@ -24,10 +24,14 @@ class Banner
 			description : $("> .description", @ui)
 			increase    : $("> .increase"   , @ui)
 			reduce      : $("> .reduce"     , @ui)
+			filterBtn   : $("> .filter"     , @ui)
 
 		#bind events
 		$(document).on("storySelected", @onStorySelected)
-		@ui        .on("click", => if @hidden then @show() else @hide())
+		@uis.increase.add(@uis.reduce).on "click", (e) => 
+			if e.target in _.map([@uis.increase, @uis.reduce], (d) -> d.get(0))
+				if @hidden then @show() else @hide()
+		@uis.filterBtn.on("click", @onFilterClick)
 
 		# init hide/show button
 		if @hidden then @hide() else @show()
@@ -41,6 +45,16 @@ class Banner
 		description = @navigation.stories.get(story_key).infos['Introduction']
 		@update(title, description)
 		@show()
+		# reset filter button
+		@uis.filterBtn.removeClass("active")
+
+	onFilterClick: =>
+		if @uis.filterBtn.hasClass("active")
+			$(document).trigger("filterSelected", false)
+			@uis.filterBtn.removeClass("active")
+		else
+			$(document).trigger("filterSelected", true)
+			@uis.filterBtn.addClass("active")
 
 	hide: =>
 		@hidden = true

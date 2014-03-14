@@ -66,8 +66,6 @@ body:
 	transition-property : all
 	transition-duration : .25s
 	transform-origin    : top right
-	&:hover, &.reduced:
-		cursor           : pointer
 	&.reduced:
 		transform : "rotate(90deg)"
 	> .title:
@@ -78,12 +76,16 @@ body:
 		line-height : 1.2em
 		font-size   : 1em
 	> .reduce, .increase:
+		cursor : pointer
 		//transition-property : transform
 		//transition-duration : .25s
 		position : absolute
 		margin   : 5px
 	> .reduce, > .increase:
 		right: 0
+	> .filter:
+		float: right
+		margin-top: 10px
 
 //--------------------------------------------
 // MAP
@@ -95,13 +97,17 @@ body:
 	height          : 9999999px
 	.all-path:
 		.discret:
-			opacity: .2
-			&.is_in_data:
-				opacity : .2
-				&:hover:
-					opacity:1
+			opacity         : 1
+			transition-duration : .75s
+			transition-property: opacity
+			&.applied:
+				opacity: .2
+				&.is_in_data:
+					opacity : .2
+					&:hover:
+						opacity:1
 	.all-symbols:
-		.discret:
+		.discret.applied:
 			opacity: .2
 
 	.switch:

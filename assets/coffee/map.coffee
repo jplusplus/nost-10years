@@ -7,7 +7,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 27-Jan-2014
-# Last mod : 06-Mar-2014
+# Last mod : 14-Mar-2014
 # -----------------------------------------------------------------------------
 #
 #    Europe MAP
@@ -67,6 +67,7 @@ class Map
 
 		#bind events
 		$(document).on("storySelected", @onStorySelected)
+		$(document).on("filterSelected", (e, do_filter) => @filter(do_filter))
 		@uis.switch_button.find("input.switch-input").on("change", @onSwitchButtonChange)
 		$(window).resize(@relayout())
 
@@ -129,6 +130,8 @@ class Map
 			@uis.switch_button.removeClass("hidden")
 		else
 			@uis.switch_button.addClass("hidden")
+		#reset filter
+		@filter(false)
 
 	onSwitchButtonChange: (e) =>
 		value = @uis.switch_button.find("input.switch-input:checked").val()
@@ -459,4 +462,10 @@ class Map
 				that.uis.scale.append $step
 				offset += size
 
+	filter: (do_filter) =>
+		$(".discret").attr "class", (i, classes) ->
+			if do_filter
+				return classes + " applied"
+			else
+				return classes.replace("applied", "")
 # EOF
