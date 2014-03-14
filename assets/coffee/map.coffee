@@ -300,9 +300,11 @@ class Map
 				# colorize the country
 				that.groupPaths.selectAll("path").filter((p) -> p.properties["iso_a3"] == d["Country ISO Code"])
 					.classed("discret", false)
+				d3.select(this).classed("discret", false)
 			.on "mouseout"     , (d) ->
 				that.groupPaths.selectAll("path").filter((p) -> p.properties["iso_a3"] == d["Country ISO Code"])
 					.classed("discret", (p) -> p.is_discrete)
+				d3.select(this).classed("discret", d["starred_country(y/n)"] == "no")
 			.transition()
 				.duration(CONFIG.map_transition)
 				.delay( (d, i) -> if is_new_story then i * 25 else 0) # one by one animation

@@ -100,9 +100,10 @@ body:
 				opacity : .2
 				&:hover:
 					opacity:1
-	//.all-symbols:
-	//	image:
-	//		image-rendering: "-webkit-optimize-contrast"
+	.all-symbols:
+		.discret:
+			opacity: .2
+
 	.switch:
 		position :absolute
 		bottom   : -10px
