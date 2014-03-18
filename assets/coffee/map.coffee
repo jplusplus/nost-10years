@@ -381,12 +381,12 @@ class Map
 			(d) ->
 				# retrieve data, depending of the element type (feature or symbol)
 				data  = if d.properties? then context.stories.get(context.story_selected).data.get(d.properties.iso_a3) else d
-				country_name = if data? then data["Country name"]            else ""
-				value        = if data? then data["serie#{serie}"]or "k. A." else ""
+				country_name = if data? then data["Country name"] else ""
+				value        = if data? and not isNaN(data["serie#{serie}"]) then data["serie#{serie}"].toString().replace('.', ",") else "k. A."
 				append       = if data? and value != "k. A." then data["Append Sign (€,%, Mio, etc)"] or "" else ""
 				if country_name
 					params =
-						content: "#{country_name}<br/><strong>#{value.toString().replace('.', ",")} #{append}</strong>"
+						content: "#{country_name}<br/><strong>#{value} #{append}</strong>"
 					$(this).qtip _.defaults(params, CONFIG.tooltip_style)
 		)(this)
 
