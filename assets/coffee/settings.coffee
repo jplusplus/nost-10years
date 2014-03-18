@@ -65,7 +65,7 @@ settings =
 	#
 	stories :
 		"n-ost_Project_1"  :
-			nb_buckets : 4
+			nb_buckets : 5
 		"n-ost_Project_2"  :
 			center : [21.869254, 50.248456] # pologne
 		"n-ost_Project_3"  :
@@ -74,16 +74,16 @@ settings =
 		"n-ost_Project_4"  :
 			center : [21.869254, 50.248456] # pologne
 		"n-ost_Project_5"  :
-			symbol_scale   : [20, 100]
+			symbol_scale   : [10, 70]
 			symbol         : "static/symbols/landwirschaft.png"
 		"n-ost_Project_6"  :
-			symbol_scale   : [20, 100]
+			symbol_scale   : [20, 70]
 			symbol         : "static/symbols/n-ost_Project_6_icon.png"
 		"n-ost_Project_7"  :
 			symbol         : "static/symbols/n-ost_Project_7_icon.png"
-			symbol_scale   : [20, 100]
+			symbol_scale   : [20, 70]
 		"n-ost_Project_8"  :
-			symbol_scale   : [20, 80]
+			symbol_scale   : [20, 70]
 			symbol         : "static/symbols/n-ost_Project_8_icon.png"
 		"n-ost_Project_9"  : {}
 		"n-ost_Project_9b" : {}
