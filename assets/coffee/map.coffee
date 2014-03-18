@@ -449,16 +449,27 @@ class Map
 				else
 					$sticker.remove()
 				# add hover effect to highlight regions
-				$step.hover ((e) ->
+				scale_selected = false
+				select = (e) =>
 					step_color = chroma.color($(e.target).css("background-color")).hex()
 					opacity    = (path) -> if path.color == step_color then 1 else .2
 					that.groupPaths.selectAll("path")
 						.attr("opacity", opacity)
 						.classed("discret", false)
-				), ->
-					that.groupPaths.selectAll("path")
-						.attr("opacity", 1)
-						.classed("discret", (d) -> d.is_discrete)
+				deselect = (e, force=false) =>
+					if (not scale_selected) or (scale_selected and force)
+						that.groupPaths.selectAll("path")
+							.attr("opacity", 1)
+							.classed("discret", (d) -> d.is_discrete)
+					scale_selected = false
+				$step.on "click", (e) ->
+					if scale_selected
+						deselect(e, force=true)
+						scale_selected = false
+					else
+						select(e)
+						scale_selected = true
+				$step.hover(select, deselect)
 				that.uis.scale.append $step
 				offset += size
 
