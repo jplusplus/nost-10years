@@ -386,7 +386,7 @@ class Map
 				append       = if data? and value != "k. A." then data["Append Sign (€,%, Mio, etc)"] or "" else ""
 				if country_name
 					params =
-						content: "#{country_name}<br/><strong>#{value} #{append}</strong>"
+						content: "#{country_name}<br/><strong>#{value.toString().replace('.', ",")} #{append}</strong>"
 					$(this).qtip _.defaults(params, CONFIG.tooltip_style)
 		)(this)
 
@@ -427,7 +427,7 @@ class Map
 			if index < domains.length - 1
 				delta = domains[index + 1] - step
 				color = scale(step)
-				label = rounded_domains[index]
+				label = rounded_domains[index].toString().replace('.', ",")
 				if index == domains.length - 2 and that.stories.get(that.story_selected).infos["append_sign"]?
 					label += " #{that.stories.get(that.story_selected).infos["append_sign"]}"
 				size  = (if size_by_value then delta / domains_delta * legend_size else legend_size / (domains.length - 1))
