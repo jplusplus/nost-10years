@@ -66,7 +66,8 @@ settings =
 	stories :
 		"n-ost_Project_1"  :
 			nb_buckets : 4
-		"n-ost_Project_2"  : {}
+		"n-ost_Project_2"  :
+			center : [21.869254, 50.248456] # pologne
 		"n-ost_Project_3"  :
 			symbol         : "static/symbols/n-ost_Project_3_icon.png"
 			reverse_scale  : true
