@@ -82,6 +82,7 @@ settings =
 		"n-ost_Project_7"  :
 			symbol         : "static/symbols/n-ost_Project_7_icon.png"
 			symbol_scale   : [20, 70]
+			zoom           : 0.8
 		"n-ost_Project_8"  :
 			symbol_scale   : [20, 70]
 			symbol         : "static/symbols/n-ost_Project_8_icon.png"
