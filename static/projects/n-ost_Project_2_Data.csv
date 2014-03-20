@@ -1,9 +1,9 @@
-Country ISO Code,Country name,serie1,serie2,"Append Sign (€,%, Mio, etc)",starred_country(y/n)
+Country ISO Code,Country name,serie1,serie2,Append Sign (€.%. Mio. etc),starred_country(y/n)
 BEL,Belgien,,,,no
-BGR,Bulgarien,49,48,%,yes
+BGR,Bulgarien,48.5,66.6,%,no
 DNK,Dänemark,,,,no
 DEU,Deutschland,,,,no
-EST,Estland,69,64,%,no
+EST,Estland,69.2,90.6,%,no
 FIN,Finnland,,,,no
 FRA,Frankreich,,,,no
 GRC,Griechenland,,,,no
@@ -11,19 +11,19 @@ GBR,Großbritannien,,,,no
 IRL,Irland,,,,no
 ITA,Italien,,,,no
 HRV,Kroatien,,,,no
-LVA,Lettland,42,44,%,yes
-LTU,Litauen,51,55,%,yes
+LVA,Lettland,42.2,61.6,%,yes
+LTU,Litauen,50.9,83.9,%,yes
 LUX,Luxemburg,,,,no
 MLT,Malta,,,,no
 NLD,Niederlande,,,,no
 AUT,Österreich,,,,no
-POL,Polen,33,39,%,no
+POL,Polen,33.3,46.7,%,yes
 PRT,Portugal,,,,no
-ROU,Rumänien,35,31,%,no
+ROU,Rumänien,34.8,40,%,no
 SWE,Schweden,,,,no
-SVK,Slowakei,76,71,%,yes
-SVN,Slowenien,54,58,%,no
+SVK,Slowakei,75.8,96.6,%,no
+SVN,Slowenien,53.8,76.1,%,yes
 ESP,Spanien,,,,no
-CZE,Tschechien,59,59,%,no
-HUN,Ungarn,61,78,%,no
+CZE,Tschechien,59.1,78,%,no
+HUN,Ungarn,61.4,94.7,%,yes
 CYP,Zypern,,,,no
