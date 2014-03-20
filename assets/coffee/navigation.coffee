@@ -28,10 +28,7 @@ class Navigation
 		q.defer(d3.csv, "static/join.csv")
 		for story of settings.stories
 			q.defer d3.csv,  "static/projects/#{story}_Infos.csv"
-			q.defer d3.csv,  "static/projects/#{story}_Data.csv", (d) ->
-				d.serie1 = parseFloat d.serie1
-				d.serie2 = parseFloat d.serie2
-				return d
+			q.defer d3.csv,  "static/projects/#{story}_Data.csv"
 		q.awaitAll(@loadedDataCallback)
 
 	loadedDataCallback: (error, results) =>

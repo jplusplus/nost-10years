@@ -183,9 +183,9 @@ class Map
 		# scale
 		values = []
 		for country in countries.values()
-			values.push(country["serie1"])
-			values.push(country["serie2"])
-		values =values.filter((d) -> d? and not isNaN(d))
+			values.push(parseFloat(country["serie1"]))
+			values.push(parseFloat(country["serie2"]))
+		values = values.filter((d) -> d? and not isNaN(d))
 		domain = [Math.min.apply(Math, values), Math.max.apply(Math, values)]
 		nb_buckets = settings.stories[@story_selected].nb_buckets or CONFIG.nb_buckets
 		scale_type = settings.stories[@story_selected]['scale_type']
@@ -201,7 +201,7 @@ class Map
 					country = countries.get(d.properties.iso_a3)
 					if country?
 					# 	# colorize country
-						value = country["serie#{serie}"]
+						value = parseFloat(country["serie#{serie}"])
 						if value? and not isNaN(value)
 							color = scale(value).hex()
 						else # there is no data for this country
@@ -224,8 +224,8 @@ class Map
 		# scale
 		values = []
 		for country in countries
-			values.push(country["serie1"])
-			values.push(country["serie2"])
+			values.push(parseFloat(country["serie1"]))
+			values.push(parseFloat(country["serie2"]))
 		values = values.filter((n) -> not isNaN(n))
 		if settings.stories[that.story_selected].symbol_scale?
 			# copy the array to be able to reverse it just after if needed
@@ -301,8 +301,8 @@ class Map
 					return that.computeZoom(that.story_selected)\# add the zoom transformation
 						# add the transformation to use the center of the picture as placed point
 						+ "translate(#{-scale(d["serie#{serie}"])/2}, #{-scale(d["serie#{serie}"])/2})"
-				.attr("width"  , (d) -> if isNaN(d["serie#{serie}"]) then 0 else scale(d["serie#{serie}"]))
-				.attr("height" , (d) -> if isNaN(d["serie#{serie}"]) then 0 else scale(d["serie#{serie}"]))
+				.attr("width"  , (d) -> if isNaN(parseFloat(d["serie#{serie}"])) then 0 else scale(parseFloat(d["serie#{serie}"])))
+				.attr("height" , (d) -> if isNaN(parseFloat(d["serie#{serie}"])) then 0 else scale(parseFloat(d["serie#{serie}"])))
 		# tooltip
 		@groupSymbols.selectAll("image").each(@tooltip(serie=serie))
 		@groupPaths.selectAll('path').each(@tooltip(serie=serie))
@@ -367,7 +367,7 @@ class Map
 				# retrieve data, depending of the element type (feature or symbol)
 				data  = if d.properties? then context.stories.get(context.story_selected).data.get(d.properties.iso_a3) else d
 				country_name = if data? then data["Country name"] else ""
-				value        = if data? and not isNaN(data["serie#{serie}"]) then data["serie#{serie}"].toString().replace('.', ",") else "k. A."
+				value        = if data? and not isNaN(parseFloat(data["serie#{serie}"])) then data["serie#{serie}"].toString().replace('.', ",") else "k. A."
 				append       = if data? and value != "k. A." then data["Append Sign (€,%, Mio, etc)"] or "" else ""
 				if country_name
 					params =
