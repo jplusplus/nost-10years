@@ -454,7 +454,7 @@ class Map
 							.classed("discret", (d) -> d.is_discrete)
 					scale_fixed = false
 				$step.on("click", (e) -> if scale_fixed then deselect(e, force=true) else select(e, fix=true))
-				$step.hover(select, deselect)
+				$step.add($sticker).hover(select, deselect)
 				that.uis.scale.append $step
 				offset += size
 
