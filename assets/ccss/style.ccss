@@ -131,7 +131,9 @@ body:
 	font-size  : .9em
 	font-weight: bold
 	line-height: 1em
-
+	.title:
+		font-size: 1.4em
+		line-height:1em
 	.scale:
 		margin-top : 10px
 		.step:
