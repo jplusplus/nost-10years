@@ -85,7 +85,9 @@ settings =
 		"n-ost_Project_8"  :
 			symbol_scale   : [20, 70]
 			symbol         : "static/symbols/n-ost_Project_8_icon.png"
-		"n-ost_Project_9"  : {}
+		"n-ost_Project_9"  :
+			symbol_scale   : [10, 80]
+			symbol         : "static/symbols/n-ost_Project_9_icon.png"
 		"n-ost_Project_9b" : {}
 
 # EOF
