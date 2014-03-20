@@ -81,6 +81,8 @@ body:
 		margin-top  : 10px
 		line-height : 1.2em
 		font-size   : 1em
+		p:
+			padding-top: .5em
 	> .reduce, .increase:
 		cursor : pointer
 		//transition-property : transform
