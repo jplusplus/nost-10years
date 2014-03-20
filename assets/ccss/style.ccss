@@ -42,9 +42,9 @@ body:
 				span.title:
 					padding-left : 10px
 			.story:
-				padding            : 2px 0 8px 2px
+				padding            : 2px 0 5px 2px
 				font-size          : .9em
-				line-height        : 1.2em
+				line-height        : 1em
 				transition-property: background-color
 				transition-duration: .25s
 				&:hover:
