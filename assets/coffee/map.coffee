@@ -52,7 +52,7 @@ class Map
 			accession = that.accessions.get(d.properties.iso_a3)
 			if accession
 				params =
-					content : "#{accession['Country name']}<br/><strong>#{accession['date']}</strong>"
+					content : "#{accession['Country name']}<br/><strong>Beitritt #{accession['date']}</strong>"
 				$(this).qtip _.defaults(params, CONFIG.tooltip_style)
 
 		#bind events
