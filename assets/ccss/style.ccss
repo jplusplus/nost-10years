@@ -101,14 +101,14 @@ body:
 			transition-duration : .75s
 			transition-property: opacity
 			&.applied:
-				opacity: .2
+				opacity: .15
 				&.is_in_data:
-					opacity : .2
+					opacity : .15
 					&:hover:
 						opacity:1
 	.all-symbols:
 		.discret.applied:
-			opacity: .2
+			opacity: .15
 
 	.switch:
 		position :absolute
