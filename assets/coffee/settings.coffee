@@ -71,6 +71,7 @@ settings =
 			symbol         : "static/symbols/n-ost_Project_3_icon.png"
 			reverse_scale  : true
 		"n-ost_Project_4"  :
+			nb_buckets : 5
 			center : [21.869254, 50.248456] # pologne
 		"n-ost_Project_5"  :
 			symbol_scale   : [10, 70]
