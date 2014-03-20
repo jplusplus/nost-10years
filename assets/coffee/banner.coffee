@@ -47,6 +47,7 @@ class Banner
 		@show()
 		# reset filter button
 		@uis.filterBtn.removeClass("active")
+		@uis.filterBtn.removeClass("hidden")
 
 	onFilterClick: =>
 		if @uis.filterBtn.hasClass("active")
