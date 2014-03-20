@@ -24,7 +24,7 @@ settings =
 		non_eu_color      : "#d6d6d6"
 		stroke_dark       : "#B9B9B9"
 		stroke_light      : "#C8C8C8"
-		color_scale       : ['rgb(239,243,255)','rgb(198,219,239)','rgb(158,202,225)','rgb(107,174,214)','rgb(66,146,198)','rgb(33,113,181)','rgb(8,69,148)'] # http://colorbrewer2.org/?type=sequential&scheme=Blues&n=7
+		color_scale       : ['rgb(158,202,225)','rgb(107,174,214)','rgb(66,146,198)','rgb(33,113,181)','rgb(8,69,148)', "#001261"] # http://colorbrewer2.org/?type=sequential&scheme=Blues&n=7
 		eu_countries      : ["DEU", "AUT", "HRV", "BEL", "BGR", "CYP", "DNK", "ESP", "EST", "FIN", "FRA", "GRC", "HUN", "IRL", "ITA", "LVA", "LTU", "MLT", "LUX", "NLD", "POL", "PRT", "CZE", "ROU", "GBR", "SVK", "SVN", "SWE"]
 		new_countries     : ["BGR","HRV","EST","LVA","LTU","POL","ROU","SVK","SVN","CZE","HUN"]  # for larger border
 		countries_centers : d3.map # fix the symbol position for countries which are not well positioned by centroid
