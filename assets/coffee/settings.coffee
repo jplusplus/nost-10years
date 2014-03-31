@@ -63,32 +63,32 @@ settings =
 	#   - reverse_scale : reverse the scale
 	#
 	stories :
-		"n-ost_Project_1"  :
+		"project_1"  :
 			nb_buckets : 5
-		"n-ost_Project_2"  :
+		"project_2"  :
 			center : [21.869254, 50.248456] # pologne
-		"n-ost_Project_3"  :
+		"project_3"  :
 			symbol         : "static/symbols/n-ost_Project_3_icon.png"
 			reverse_scale  : true
-		"n-ost_Project_4"  :
+		"project_4"  :
 			nb_buckets : 5
 			center : [21.869254, 50.248456] # pologne
-		"n-ost_Project_5"  :
+		"project_5"  :
 			symbol_scale   : [10, 70]
 			symbol         : "static/symbols/landwirschaft.png"
-		"n-ost_Project_6"  :
+		"project_6"  :
 			symbol_scale   : [20, 70]
 			symbol         : "static/symbols/n-ost_Project_6_icon.png"
-		"n-ost_Project_7"  :
+		"project_7"  :
 			symbol         : "static/symbols/n-ost_Project_7_icon.png"
 			symbol_scale   : [20, 70]
 			zoom           : 0.8
-		"n-ost_Project_8"  :
+		"project_8"  :
 			symbol_scale   : [20, 70]
 			symbol         : "static/symbols/n-ost_Project_8_icon.png"
-		"n-ost_Project_9"  :
+		"project_9"  :
 			symbol_scale   : [10, 80]
 			symbol         : "static/symbols/n-ost_Project_9_icon.png"
-		"n-ost_Project_9b" : {}
+		"project_9b" : {}
 
 # EOF

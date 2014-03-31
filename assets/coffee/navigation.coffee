@@ -27,8 +27,8 @@ class Navigation
 		q.defer(d3.json, "static/europe.topo.json")
 		q.defer(d3.csv, "static/join.csv")
 		for story of settings.stories
-			q.defer d3.csv,  "static/projects/#{story}_Infos.csv"
-			q.defer d3.csv,  "static/projects/#{story}_Data.csv"
+			q.defer d3.csv,  "static/projects/#{story}_infos.csv"
+			q.defer d3.csv,  "static/projects/#{story}_data.csv"
 		q.awaitAll(@loadedDataCallback)
 
 	loadedDataCallback: (error, results) =>
