@@ -20,6 +20,10 @@ published on [http://www.ostpol.de/europakarte](http://www.ostpol.de/europakarte
 
 ![Screenshot](screenshot.png "Screenshot")
 
+### Licence
+
+(c) n-ost 2014
+
 ## Installation
 
 ### Dependances
