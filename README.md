@@ -1,11 +1,13 @@
-n-host : Map for the 10th anniversary of the EU-enlargement
-===========================================================
+n-ost : Map for the 10th anniversary of the EU-enlargement
+==========================================================
 
 Berlin, January 2014
 
 ## The project
 
 [http://jplusplus.github.io/nost-10years/](http://jplusplus.github.io/nost-10years/)
+
+published on [http://www.ostpol.de/europakarte](http://www.ostpol.de/europakarte)
 
 ### Features
 
